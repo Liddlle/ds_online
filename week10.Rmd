@@ -1,0 +1,50 @@
+---
+title: "week 10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#loading the data and the libraries needed
+library(foreign)
+library(psych)
+library(ggplot2)
+library(sjPlot)
+library(sjmisc)
+library(rockchalk)
+
+
+data(msleep)
+str(msleep)
+
+ms <- na.omit(msleep)
+
+options(scipen=999)
+```
+
+Почистить данные от NA
+Сделать 3 регерссионные модели, объяснить суть, соответствующие графики, анова для сравнения моделей для выяснения эффективности добавления доп.предикторов(???), насколько крутыми графики должны быть выясним после урока по ггплоту
+```{r}
+lm1 <-  lm(sleep_total ~ vore, data = msleep)
+summary(lm1)
+```
+
+```{r}
+lm2 <- lm(sleep_total ~ vore+order, data = msleep)
+summary(lm2)
+```
+
+Тут большие проблемы с NA
+
+```{r}
+lm3 <- lm(sleep_total ~ vore*order, data = msleep)
+summary(lm3)
+```
+
+
+
+
+Подумать про предикторы и ауткам, посмотреть датасет с самолетами, мб, использовать его поприкольнее
