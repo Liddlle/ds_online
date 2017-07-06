@@ -5,27 +5,13 @@ Exploratory Data Analysis - то же самое
 http://r4ds.had.co.nz/ R for Data Science от Hadley Wickham (разработчик tidyverse и других пакетов)
 Text Mining with R http://tidytextmining.com/  
 
-Аня - datacamp
-Алина - степик и exploratory data analysis
-Лиза - степик и art of data science
-Оля - R for Data Science, cookbook for r (про ggplot2) 
-
-Алина Б
-Оля
-Аня
-Алина Ч
-Лиза
-
 Week 1. INTRODUCTION. What is Data Science? - теоретические вопросы
-PART I. REPRODUCIBLE RESEARCH AND DATA SCIENCE
-Week 2. Reproducible Research and Data Science - теоретические вопросы
-Объединить week 1 и week 2:
 Week 1 = art of DS + exploratory DA (теоретические вопросы)
-Придумать доп неделю вместо объединенных первых двух?
-Week 3. Introduction to the tools: R, RStudio, RMarkdown. Reports + индексирование + базовые функции
-PART II. EXPLORATORY DATA ANALYSIS
-Week 4. Making plots: grammar of graphics and ggplot2 package
-Week 5.  Data aggregation and manipulation: dplyr and lubridate packages 
+Week 1. Reproducible Research and Data Science - теоретические вопросы
+Week 2. Introduction to the tools: R, RStudio, RMarkdown. Reports + индексирование + базовые функции
+Week 3. Making plots: grammar of graphics and ggplot2 package
+Week 4. Data aggregation and manipulation: dplyr and tidyr (lubridate) packages 
+
 Week 6. (КР)
 Week 7 . Параметрические тесты + проверка гипотез
 Week 8. Проверка на нормальность, непараметрические тесты  
@@ -38,5 +24,18 @@ Week 11. Regression and Classification Decision Trees
 Домашнее задание
 
 ЭКЗАМЕН 
-Добавлять задания из предыдущих циклов
 6-7 неделя параметрические/непараметрические тесты
+
+1) разницу между data.frame и tibble тоже нужно наверное будет рассказать 
+2) [[]] возвращает контент 
+[] возвращает лист, только из одного элемента. это к индексации
+3) про named vector стоит ли рассказывать? 
+4) датасет по звездным войнам в пакете purrr можно для каких-нибудь заданий использовать 
+Tibble vs data table for big data 
+bind_rows
+rbind долгий очень ? заранее закладывать место под датафрейм 
+
+https://www2.stat.duke.edu/courses/Fall15/sta112.01/data/  - дополнительные датасеты 
+
+https://github.com/rstudio/learnr/tree/master/examples
+немного введения в р
