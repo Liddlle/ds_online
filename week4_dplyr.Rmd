@@ -1,21 +1,46 @@
 ---
-title: "Dplyr"
-output: html_document
+title: "Week 4. Data manipulations"
+output: 
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
 ---
 
-###Шаг 1 
-На предыдущей неделе вы уже познакомились с одним из пакетов для визуализации данных ггплот
-Данный модуль нацелен на то, чтобы познакомить вас с аггрегацией данных. 
-Что такое агрегация
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
 
-Мы будем использовать основные пакеты входящие в tidyverse: dplyr  
-Шпаргалку можно найти здесь:  https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
+knitr::opts_chunk$set(error = TRUE)
+```
+
+##Урок 1. Манипуляция данных с dplyr 
+
+##Шаг 1. Теория  
+Визуализация является важным инструментом для работы с данными, но эти данные не всегда приходят к нам в виде, готовом к визуализации. Часто нам нужно убрать что-то из данных, создать новую переменную или получить описательную статистику по группам переменных. На этом уроке вы освоите базовые навыки обращения с таблицами используя пакеты dplyr и tidyr, включая:
+
+###Часть 1
+* Использовать filter(), чтобы убрать нежелательные значения из таблицы с данными 
+* Упорядочивать значения в таблице с arrange()
+* Оставлять только нужные столбцы с select()
+* Создавать новые переменные с mutate()
+* Группировать таблицу на основе различных переменных с group_by()
+* И получать различную статистику с summarise()
+
+Часть 2
+?bind_rows()
+
+?join() 
+
+tidyrgather()spread()separate()unite()
 
 ```{r}
 library(tidyverse)
 #library(dplyr)
 #library(tidyr)
 ```
+
+Шпаргалку к уроку можно найти здесь: https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
 
 
 ###Шаг 2 Соедините функции из пакета dplyr с их описанием:? это переделать 
