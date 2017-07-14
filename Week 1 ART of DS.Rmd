@@ -127,6 +127,7 @@ A causal question asks about whether changing one factor will change another fac
 
 6.	Mechanistic
 Finally, none of the questions described so far will lead to an answer that will tell us, if the diet does, indeed, cause a reduction in the number of viral illnesses, how the diet leads to a reduction in the number of viral illnesses. A question that asks how a diet high in fresh fruits and vegetables leads to a reduction in the number of viral illnesses would be a mechanistic question.
+
 X. 
 
 XI. Существует пять характеристик хорошего вопроса для анализа данных:
