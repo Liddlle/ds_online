@@ -3,37 +3,135 @@ title: "Week 1 ART of DS"
 output: html_document
 ---
 
-1.	Data Analysis is Art
-Science is knowledge which we understand so well that we can teach it to a computer. 
-Everything else is art. 
+I.	Data Analysis is Art
+Наука - это знание, которое мы понимаем так хорошо, что можем научить ему компьютер. Все остальное - это искусство.  
 © Donald Knuth. Computer programming as an Art.1974.
 
-It’s important to realize that data analysis is an art. It is not something yet that we can teach to a computer. Data analysts have many tools at their disposal, from linear regression to classification trees and even deep learning, and these tools have all been carefully taught to computers. But ultimately, a data analyst must find a way to assemble all of the tools and apply them to data to answer a relevant question—a question of interest to people. This requires a creativity spark which hard to describe as well as it’s hard to describe the thought process that leads to a successful data analysis.
+Анализ данных - это искусство. В распоряжении аналитиков есть множество инструментов, таких как, например, линейная регрессия, и им нужно найти способ оценить все эти средства и применить их к данным, чтобы ответить на вопрос, который интересует людей. Анализ требует определенную долю креативности, которую тяжело объяснить, так же как и тяжело описать мысленный процесс, который ведет к успешному анализу данных.
 
-2.	Epicycles of Analysis
+Однако существуют определенные процедуры, которые приводят к хорошим результатам и привносят полезные инсайты в данные, о них мы и поговорим!
 
-Data analysis is a highly iterative and non-linear process, better reflected by a series of epicycles (see Figure), in which information is learned at each step, which then informs whether (and how) to refine, and redo, the step that was just performed, or whether (and how) to proceed to the next step.
+II.	Epicycles of Analysis
+
+Анализ данных это интерактивный и нелинейный процесс, лучше всего его можно отразить в серии эпициклов, в которых каждый шаг помогает получить новую информацию и дает понять как усовершенствовать, переделать только что совершенный шаг или (и как) перейти на следующий.
 
 ЗДЕСЬ КАРТИНКА СО СТР 5
 
-There are 5 core activities of data analysis:
-1. Stating and refining the question
-2. Exploring the data
-3. Building formal statistical models
-4. Interpreting the results
-5. Communicating the results
+В процессе анализа данных выделяется 5 ключевых шагов:
+1. Постановка и усовершенствование исследовательского вопроса
+2. Эксплораторный анализ данных
+3. Построение статистических моделей
+4. Интерпретация результатов
+5. Рассказ о результатах
 
-For each of the five core activities, it is critical that you engage in the following steps:
-1.	Setting Expectations, 
-which can be developed using prior knowledge or external information,
+III. Внутри каждого из пяти ключевых шагов важно следовать следующим этапам:
+1. Формулировка ожиданий, которые могут быть основаны на знаниях, которыми исследователь уже обладает или с помощью внешней информации,
 
-2. Collecting information (data), comparing the data to your expectations, and if the expectations don’t match,
+2. Сбор информации (данных), сравнение данных с вашими ожиданиями и, если ожидания с ними не совпадают,
 
-3. Revising your expectations or fixing the data so your data and your expectations match. There are two possible explanations for the discordance: first, your expectations were wrong and need to be revised, or second, the check was wrong and contains an error.
+3. Пересмотр ожиданий или исправление данных таким образом, чтобы они совпадали.
 
-Iterating through this 3-step process is what we call the “epicycle of data analysis.” As you go through every stage of an analysis, you will need to go through the epicycle to continuously refine your question, your exploratory data analysis, your formal models, your interpretation, and your communication.
+Если ваши ожидания не совпадают с данными, то либо неверны ожидания, либо при проверке была допущена ошибка.
 
-ЗДЕСЬ ТАБЛИЦА СТР 8
+Еще раз проясним, формулировка ожиданий - это процесс сознательного размышления о том, какие результаты вы ждете прежде чем начнете совершать какие-либо действия, такие как изучение данных или написание команд.
+
+Повторение этого 3-х фазного процесса называется "эпицикл анализа данных". Во время прохождения каждого этапа анализа данных также нужно проходить через эпицикл для того чтобы совершенствовать ваш вопрос, эксплораторный анализ, модели, интерпретацию и сообщение результатов.
+
+IV. Соедините этап эпицикла и его результат. Каковы ваши ожидания? Как вы будете собирать данные? Как усовершенствуются ожидания? После выполнения задания прочитайте пример исследования для лучшего понимания.
+
+Пример: Распространенность астмы в США
+
+Предположим, что изначальный вопрос заключается в определении распространенности астмы среди взрослых, так как ваша компания хочет понять размеры рынка для нового препарата для лечения астмы.
+
+На первом этапе усовершенствования вопроса, прежде всего, нужно сформулировать ожидания к вопросу, затем собрать информацию о нем и определить соответствует ли собранная информация вашим ожиданиям, и если нет, вам нужно будет пересмотреть вопрос. Ожидания заключаются в том, что ответ на вопрос неизвестен и что он может быть получен. Однако, литературный и интернет обзор показал, что этот вопрос был уже исследован (и ответ на него постоянно дополняется Центром борьбы с заболеваниями), поэтому вы пересматриваете вопрос с тем фактом, что вы можете просто зайти на сайт Центра, чтобы получить информацию о распространенности астмы. 
+
+Вы информируете начальника об этом. В ходе обсуждения выясняется, что новый препарат от астмы таргетирует людей, у которых астма не контролируется медикаментами, доступными в настоящее время. Таким образом, вы выявляете более хороший вопрос "Как много людей в США страдают от астмы, которая в настоящее время не контролируется, и каковы демографические предикторы неконтролируемой астмы?" Далее вы повторяете процесс сбора информации, чтобы определить можно ли ответить на вопрос и хорош ли он, продолжая до тех пор, пока не будете уверены в том, что усовершенствовали вопрос до такой степени, что на него можно ответить с имеющимися данными. 
+
+Задание:
+Вопрос интересен аудитории - Постановка ожиданий 
+Литературный обзор/Эксперты - Сбор информации
+Уточнение вопроса - Пересмотр ожиданий
+
+V. Сделайте то же самое для этапа "Эксплораторный анализ данных"
+
+Пример: Распространенность астмы в США
+
+Предположим, что вы нашли базу данных, которую можно загрузить с сайта и которая содержит выборку, репрезентующую взрослое население США, 18 лет и старше. Следующим этапом вы проводите эксплораторный анализ и начинаете с ожидания того, что когда вы будете исследовать ваши данные, они будут содержать 10,123 строки, каждая ииз которых будет отражать индивида из США, так как такую информацию предоставляет документация, которая прилагается к базе. Там же указано, что в данных будет переменная, указывающая возраст индивида. 
+
+Однако, когда вы начинаете исследовать данные, то обнаруживаете, что в базе всего 4,803 строки, поэтому вы возвращаетесь к документации, чтобы подтвердить верность ваших ожиданий о количестве строк, сделав это, вы возвращаетесь на сайт и обнаруживаете, что там два файла с нужными вам данными, первый состоит из 4,803 строк и второй, содержащий 5,320 оставшихся. Вы загружаете второй файл и соединяете его с первым. 
+
+Теперь, когда у вас правильное число строк, вы двигаетесь дальше и определяете соответствуют ли ваши ожидания возрасту выборки, где каждому должно быть 18 лет и больше. Вы делаете summarize для переменной возраст, смотрите минимальные и максимальные значения и находите, что все индивиды 18ти лет и старше, что соответствует вашим ожиданиям. Хотя существует еще много вещей, которые можно было бы сделать для исследования данных, эти два задания являются примерами подхода. В конечном итоге, вы приходете к тому, что данные годятся для оценки распространенности неконтролируемой астмы среди взрослых в США.
+
+Задание:
+Данные подходящие для вопроса - Постановка ожиданий 
+Построение описательных графиков данных - Сбор информации
+Усовершенствование вопроса или сбор дополнительных данных - Пересмотр ожиданий
+
+VI. Как вы примените эпицикл при построении статистических моделей? Выполните задание, затем прочитайте текст ниже 
+
+Пример: Распространенность астмы в США
+
+Третий этап - построение статистических моделей необходим для определения демографических характеристик, которые лучше всего предсказывают, что кто-то страдает неконтролируемой астмой. Статистические модели помогают точно сформулировать вопрос, таким образом что вы видите как вы хотите использовать данные: посчитать ли определенный параметр или сделать предсказание. Статистические модели также преставлляют формальную рамку в котрой вы можете проверять свои выводы и тестировать предположения. 
+
+После этого этапа, вы оценили распространение неконтролируемой астмы среди взрослых в США и определили, что возраст, пол, раса, индекс массы тела, статус курения, и доход являются лучшими из имеющихся предикторов неконтролируемой астмы. Далее вы переходите к четвертому этапу, интерпретации результатов. На практике, интерпретация результатов происходит вместе с построением моделей, о концептуально это два разных процесса. 
+
+Задание:
+Первичная модель отвечает на вопрос - Постановка ожиданий
+Построение вторичных моделей, анализ чувствительности - Сбор информации
+Усовершенствование модели путем добавление новых предикторов - Пересмотр ожиданий
+
+VII. Четвертый этап - интерпретация результатов. Какие ожидания будут на этом этапе? Как сбор информации и пересмотр ожиданий могут быть проделаны? Выполните задание, а затем прочтите текст примера
+
+Пример: Распространенность астмы в США
+
+Предположим вы построили финальную модель и теперь переходите к интерпретации выводов модели. Когда вы исследуете модель, вашими изначальными ожиданиями является, что возраст, афроамериканская/черная раса, индекс массы тела, статус курения, и маленький доход все позитивно ассоциируются с неконтролируемой астмой. 
+
+Однако, вы замечаете, что женщины негативно связаны с неконтролируемой астмой, хотя ваше исследование и обсуждение с экспертами говорит о том, что среди взрослых, женский пол должен быть позитивно связан с неконтролируемой астмой. Это несоответствие между ожиданиями и результатами принуждает вас сделать паузу и провести некоторое исследование, чтобы определить, действительно ли правильны ваши результаты, и нужно приспособить свои ожидания или если есть проблема с результатами, а не ожиданиями. После некоторого исследования Вы обнаруживаете, что думали, что гендерная переменная была закодирована 1 для женщины и 0 для мужчины, но вместо этого документация указывает, что гендерная переменная была закодирована 1 для мужчины и 0 для женщины. Таким образом, интерпретация ваших результатов была неправильной, не ваши ожидания. Теперь, когда вы понимаете кодирование для гендерной переменной, ваша интерпретация выводов модели соответствует вашим ожиданиям, таким образом, вы можете идти дальше к сообщению ваших результатов.
+
+Задание:
+Интерпретация анализа предоставляет определенный & значимый ответ на вопрос - Постановка ожиданий   
+Интерпретируйте весь анализ с вниманием на размеры эффекта & неопределенность - Сбор информации
+Пересмотр EDA и/или модели, чтобы предоставить определенный & поддающийся толкованию ответ - Пересмотр ожиданий
+
+VIII. На финальном этапе анализа вам нужно рассказать о его результатах. Выполните задание и прочитайте текст ниже 
+
+Пример: Распространенность астмы в США
+
+Наконец, вы рассказываете о своих выводах, и опять применяете эпицикл. Будем считать, что вы подготовили неформальны отчет. Ваши ожидания состоят в том, что он интересен вашему начальнику. Вы встречаетесь со своим боссом, чтобы рассмотреть результаты, и она задает два вопроса: (1)как давно данные были собраны и (2)какие изменения демографических паттернов, произойдут за следующие 5-10 лет, которые повлияют на распространение неконтролируемой астмы. Несмотря на то, что может быть разочаровывающе, что ваш отчет не полностью удовлетворяет потребности начальника, получение фидбэка является важнейшей частью выполнения анализа данных, и на самом деле, мы утверждаем, что хороший анализ данных требует коммуникации, обратной связи, и затем действий в ответ на обратную связь.
+
+Несмотря на то, что вы знаете ответ о годах, когда данные были собраны, вы понимаете, что не включали эту информацию в свой отчет, таким образом, вы пересматриваете отчет и дополняете его. вы также понимаете, что вопрос босса об влиянии меняющихся демографических паттернов на распространение неконтролируемой астмы - хороший, так как ваша компания хочет предсказать размер рынка в будущем, таким образом, вы теперь можете провести новый анализ. Вы должны также чувствовать пользу своего отчета, так как он выдвинул дополнительные вопросы на первый план, а это - одна из характеристик успешного анализа данных.
+
+Задание:
+Процесс & анализ поняты, полны & значимы для аудитории - Постановка ожиданий
+Поиск фидбэка - Сбор информации
+Пересмотр исследования или переход к его презентации - Пересмотр ожиданий
+
+IX.
+X. 
+
+XI. Существует пять характеристик хорошего вопроса для анализа данных:
+-  вопрос должен быть интересен аудитории
+-  вопрос не должен быть уже отвеченным  
+Исследование и обсуждение с экспертами может быть полезно, потому что даже если на ваш конкретный вопрос ответа еще не было дано, могут быть ответы на связанные с ним вопросы и эти ответы могут быть информативными для принятия решения продолжить ли использовать ваш вопрос.
+
+-  вопрос должен быть правдоподобным 
+Если вы задаете неправдоподобный вопрос, то скорее всего окажетесь в ситуации когда ответ трудно интерпретировать или быть уверенным в нем
+
+-  вопрос должен быть "отвечамым"
+На некоторые замечательные вопросы невозможно ответить - либо из-за отсутствия данных или инструментов для их сбора, либо этических проблем.
+
+-  вопрос должен быть конкретным
+Сравните: "Полезней ли для здоровья правильное питание?" 
+" Ведет ли употребление в пищу минимум 5-ти порций свежих овощей и фруктов в день к уменьшению количества случаев заболеваемости ОРВИ?"
+
+XII. Следующий вопрос правдоподобен:
+"Коррелируют ли продажи пепперони с продажами йогурта?" - False
+
+XIII. Следующий вопрос правдоподобен:
+"Верно ли, что продажи пепперони увеличиваются, когда они разложены в магазине рядом с соусом для пиццы, а не с другой расфасованной едой?" - True
+
+XIV. Следующий вопрос конкретен:
+"Верно ли, что мужчины, в среднем, работают больше часов в неделю на основной работе, чем женщины?" - True
 
 3.  Stating and Refining the Question
 
@@ -59,30 +157,5 @@ A causal question asks about whether changing one factor will change another fac
 6.	Mechanistic
 Finally, none of the questions described so far will lead to an answer that will tell us, if the diet does, indeed, cause a reduction in the number of viral illnesses, how the diet leads to a reduction in the number of viral illnesses. A question that asks how a diet high in fresh fruits and vegetables leads to a reduction in the number of viral illnesses would be a mechanistic question.
 
-!Note 
-Many data analyses answer multiple types of questions. For example, if a data analysis aims to answer an inferential question, descriptive and exploratory questions must also be answered during the process of answering the inferential question. Also the type of question you ask is determined in part by the data available to you (unless you plan to conduct a study and collect the data needed to do the analysis).
-
-Characteristics of a Good Question:
--	the question should be of interest to your audience,
--	the question has not already been answered 
-Some research and discussion with experts can be helpful because even if the specific question you have in mind has not been answered, related questions may have been answered and the answers to these related questions are informative for deciding if or how you proceed with your specific question.
-
--	the question should also stem from a plausible framework
-If you ask a question whose framework is not plausible, you are likely to end up with an answer that’s difficult to interpret or have confidence in.
-
--	the question should be answerable
-Some of the best questions aren’t answerable - either because the data don’t exist or there is no means of collecting the data because of lack of resources, feasibility, or ethical problems.
-
--	the question should be specific
-Compare: 
-“Is eating a healthier diet better for you?”
-“Does eating at least 5 servings per day of fresh fruits and vegetables lead to fewer upper respiratory tract infections (colds)?”
-
-Translating a Question into a Data Problem
-
-Every question must be operationalized as a data analysis that leads to a result. The typical type of question that does not lead to interpretable answers is a question that uses *inappropriate data*. The problem with this question is that for a single possible answer, are multiple interpretations. This scenario of multiple interpretations arises when at least one of the variables you use is not a good measure of the concept you are truly after. To head off this problem, you will want to make sure that the data available to answer your question provide reasonably specific measures of the factors required to answer your question.
-
-A related problem that interferes with interpretation of results is *confounding*. Confounding is a potential problem when your question asks about the relationship between factors, such as taking vitamin D and frequency of headaches. A brief description of the concept of confounding is that it is present when a factor that you were not necessarily considering in your question is related to both
-your exposure of interest (in the example, taking vitamin D supplements) and your outcome of interest (taking pain reliever medication). For example, income could be a confounder, because it may be related to both taking vitamin D supplements and frequency of headaches, since people with higher income may tend to be more likely to take a supplement and less likely to have chronic health problems, such as headaches.
 
 
