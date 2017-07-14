@@ -1,0 +1,88 @@
+---
+title: "Week 1 ART of DS"
+output: html_document
+---
+
+1.	Data Analysis is Art
+Science is knowledge which we understand so well that we can teach it to a computer. 
+Everything else is art. 
+© Donald Knuth. Computer programming as an Art.1974.
+
+It’s important to realize that data analysis is an art. It is not something yet that we can teach to a computer. Data analysts have many tools at their disposal, from linear regression to classification trees and even deep learning, and these tools have all been carefully taught to computers. But ultimately, a data analyst must find a way to assemble all of the tools and apply them to data to answer a relevant question—a question of interest to people. This requires a creativity spark which hard to describe as well as it’s hard to describe the thought process that leads to a successful data analysis.
+
+2.	Epicycles of Analysis
+
+Data analysis is a highly iterative and non-linear process, better reflected by a series of epicycles (see Figure), in which information is learned at each step, which then informs whether (and how) to refine, and redo, the step that was just performed, or whether (and how) to proceed to the next step.
+
+ЗДЕСЬ КАРТИНКА СО СТР 5
+
+There are 5 core activities of data analysis:
+1. Stating and refining the question
+2. Exploring the data
+3. Building formal statistical models
+4. Interpreting the results
+5. Communicating the results
+
+For each of the five core activities, it is critical that you engage in the following steps:
+1.	Setting Expectations, 
+which can be developed using prior knowledge or external information,
+
+2. Collecting information (data), comparing the data to your expectations, and if the expectations don’t match,
+
+3. Revising your expectations or fixing the data so your data and your expectations match. There are two possible explanations for the discordance: first, your expectations were wrong and need to be revised, or second, the check was wrong and contains an error.
+
+Iterating through this 3-step process is what we call the “epicycle of data analysis.” As you go through every stage of an analysis, you will need to go through the epicycle to continuously refine your question, your exploratory data analysis, your formal models, your interpretation, and your communication.
+
+ЗДЕСЬ ТАБЛИЦА СТР 8
+
+3.  Stating and Refining the Question
+
+Types of Questions:
+
+1.	Descriptive
+A descriptive question is one that seeks to summarize a characteristic of a set of data (the proportion of males, the mean number of servings of fresh fruits per day). There is no interpretation of the result itself as the result is a fact, an attribute of the set of data that you are working with.
+
+2.	Exploratory
+An exploratory question is one in which you analyze the data to see if there are patterns, trends, or relationships between variables. These types of analyses are also called “hypothesis- generating” analyses because you are looking for patterns that would support proposing a hypothesis. If you had a general thought that diet was linked somehow to viral illnesses, you might explore this idea by examining relationships between a range of dietary factors and viral illnesses. You find in your exploratory analysis that individuals who ate a diet high in certain foods had fewer viral illnesses than those whose diet was not enriched for these foods, so you propose the hypothesis that among adults, eating at least 5 servings a day of fresh fruit and vegetables is associated with fewer viral illnesses per year.
+
+
+3.	Inferential
+An inferential question would be a restatement of this proposed hypothesis as a question and would be answered by analyzing a different set of data, which in this example, is a representative sample of adults in the US. By analyzing this different set of data you are both determining if the association you observed in your exploratory analysis holds in a different sample and whether it holds in a sample that is representative of the adult US population, which would suggest that the association is applicable to all adults in the US. In other words, you will be able to infer what is true, on average, for the adult population in the US from the analysis you perform on the representative sample.
+
+4.	Predictive
+A predictive question would be one where you ask what types of people will eat a diet high in fresh fruits and vegetables during the next year. In this type of question you are less interested in what causes someone to eat a certain diet, just what predicts whether someone will eat this certain diet.
+For example, higher income may be one of the final set of predictors, and you may not know (or even care) why people with higher incomes are more likely to eat a diet high in fresh fruits and vegetables, but what is most important is that income is a factor that predicts this behavior. Although an inferential question might tell us that people who eat a certain type of foods tend to have fewer viral illnesses, the answer to this question does not tell us if eating these foods causes a reduction in the number of viral illnesses, which would be the case for a causal question.
+
+5.	Causal
+A causal question asks about whether changing one factor will change another factor, on average, in a population.
+
+6.	Mechanistic
+Finally, none of the questions described so far will lead to an answer that will tell us, if the diet does, indeed, cause a reduction in the number of viral illnesses, how the diet leads to a reduction in the number of viral illnesses. A question that asks how a diet high in fresh fruits and vegetables leads to a reduction in the number of viral illnesses would be a mechanistic question.
+
+!Note 
+Many data analyses answer multiple types of questions. For example, if a data analysis aims to answer an inferential question, descriptive and exploratory questions must also be answered during the process of answering the inferential question. Also the type of question you ask is determined in part by the data available to you (unless you plan to conduct a study and collect the data needed to do the analysis).
+
+Characteristics of a Good Question:
+-	the question should be of interest to your audience,
+-	the question has not already been answered 
+Some research and discussion with experts can be helpful because even if the specific question you have in mind has not been answered, related questions may have been answered and the answers to these related questions are informative for deciding if or how you proceed with your specific question.
+
+-	the question should also stem from a plausible framework
+If you ask a question whose framework is not plausible, you are likely to end up with an answer that’s difficult to interpret or have confidence in.
+
+-	the question should be answerable
+Some of the best questions aren’t answerable - either because the data don’t exist or there is no means of collecting the data because of lack of resources, feasibility, or ethical problems.
+
+-	the question should be specific
+Compare: 
+“Is eating a healthier diet better for you?”
+“Does eating at least 5 servings per day of fresh fruits and vegetables lead to fewer upper respiratory tract infections (colds)?”
+
+Translating a Question into a Data Problem
+
+Every question must be operationalized as a data analysis that leads to a result. The typical type of question that does not lead to interpretable answers is a question that uses *inappropriate data*. The problem with this question is that for a single possible answer, are multiple interpretations. This scenario of multiple interpretations arises when at least one of the variables you use is not a good measure of the concept you are truly after. To head off this problem, you will want to make sure that the data available to answer your question provide reasonably specific measures of the factors required to answer your question.
+
+A related problem that interferes with interpretation of results is *confounding*. Confounding is a potential problem when your question asks about the relationship between factors, such as taking vitamin D and frequency of headaches. A brief description of the concept of confounding is that it is present when a factor that you were not necessarily considering in your question is related to both
+your exposure of interest (in the example, taking vitamin D supplements) and your outcome of interest (taking pain reliever medication). For example, income could be a confounder, because it may be related to both taking vitamin D supplements and frequency of headaches, since people with higher income may tend to be more likely to take a supplement and less likely to have chronic health problems, such as headaches.
+
+
