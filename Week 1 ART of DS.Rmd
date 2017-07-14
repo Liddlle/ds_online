@@ -106,7 +106,27 @@ VIII. На финальном этапе анализа вам нужно рас
 Поиск фидбэка - Сбор информации
 Пересмотр исследования или переход к его презентации - Пересмотр ожиданий
 
-IX.
+IX. Types of Questions:
+
+1.	Descriptive
+A descriptive question is one that seeks to summarize a characteristic of a set of data (the proportion of males, the mean number of servings of fresh fruits per day). There is no interpretation of the result itself as the result is a fact, an attribute of the set of data that you are working with.
+
+2.	Exploratory
+An exploratory question is one in which you analyze the data to see if there are patterns, trends, or relationships between variables. These types of analyses are also called “hypothesis- generating” analyses because you are looking for patterns that would support proposing a hypothesis. If you had a general thought that diet was linked somehow to viral illnesses, you might explore this idea by examining relationships between a range of dietary factors and viral illnesses. You find in your exploratory analysis that individuals who ate a diet high in certain foods had fewer viral illnesses than those whose diet was not enriched for these foods, so you propose the hypothesis that among adults, eating at least 5 servings a day of fresh fruit and vegetables is associated with fewer viral illnesses per year.
+
+
+3.	Inferential
+An inferential question would be a restatement of this proposed hypothesis as a question and would be answered by analyzing a different set of data, which in this example, is a representative sample of adults in the US. By analyzing this different set of data you are both determining if the association you observed in your exploratory analysis holds in a different sample and whether it holds in a sample that is representative of the adult US population, which would suggest that the association is applicable to all adults in the US. In other words, you will be able to infer what is true, on average, for the adult population in the US from the analysis you perform on the representative sample.
+
+4.	Predictive
+A predictive question would be one where you ask what types of people will eat a diet high in fresh fruits and vegetables during the next year. In this type of question you are less interested in what causes someone to eat a certain diet, just what predicts whether someone will eat this certain diet.
+For example, higher income may be one of the final set of predictors, and you may not know (or even care) why people with higher incomes are more likely to eat a diet high in fresh fruits and vegetables, but what is most important is that income is a factor that predicts this behavior. Although an inferential question might tell us that people who eat a certain type of foods tend to have fewer viral illnesses, the answer to this question does not tell us if eating these foods causes a reduction in the number of viral illnesses, which would be the case for a causal question.
+
+5.	Causal
+A causal question asks about whether changing one factor will change another factor, on average, in a population.
+
+6.	Mechanistic
+Finally, none of the questions described so far will lead to an answer that will tell us, if the diet does, indeed, cause a reduction in the number of viral illnesses, how the diet leads to a reduction in the number of viral illnesses. A question that asks how a diet high in fresh fruits and vegetables leads to a reduction in the number of viral illnesses would be a mechanistic question.
 X. 
 
 XI. Существует пять характеристик хорошего вопроса для анализа данных:
@@ -133,29 +153,9 @@ XIII. Следующий вопрос правдоподобен:
 XIV. Следующий вопрос конкретен:
 "Верно ли, что мужчины, в среднем, работают больше часов в неделю на основной работе, чем женщины?" - True
 
-3.  Stating and Refining the Question
-
-Types of Questions:
-
-1.	Descriptive
-A descriptive question is one that seeks to summarize a characteristic of a set of data (the proportion of males, the mean number of servings of fresh fruits per day). There is no interpretation of the result itself as the result is a fact, an attribute of the set of data that you are working with.
-
-2.	Exploratory
-An exploratory question is one in which you analyze the data to see if there are patterns, trends, or relationships between variables. These types of analyses are also called “hypothesis- generating” analyses because you are looking for patterns that would support proposing a hypothesis. If you had a general thought that diet was linked somehow to viral illnesses, you might explore this idea by examining relationships between a range of dietary factors and viral illnesses. You find in your exploratory analysis that individuals who ate a diet high in certain foods had fewer viral illnesses than those whose diet was not enriched for these foods, so you propose the hypothesis that among adults, eating at least 5 servings a day of fresh fruit and vegetables is associated with fewer viral illnesses per year.
 
 
-3.	Inferential
-An inferential question would be a restatement of this proposed hypothesis as a question and would be answered by analyzing a different set of data, which in this example, is a representative sample of adults in the US. By analyzing this different set of data you are both determining if the association you observed in your exploratory analysis holds in a different sample and whether it holds in a sample that is representative of the adult US population, which would suggest that the association is applicable to all adults in the US. In other words, you will be able to infer what is true, on average, for the adult population in the US from the analysis you perform on the representative sample.
 
-4.	Predictive
-A predictive question would be one where you ask what types of people will eat a diet high in fresh fruits and vegetables during the next year. In this type of question you are less interested in what causes someone to eat a certain diet, just what predicts whether someone will eat this certain diet.
-For example, higher income may be one of the final set of predictors, and you may not know (or even care) why people with higher incomes are more likely to eat a diet high in fresh fruits and vegetables, but what is most important is that income is a factor that predicts this behavior. Although an inferential question might tell us that people who eat a certain type of foods tend to have fewer viral illnesses, the answer to this question does not tell us if eating these foods causes a reduction in the number of viral illnesses, which would be the case for a causal question.
-
-5.	Causal
-A causal question asks about whether changing one factor will change another factor, on average, in a population.
-
-6.	Mechanistic
-Finally, none of the questions described so far will lead to an answer that will tell us, if the diet does, indeed, cause a reduction in the number of viral illnesses, how the diet leads to a reduction in the number of viral illnesses. A question that asks how a diet high in fresh fruits and vegetables leads to a reduction in the number of viral illnesses would be a mechanistic question.
 
 
 
