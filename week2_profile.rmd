@@ -1,0 +1,30 @@
+# Станислав Козлов
+![cvc](https://pp.vk.me/c631930/v631930157/42287/UXL56n40KZA.jpg)
+[Страница ВК](http://vk.com/echrus)
+
+## About me:
+
+Меня зовут **ВАСЯ**, мне *20 лет*, я буду вашим ***ассистентом***
+
+
+## Мне нравятся:   
++ Data Science    
++ Вышка    
++ Музыка:   
+    * Pop-punk
+    * Post-hardcore
+    * Pop
+    
+
+Also I can write $F=o^r - mu_l + as$ and speak English
+
+## Cколько пар я проспал с начала года
+```{r}
+3*2
+```
+
+
+```{r}
+pairs<-c(5,1,1,1,0,2,2,4,2,3,3,4,4,5,6,9,9,9,9,9)
+hist(pairs)
+```

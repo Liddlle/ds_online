@@ -1,6 +1,10 @@
 ---
 title: "Week 2. Introduction to the tools: R, RStudio, RMarkdown. Reports"
-output: html_document
+output: 
+  learnr::tutorial:
+progressive: true
+allow_skip: true
+runtime: shiny_prerendered
 ---
 
 Introduction to the tools: R, RStudio, RMarkdown. Reports + индексирование + базовые функции
@@ -229,6 +233,9 @@ data(iris)
 
 
 
+look at the contents of a data frame or tibble
+open a help page that describes a data frame or tibble
+identify the variables and their types in a tibble
 
 
 
