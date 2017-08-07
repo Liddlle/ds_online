@@ -1,0 +1,63 @@
+---
+title: "Week 2. Introduction to the tools: R, RStudio, RMarkdown. Reports"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+
+
+
+Что такое рабочая директория (working directory) в R?
+ Директория используемая R для подгрузки пакетов с функциями
+ Рабочая папка программной среды, т.е. место в файловой системе, в которой R по умолчанию будет "пытаться найти" тот или иной файл
+ Место в которое сохраняются все команды выполненные в консоли
+ Папка куда сохраняются графики
+
+
+Этот тест посвящен использованию языка разметки R Markdown.
+
+https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf
+https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf
+
+Сопоставьте сочетание горячих клавиш и их значение (по умолчанию).
+Ctrl+Enter Выполнить строчку кода в документе, на которой в данный момент находится мигающий курсор
+Ctrl+L Очистить консоль
+Ctrl+S Сохранить открытый документ
+Ctrl+Z Отменить последнее действие в документе
+
+
+Что такое R Markdown? 
+Язык разметки текста, для преобразования его в изображение
+ Один из элементов интерфейса среды программирования Rstudio
+ Единый формат для сдачи домашних заданий всех майноров в НИУ ВШЭ
+ Язык разметки текста, позволяющий автоматизировано генерировать отчёты
+Submit
+
+
+Используя синтаксис R Markdown выделите фразу ‘Hello, world!’ жирным шрифтом
+
+Как можно оформить ?картинку/фотографию ?: http://fatcatart.ru/wp-content/uploads/2014/03/Floris-van-Dijck-Still-Life-with-Cheeses-cat-w.jpg
+
+
+Что нужно добавить в начале строки для создания заголовка 1-го уровня.
+
+За что отвечает параметр echo = FALSE во фрагментах c кодом (chunk) в документе Rmd?
+
+Пример:
+
+
+Каким образом оформляются ссылки в языке разметки R Markdown?
+
