@@ -1,5 +1,5 @@
 ---
-title: "Week 2. Introduction to the tools: R, RStudio, RMarkdown. Reports"
+title: "Introduction to the tools. Part 1: R Basics"
 output: 
   learnr::tutorial:
 progressive: true
@@ -7,12 +7,25 @@ allow_skip: true
 runtime: shiny_prerendered
 ---
 
-Introduction to the tools: R, RStudio, RMarkdown. Reports + индексирование + базовые функции
 
+```{r setup, include=FALSE}
+library(learnr)
+library(checkr)
+library(tidyverse)
 
+knitr::opts_chunk$set(exercise.checker = checkr::checkr_tutor, error = TRUE)
+
+tutorial_options(exercise.timelimit = 60)
+age <- c(23, 20, 21, 19, 20, 21, 20, 23)
+sex <- c("m", "m", "f", "f", "m", "f", "m", "f")
+dataExample <- data.frame(age, sex)
+data(iris)
+
+```
+
+##Типы данных 
 Анализ данных (методы, которые можно применить, графики, которые можно построить) зависит от того, какие данные мы изучаем
 
-### Типы данных
 
 ```{r echo=F}
 library(DiagrammeR)
@@ -27,7 +40,7 @@ mermaid("
 ")
 ```
      
-**Примеры для обсуждения:**
+###Примеры для обсуждения:
 
 - рост
 - число студентов в классе
@@ -38,9 +51,9 @@ mermaid("
 - удовлетворенность услугой (по шкале от 1 до 5)
 - ...
 
-### "Основные" типы данных в R
+### "Основные" типы данных в R:
 
-- numeric
+- numeric 
 - integer
 - factor
 - logical
@@ -48,36 +61,53 @@ mermaid("
 
 Для любой переменной можно проверить, к какому типу данных (классу) она относится:
 
-```{r}
+```{r class1, exercise = TRUE}
 class(100)
-class("Hello")
-class(45.7)
-class(TRUE)
-class(1:2)
+```
+<div id="class1-hint">
+**Hint:** Проверьте как работает функция class().
+</div>
+```{r class1-check}
 ```
 
-Можно проверить принадлежность к конкретному типу
 
-```{r}
-is.integer("Hello")
-is.character("Hello")
-is.integer(100)
-is.numeric(100)
+ 
+```{r class5, exercise = TRUE}
+
+```
+
+```{r quiz1, echo = FALSE}
+quiz(caption = "Для ответа можете использовать чанк с кодом сверху",
+     question("Используйте функцию `class()`, чтобы проверить к какому типу данных относится `TRUE`", answer("numeric"), 
+           answer("character"),
+           answer("logical", correct = TRUE),
+           answer("factor"), 
+         answer("other"),
+           allow_retry = TRUE))
+```
+
+
+
+Также можно проверить принадлежность к конкретному типу с помощью функции `is.integer()`
+
+
+```{r is1, exercise = TRUE}
 is.logical(45.7)
-is.logical(TRUE)
 ```
+
 
 ... и преобразовать из типа в тип (но аккуратно)
 
-```{r}
+
+```{r as1, exercise = TRUE}
 as.character(45.7)
-as.character(100)
-as.integer("Hello")
-as.integer(100)
-as.numeric(TRUE)
 ```
 
-**Ваша очередь:** что получится в результате выполнения следующих команд?
+
+
+  
+###Упражнение 
+Ваша очередь: что получится в результате выполнения следующих команд?
 
 ```{r eval = FALSE}
 class("Пример")
@@ -87,13 +117,20 @@ as.character(87.9)
 is.integer("1")
 as.integer(4.5)
 as.numeric(FALSE)
+as.integer("Hello")
 ```
 
-### Создание переменной
+```{r exer1, exercise = TRUE}
+
+```
+
+##Работа с векторами
+
+###Создание переменной
 
 Для создания переменных используется оператор присваивания `<-` или `=` (`a <- 6`). Т.е. мы придумываем имя переменной, а затем присваиваем ей некоторое значение. Дальше мы можем работать с этим именем
 
-```{r}
+```{r exp0, exercise = TRUE}
 newVariable <- TRUE
 class(newVariable)
 newVariable <- as.numeric(newVariable)
@@ -107,7 +144,7 @@ newVariable + 7
 
 Вектора считаются базовыми элементами в R. Они объединяют в себе несколько однотипных значений (например, возраст для целой группы, а не возраст одного человека), что позволяет, в частности, обрабатывать их все одновременно. Оператор `c()` используется для объединения нескольких элементов в один вектор
 
-```{r}
+```{r age1, exercise = T}
 age <- c(23, 20, 21, 19, 20, 21, 20, 23)
 age
 class(age)
@@ -119,9 +156,9 @@ age + 5
 age == 21
 ```
 
-**Логические операции**
+###Логические операции
 
-```{r}
+```{r logic, exercise = T}
 ## участнику группы 21 год? age <- c(23, 20, 21, 19, 20, 21, 20, 23)
 age == 21
 
@@ -139,7 +176,7 @@ age != 20
 
 ```
 
-**Обобщения**
+###Обобщения
 
 О том, как работают разные функции, можно узнать из справки
 ```{r eval = F}
@@ -151,23 +188,24 @@ age != 20
 
 Пример:
 
-```{r}
+```{r exp2, exercise = T}
 min(age)
 max(age)
 mean(age)
 summary(age)
 ```
 
+
 Вектора могут быть не только числовыми, но и строковыми, логическими
 
-```{r}
+```{r exp3, exercise = T}
 sex <- c("m", "m", "f", "f", "m", "f", "m", "f")
 class(sex)
 ```
 
 Если переменная принимает всего несколько значений, то она, скорее всего, соответствует некоторым категориям. В R категории представлены факторами (factors)
 
-```{r}
+```{r exp4, exercise = T}
 sex <- as.factor(sex)
 class(sex)
 summary(sex)
@@ -176,22 +214,19 @@ summary(sex)
 summary(age)
 ```
 
-### Таблицы данных (data frame)
+## Таблицы данных (data frame)
 
 Однако, мы редко имеем дело только с одной переменной, чаще для одного человека/предмета/страны... у нас есть несколько показателей (не только возраст, но и, например, пол). Т.е. данные можно объединять в таблицы (составляющие их вектора должны быть одинаковой длины)
 
-```{r}
+```{r exp5, exercise = T}
 dataExample <- data.frame(age, sex)
 class(dataExample)
 dataExample
-
-head(dataExample)
-tail(dataExample)
 ```
 
 Более содержательный пример: характеристики 38 популярных моделей автомобилей с 1999 по 2008 гг.
 
-```{r message=F, warning=FALSE}
+```{r exp6, message=F, warning=FALSE, exercise = T}
 library(ggplot2)
 head(mpg)
 ```
@@ -202,7 +237,7 @@ head(mpg)
 
 Типы данных некоторых переменных (с помощью символа $ можно указать, какая именно переменная нас интересует)
 
-```{r}
+```{r exp7, exercise = T}
 class(mpg$displ)
 class(mpg$year)
 class(mpg$manufacturer)
@@ -210,142 +245,60 @@ class(mpg$manufacturer)
 
 Характеристики данных
 
-```{r}
+```{r exp8, exercise = T}
 dim(mpg)
 str(mpg)
 summary(mpg)
 ```
 
-## Ваша очередь:
 
-Рассмотрим данные про ирисы
+
+##Упражнения
+
+Рассмотрим данные про ирисы. О чем эти данные?
 
 ```{r eval = F}
 ?iris
 data(iris)
 ```
 
-* О чем эти данные?
-* Сколько наблюдений и сколько переменных в данных?
 * Какого типа данные?
 * Каковы минимальные и максимальные значения переменных?
 
 
+```{r exercises2, exercise = TRUE}
 
+```
 
-look at the contents of a data frame or tibble
-open a help page that describes a data frame or tibble
-identify the variables and their types in a tibble
+```{r quiz3, echo = FALSE}
+quiz(caption = "Use the code chunk above to help answer these questions.",
+     
+  question("Сколько наблюдений (строк) в данных?",
+           answer("1000"), 
+           answer("150", correct = TRUE),
+           answer("200"),
+           answer("50"), 
+           incorrect = "`dim()`",
+           allow_retry = TRUE),
+  question("Сколько переменных (столбцов) в данных?",
+           answer("10"), 
+           answer("20"),
+           answer("5", correct = TRUE),
+           answer("50"),
+           allow_retry = TRUE),
+  question("К какому типу относится переменная `Species`?",
+           answer("integer"), 
+           answer("factor", correct = TRUE),
+           answer("character"),
+           answer("data frame"),
+           allow_retry = TRUE),
+    question("Какое максимальное значение `Petal.Width`?",
+           answer("2.5", correct = TRUE), 
+           answer("2"),
+           answer("4"),
+           answer("1.9"),
+           allow_retry = TRUE)
+)
+```
 
-
-
-В этом уроке мы повторим все, что узнали о типах переменных используемых в R, научимся различать операторы и применять базовые функции.
-
-
-
-ВНИМАНИЕ:  при выполнении заданий на код, игнорируйте значения sample input и output
-
-
-
-Типы переменных в R: http://www.tutorialspoint.com/r/r_data_types.htm
-
-Операторы: http://www.statmethods.net/management/operators.html
-
-Несколько полезных функций: http://www.statmethods.net/management/functions.html
-
-Какие из следующих утверждений верны?
- Таблица данных (data frame) - это таблица состоящая из нескольких векторов одинаковой длины.
- Вектор - это набор данных одного типа
- R чувствительный к регистру символов. х и Х - это два разных объекта
- R не работает с логическими переменными
- R работает с текстовыми объектами (character type)
- Матрица - это трехмерный набор элементов одного типа
- В R можно работать со многими типами данных, включая векторы, матрицы и листы
-Submit
-
-
-
-Какие из следующих элементов, относятся к базовым типам данных в R (выберите все подходящие варианты) 
- логические (logical)
- факторные (factor)
- целые (integer)
- листы (list)
- символьные (character)
- матрица (matrix)
- числовые (numeric)
- таблицы данных (dataframe)
- 
- Какое из выражений ниже используется для обозначения оператора И?
-
- !=
- &
- $
- <-
- |
-
-
-Предположим, что у нас есть вектор x.
-
-x <- c(2, 4, 5)
-Для дальнейших преобразований нам нужно убедиться, что этот вектор - численный. Какая функция для этого пригодится?
- is.numeric(x)
- as.numeric(x)
- as.vector(x)
-
-
-У нас есть числовой вектор y, состоящий из четырех элементов. 
-y <- c(2, 4, 5, 6)
- 
-Создайте вектор такой же длины, но с логическими значениями.
-
-
-
-Что мы можем делать с векторами? Например, мы можем их сложить.
-
-Создадим два числовых вектора:
-
-x <- c(2, 4, 5)
-y <- c(1, 9, 6)
-Сложите два вектора и сохраните новые значения в переменной z.
-
-
-
-
-Есть два основных способа того, как можно присваивать имена векторам: 
-
-1) Непосредственно при создании векторов 
-
-> v <- c(x = 1.0, y = 2.5, z = -0.1)
-> v
-   x    y    z 
- 1.0  2.5 -0.1 
-
-
-2) Присвоить имена уже имеющимся векторам
-
-> u <- c(1.0, -0.5, -0.5)
-> names(u) <- c("x", "y", "z")
-> u
-   x    y    z 
- 1.0 -0.5 -0.5 
-
-
-А как можно поменять название одного вектора (столбца) в таблице данных с помощью функции names()? В векторе u измените название третьего объекта с z на i.
-
-
-
-Мы загрузили данные о скорости для 50-ти автомобилей и о дистанциях, необходимых для торможения. Данные были собраны в 1920-х года.
-
-Давайте посмотрим на первые записи в таблице.
-
-> head(cars, 5)
-  speed dist
-1     4    2
-2     4   10
-3     7    4
-4     7   22
-5     8   16
-
-Используйте функцию mean() чтобы найти среднюю скорость машин в 20-х годах. Для этого вам понадобится колонка 'speed' в датафрейме 'cars'. Не забудьте о символе $ когда обращаетесь к переменной speed.
-Больше информации о данных и о том, как их можно загрузить в RStudio можно найти здесь: https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/cars.html
 

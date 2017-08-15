@@ -1,5 +1,5 @@
 ---
-title: "Week 2. Introduction to the tools: R, RStudio, RMarkdown. Reports"
+title: "Week 2. Introduction to the tools. Part 2: RMarkdown and Reports"
 output: html_document
 ---
 
