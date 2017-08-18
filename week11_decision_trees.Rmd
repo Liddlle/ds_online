@@ -20,7 +20,7 @@ output: html_document
 
 Загрузим данные и разделим их на **обучающую (train)** и **тестовую (test)** выборки. На первой вы будете строить модель, а на второй оценивать качество предсказания. Тестовая выборка будет содержать 20% данных
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 titanic <- read.csv("/principal/courses/minor2_2016/lab10-tree2/Titanic.csv")
 str(titanic)
 
@@ -28,13 +28,13 @@ titanic$Pclass <- as.factor(titanic$Pclass)
 titanic$Survived <- as.factor(titanic$Survived)
 ```
 Сначала посчитаем, сколько строк составят 20% от данных
-```{r}
+```{r message=FALSE, warning=FALSE}
 test_size = nrow(titanic)*0.20
 test_size
 ```
 
 Теперь отберем `r test_size` номеров строк случайным образом
-```{r}
+```{r message=FALSE, warning=FALSE}
 set.seed(1238)
 test_indices = sample(1:dim(titanic)[1], test_size)
 head(test_indices, 20)
@@ -42,18 +42,18 @@ head(test_indices, 20)
 
 Затем в качестве тестовой выборки возьмем те строки, номера которых "выпали"
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 test_data = titanic[test_indices,]
 ```
 
 А в качестве обучающей --  все, кроме них
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 train_data = titanic[-test_indices,]
 ```
 Как много людей в вашей тренировачной выборке выжили? Чтобы узнать это используйте команду table() в комбинации с $-оператором для выбора колонки из таблицы.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 # Число выживших в абсолютных числах
 table(train_data$Survived)
 
@@ -64,15 +64,15 @@ prop.table(table(train_data$Survived))
 
 В целом, команда table() может помочь вам выявить какие переменные имеют предсказательную силу. Например, может быть пол имеет значение для предсказания? Для включения гендера в сравнение используйте следующий код
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 table(train_data$Sex, train_data$Survived)
 ```
 Для получения пропорций заверните table() в prop.table(), но нужно будет уточнить какую пропорцию вы хотите: построчную или колоночную. Для этого включите в prop.table() аргумент margin и определите его значение как 1 или 2 соответственно.
-```{r}
+```{r message=FALSE, warning=FALSE}
 prop.table(table(train_data$Sex, train_data$Survived), 1)
 ```
 Еще одна переменная, которая может повлиять на выживаемость - возраст: возможно, детей спасали в первую очередь. Вы проверите это, создав категориальную переменную child. 
-```{r}
+```{r message=FALSE, warning=FALSE}
 # Создаем переменную
 train_data$Child <- NA
 train_data$Child[train_data$Age < 18] <- 1
@@ -88,7 +88,7 @@ prop.table(table(train_data$Child, train_data$Survived), 1)
 Для построения первого дерева решений мы будем использовать пакет rpart.
 Подробнее про пакет бы можете прочитать здесь https://cran.r-project.org/web/packages/rpart/rpart.pdf
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(rpart)
 ```
 Внутри rpart, есть функция rpart(), с помощью которой мы и построим дерево решений. Функция включает следующие аргументы:
@@ -104,7 +104,7 @@ library(rpart)
 **method:** тип предсказания. Мы хотим предсказать категориальную переменную, это задача классификации: method = "class".
 
 Чтобы визуализировать полученное дерево вы можете использовать prp(my_tree) из пакета rpart.plot. 
-```{r}
+```{r message=FALSE, warning=FALSE}
 # Build the decision tree
 my_tree <- rpart(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked, data = train_data, method = "class")
 
@@ -134,13 +134,13 @@ Sex, Age, Parch and Embarked
 Sex, Age and Embarked
 
 Следующим шагом нам нужно предсказать количество выживших для наблюдений в тестовой выборке. Для этого мы воспользуемся функцией predict(). Здесь, my_tree это модель, которую вы построили, test_data это датасет, для которого вы делаете предсказания
-```{r}
+```{r message=FALSE, warning=FALSE}
 my_prediction <- predict(my_tree, newdata = test_data, type = "class")
 my_prediction
 ```
 
 Посчитаем точность модели, для этого воспользуемся confusion table
-```{r}
+```{r message=FALSE, warning=FALSE}
 # confusion table
 table(my_prediction, test_data$Survived)
 (100+42)/178
@@ -149,7 +149,7 @@ table(my_prediction, test_data$Survived)
 Точность модели - 80%
 
 Как уже было продемонстрировано с переменной child, вы можете самостоятельно создавать переменные и включать их в модель. Давайте попробуем увеличить точность модели, добавив family_size. Предположение заключается в том, что большим семьям требуется больше времени чтобы собраться вместе на тонущем корабле, соответвтвенно у них шанс выжить меньше. Размер семьи определяется переменными SibSp и Parch, которые отражают количество членов семьи, с которыми путешествует каждый конкретный пассажир. Для создания новой переменной family_size, мы суммируем SibSp и Parch плюс один (само наблюдение).
-```{r}
+```{r message=FALSE, warning=FALSE}
 train_data$family_size <- train_data$SibSp + train_data$Parch + 1
 test_data$family_size <- test_data$SibSp + test_data$Parch + 1
 
@@ -160,14 +160,13 @@ my_tree_two <- rpart(Survived ~ Pclass + Sex + Age + SibSp + Fare + Embarked + f
 
 
 my_prediction2 <- predict(my_tree_two, newdata = test_data, type = "class")
-my_prediction2
 ```
-```{r}
+```{r message=FALSE, warning=FALSE}
 prp(my_tree_two, type=2, extra=104)
 ```
 
 Как видите, наша новая переменная не появилась в дереве
-```{r}
+```{r message=FALSE, warning=FALSE}
 table(my_prediction2, test_data$Survived)
 (104+42)/178
 ```
@@ -177,9 +176,10 @@ table(my_prediction2, test_data$Survived)
 Мы можем улучшить показатель, сделав модель более сложной. В rpart количество деталей опредлеляется двумя параметрами:
 
 **cp**(complexity parameter) - это метрика, которая останавливает ветвление дерева, когда оно уже не улучшает показатели модели. 
+
 **minsplit** определяет минимальное количество наблюдений, которые должны содержаться в листе дерева
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 # Построим дерево с минимальным количество наблюдений в каждом листе 5 и с cp = 0.006
 my_tree_three <- rpart(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked, data = train_data, method = "class", control = rpart.control(minsplit = 5, cp = 0.006))
 
@@ -187,11 +187,76 @@ my_tree_three <- rpart(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Em
 prp(my_tree_three)
 ```
 
-Таким образом мы постороили дерево классификации. Для построение дерева регрессии с помощью rpart требуется tree pruning - отсечение ветвей там, где эта процедура не приводит к серьезному возрастанию ошибки. Подробнее читайте здесь http://r-analytics.blogspot.ru/2017/02/blog-post.html#.WZBlq-zyjIV
+Таким образом мы постороили дерево классификации. Для построение дерева с помощью rpart требуется tree pruning - отсечение ветвей там, где эта процедура не приводит к серьезному возрастанию ошибки. Подробнее читайте здесь http://r-analytics.blogspot.ru/2017/02/blog-post.html#.WZBlq-zyjIV
 
-Для построения regression decision tree мы будем использовать другой датасет и пакет partykit 
-https://cran.r-project.org/web/packages/partykit/partykit.pdf
+Для построения regression decision tree мы будем использовать пакет partykit 
+https://cran.r-project.org/web/packages/partykit/partykit.pdf  и таблицу algae, включенный в пакет DMwR и содержащую данные гидробиологических исследований обилия водорослей в различных реках. Каждое из 200 наблюдений содержит информацию о 18 переменных, в том числе:
+
+три номинальных переменных, описывающих размеры size = c("large", "medium", "small") и скорость течения реки speed = c("high", "low", "medium"), а также время года season = c("autumn", "spring", "summer", "winter"), сопряженное с  моментом взятия проб;
+
+8 переменных, составляющих комплекс наблюдаемых гидрохимических показателей: максимальное значение рН  mxPH (1), минимальное содержание кислорода mnO2 (2), хлориды Cl (10), нитраты NO3 (2), ионы аммония NH4 (2), орто-фосфаты oPO4 (2), общий минеральный фосфор PO4 (2) и число клеток хлорофилла Chla (12); в скобках приведено число пропущенных значений;
+
+средняя численность каждой из 7 групп водорослей a1-a7 (видовой состав не идентифицировался).
+```{r message=FALSE, warning=FALSE}
+library(partykit)
+algae = DMwR::algae
+```
+
+Построим модель для предсказания численности водорослей вида а1, используя для этого все доступные переменные
+
+Разделим выборку снова на две части
+```{r message=FALSE, warning=FALSE}
+set.seed(2)
+train=sample(1:nrow(algae), 100)
+algae.test <- algae[-train,]
+algae.train <- algae[train,]
+
+tree <- ctree(a1 ~ ., data = algae.train)
+```
+
+Визуализируем получившееся дерево
+```{r message=FALSE, warning=FALSE}
+plot(tree)
+
+plot(tree, type = "simple")
+
+plot(tree, gp = gpar(fontsize = 6),     # font size changed to 6
+      inner_panel=node_inner,
+      ip_args=list(
+        abbreviate = F, 
+        id = FALSE,
+        pval=F)
+ )
+
+plot(tree, gp = gpar(fontsize = 8),     # font size changed to 8
+      inner_panel=node_inner,
+      ip_args=list(
+        abbreviate = F, 
+        id = FALSE,
+        pval=F),
+     type = "simple"
+ )
+```
+```{r}
+tree.pred <- predict(tree, algae.test)
+```
+Для того чтобы понять насколько наше предсказание отличается от реального значения посчитаем коэффициент детерминации. Коэффициент детерминации (R2) дает предварительную оценку качества модели. Он показывает долю объясненной дисперсии зависимой переменной (доля общей суммы квадратов, объясненной уравнением регрессии).
+
+```{r message=FALSE, warning=FALSE}
+# residual sum of squares (rss)
+rss = sum((tree.pred - algae.test$a1)^2) 
+# total sum of squares (tss)
+tss = sum((mean(algae.test$a1) - algae.test$a1)^2)
+# R^2
+1-rss/tss
+```
+R2 принимает значение от 0 до 1, чем ближе R2 к 1, тем лучше модель, тем меньше доля необъяснённого. Наша модель объясняет 25% дисперссии в средней численности водорослей вида а1
+
+Возможные проблемы: Проблемы с использованием R2 заключаются в том, что его значение не уменьшается при добавлении в уравнение факторов, сколь плохи бы они ни были. Он гарантированно будет равен 1, если мы добавим в модель столько факторов, сколько у нас наблюдений. Поэтому сравнивать модели с разным количеством факторов, используя R2, не имеет смысла.
 
 
+**Доп. материалы:**
 
 В следующей статье анализируются фукции rpart() из пакета rpart и ctree() из пакета party https://www.r-bloggers.com/party-with-the-first-tribe/
+
+http://www.statmethods.net/advstats/cart.html
