@@ -1,21 +1,22 @@
 ###Syllabus:  
 * Week 1. INTRODUCTION. What is Data Science? art of DS + exploratory DA (лекция?)
-Reproducible Research and Data Science 
+Reproducible Research and Data Science  
+https://stepik.org/lesson/50472/step/1
 * Week 2. Introduction to the tools: R, RStudio, RMarkdown. Reports - начало лабораторных
+https://aabakhitova.shinyapps.io/week2_2_basics/
 * Week 3. Making plots: grammar of graphics and ggplot2 package
 * Week 4. Data aggregation and manipulation: dplyr and tidyr (lubridate) packages 
-* Week 6. (КР)
-* Week 7 . Параметрические тесты + проверка гипотез
-* Week 8. Проверка на нормальность, непараметрические тесты  
+* Week 5. (КР1)
+* Week 6 . Параметрические тесты + проверка гипотез
+* Week 7. Проверка на нормальность, непараметрические тесты  
 * Домашнее задание
-* Week 9. Statistical learning: Linear Regression Models, Decision Trees (только лекция) 
-* Week 10. Linear Regression Models
-* Week 11. Regression and Classification Decision Trees 
-* (Week 12. Unsupervised learning: Introduction to Clustering)
-* Домашнее задание
- 
-ЭКЗАМЕН 
-6-7 неделя параметрические/непараметрические тесты
+* Week 8. Statistical learning: Linear Regression Models, Decision Trees (только лекция) 
+* Week 9. Linear Regression Models
+* Week 10. Regression and Classification Decision Trees 
+* (Week 11. Unsupervised learning: Introduction to Clustering)
+* (КР2)
+* Домашнее задание и экзамен
+
 
 Материалы:  
 - Art of Data Science 
