@@ -1,35 +1,14 @@
 ---
 title: "Week 2. Exercises"
-output: 
-  learnr::tutorial:
-progressive: true
-allow_skip: true
-runtime: shiny_prerendered
+output: html_document
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-
-```{r setup, include=FALSE}
-library(learnr)
-library(checkr)
-
-knitr::opts_chunk$set(exercise.checker = checkr::checkr_tutor, error = TRUE)
-
-tutorial_options(exercise.timelimit = 60)
-```
-
 
 В этом уроке мы повторим все, что узнали о типах переменных используемых в R, научимся различать операторы и применять базовые функции.
 
-
+Дополнительное чтение:
 
 Типы переменных в R: http://www.tutorialspoint.com/r/r_data_types.htm
-
 Операторы: http://www.statmethods.net/management/operators.html
-
 Несколько полезных функций: http://www.statmethods.net/management/functions.html
 
 Какие из следующих утверждений верны?
@@ -38,22 +17,11 @@ tutorial_options(exercise.timelimit = 60)
  R чувствительный к регистру символов. х и Х - это два разных объекта
  R не работает с логическими переменными
  R работает с текстовыми объектами (character type)
- Матрица - это трехмерный набор элементов одного типа
+ Матрица - это обязательно трехмерный набор элементов одного типа
  В R можно работать со многими типами данных, включая векторы, матрицы и листы
-Submit
-
-
-
-Какие из следующих элементов, относятся к базовым типам данных в R (выберите все подходящие варианты) 
- логические (logical)
- факторные (factor)
- целые (integer)
- листы (list)
- символьные (character)
- матрица (matrix)
- числовые (numeric)
- таблицы данных (dataframe)
+ Для индексации используется оператор `(`
  
+
  Какое из выражений ниже используется для обозначения оператора И?
 
  !=
@@ -129,7 +97,7 @@ y <- c(1, 9, 6)
 Больше информации о данных и о том, как их можно загрузить в RStudio можно найти здесь: https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/cars.html
 
 
-
++задание на индексацию
 
 
 
