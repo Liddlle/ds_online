@@ -4,7 +4,7 @@ Reproducible Research and Data Science
 https://stepik.org/lesson/50472/step/1
 * Week 2. Introduction to the tools: R, RStudio, RMarkdown. Reports - начало лабораторных
 https://aabakhitova.shinyapps.io/week2_2_basics/
-* Week 3. Making plots: grammar of graphics and ggplot2 package
+* Week 3. Making plots: grammar of graphics and ggplot2 package https://aabakhitova.shinyapps.io/week3_ggplot2/
 * Week 4. Data aggregation and manipulation: dplyr and tidyr (lubridate) packages 
 * Week 5. (КР1)
 * Week 6 . Параметрические тесты + проверка гипотез
