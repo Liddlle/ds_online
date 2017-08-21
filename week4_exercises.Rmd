@@ -1,33 +1,59 @@
 ---
 title: "Week 4. Data manipulations"
-output: 
-  learnr::tutorial:
-    progressive: true
-    allow_skip: true
-runtime: shiny_prerendered
+output: html_document
 ---
 
+Соедините функции из пакета dplyr с их описанием:? это переделать 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+3 Для соединения данных их разных таблиц применяется операция join. Соединяя при помощи этой операции таблицы, мы получаем в качестве результата таблицу в которой часть столбцов взята из первой таблицы, а часть столбцов из второй таблицы.
 
-## R Markdown
+Какую функцию из пакета dplyr нужно использовать, если мы хотим левую таблицу a сделать более приоритетной, то есть включать ее строки в результат, даже если для них нет соответствия в правой таблице b:
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+ cbind(a, b)
+ left_join(a, b, by = "x1")
+ right_join(a, b, by = "x1")
+ anti_join(a, b, by = "x1")
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
-```
+4 Для более последовательного представления кода можно использовать "пайпы" или %>% из пакета dplyr, при помощи которых можно отправить результат выполнения одной команды в следующую.
 
-## Including Plots
+Оператор %>% в RStudio вызывается сочетанием клавиш Ctrl + Shift + m. 
 
-You can also embed plots, for example:
+Продолжим работу с датасетом diamonds. Посчитайте средние значения по переменным price и carat для каждой группы переменной cut.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+5 Используя код из предыдущего задания, посчитайте сколько карат в среднем весит бриллиант из группы Fair: 
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+6 Рассмотрим таблицу diamonds, содержащую информацию  о ценах и прочих характеристиках бриллиантов.
+
+> ?diamonds
+> d = as.data.frame(diamonds)
+> head(d)
+
+Применив функцию select(), оставьте в таблице d столбцы: carat, cut  и price. Дополнительно оставьте все значения удовлетворяющие условию carat > 0.5.  
+
+В результате должна получиться таблица вида: 
+
+7 Из данных msleep оставьте строки, содержащие информацию только о домашних животных (domesticated). Для этих данных создайте новую колонку brain_body, в которой будет указано соотношение массы мозга к массе тела животного. 
+
+Упорядочьте значения в таблице по убыванию по новой переменной.
+
+?msleep
+
+8 У какого одомашненного животного в таблицу msleep наибольшее соотношение массы мозга и массы тела? 
+
+9 Рассмотрим еще один набор данных, содержащий информацию о приеме в Беркли в 1973 году
+
+> d <- as.data.frame(UCBAdmissions)
+> head(d)
+     Admit Gender Dept Freq
+1 Admitted   Male    A  512
+2 Rejected   Male    A  313
+3 Admitted Female    A   89
+4 Rejected Female    A   19
+5 Admitted   Male    B  353
+6 Rejected   Male    B  207
+Предположим, мы хотим проверить, имела ли место половая дискриминация при приеме студентов в Беркли вне зависимости от подразделения (dept).
+
+Сгруппируйте данные, воспользовавшись функциями из пакета dplyr, а затем постройте столбчатую диаграмму, на которой можно сравнить количество поступивших и не поступивших студентов в зависимости от пола.
+
+Подсказка: для того, чтобы отразить три переменных на графике, воспользуйтесь аргументом fill.

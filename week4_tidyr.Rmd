@@ -1,0 +1,252 @@
+---
+title: "tidyr + lubridate"
+output: 
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+#library(tidyr)
+
+knitr::opts_chunk$set(error = TRUE)
+```
+
+
+
+##Работа с данными
+
+
+
+
+
+Для начала загрузим базу, с которой будем работать. В базе содержатся информация о сообщений очевидцев НЛО. 
+
+Файл достаточно большой, поэтому используем пакет для быстрой загрузки таблиц данных `readr`
+
+```{r}
+library(readr)
+ufo = read_tsv("~/shared/minor3_2016/practice_10/ufo_awesome.tsv", col_names=F)
+# naming columns
+colnames(ufo) = c("Sighted", "Reported", "Location", "Shape", "Duration", "Description")
+```
+
+Посмотрим на данные
+```{r}
+head(ufo)
+tail(ufo)
+```
+
+* Как вы думаете, что означают первые две колонки?
+* Как мы можем посчитать разницу между этими значениями?
+
+
+## Работа с датами
+
+Для удобной работы с датами есть пакет `lubridate`. Загрузим его
+
+```{r}
+library(lubridate)
+```
+
+* В каком порядке расположена информация о дате (день, месяц, год)?
+
+```{r}
+ufo$Sighted = ymd(ufo$Sighted)
+ufo$Reported = ymd(ufo$Reported)
+```
+
+Рассмотрим еще примеры
+
+```{r}
+date1 = "18-10-2016"
+date2 = "10/30/2016"
+date3 = "23/3/2016 15:20"
+date4 = today()
+```
+
+Сначала посмотрим, что же такое `date4`
+```{r}
+date4
+class(date4)
+```
+
+Теперь посмотрим на остальные элементы
+
+```{r}
+class(date1)
+class(date2)
+class(date3)
+# date2 - date1
+```
+
+Для удобной работы приведем остальные строки к единому формату даты
+```{r}
+#date1 = "18-10-2016"
+date1 = dmy(date1)
+#date2 = "10/30/2016"
+date2 = mdy(date2)
+#date3 = "23/3/2016 15:20"
+date3 = dmy_hm(date3)
+
+class(date1)
+class(date2)
+class(date3)
+
+date1
+date2
+date3
+```
+
+Из дат в таком формате легко извлекать отдельные части:
+
+```{r}
+year(date1)
+month(date2)
+month(date2, label = TRUE)
+wday(date2)
+wday(date2, label = TRUE)
+yday(date3)
+minute(date3)
+```
+
+Или присваивать им новые значения
+
+```{r}
+second(date3) = 45
+date3
+```
+
+Когда мы работаем со временем, нам иногда важно учитывать часовой пояс (time zone). По умолчанию используется UTC - Universal Time Coordinate (нулевой меридиан). Указать часовой пояс можно во время преобразования строки в дату `date3 = dmy_hm(date3, tz = "Europe/Moscow")` или уже для преобразованного значения
+
+```{r}
+date3 = force_tz(date3, tzone = "Europe/Moscow")
+date3
+```
+
+Подробнее о часовых поясах в R можно почитать в справке `?timezones`, `?OlsonNames`, а обозначения найти, например, в [Википедии](https://en.wikipedia.org/wiki/List_of_time_zone_abbreviations).
+
+Кроме того, мы всегда можем посмотреть, какое время будет соответствовать исследуемому в другом часовом поясе, например, для Pacific Daylight Time (North America)
+
+```{r}
+with_tz(date3, tzone = "US/Pacific")
+```
+
+### Арифметика с датами и временные интервалы
+
+Одним из важных свойств пакета `lubridate` является возможность осуществлять арифметические операции с датами. При этом мы можем выражать временные данные в разных форматах (месяцы, годы, секунды, минуты...)
+
+```{r}
+date1 - years(2)
+difference = date2 - date1
+difference
+difference/ddays(1)
+difference/dweeks(1)
+difference/dhours(1)
+```
+
+Больше про функции lubridate: https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html
+
+Вернемся к НЛО. Теперь можем посчитать разницу между датой наблюдения и сообщения
+
+```{r}
+library(dplyr)
+ufo = mutate(ufo, Difference = (Reported - Sighted)/ddays(1))
+```
+
+У нас есть значения, у которых разница отрицательна. Почему так может быть?
+
+Удалим их из данных
+```{r}
+ufo = filter(ufo, Difference >= 0)
+```
+
+```{r}
+library(ggplot2)
+ggplot() +
+  geom_histogram(data = ufo, aes(x = Difference), 
+                colour = "darkgreen", fill="white") +
+  ggtitle("Reporting Gap")
+```
+
+Большая часть значений близка к 0. Посмотрим на возможные значения
+
+```{r}
+summary(ufo$Difference)
+```
+
+Рассмотрим только значения, попавшие между 1 и 3 квартилем
+```{r}
+ufo2 = filter(ufo, Difference > 0 & Difference < 213)
+ggplot() +
+  geom_histogram(data = ufo2, aes(x = Difference), 
+                colour = "darkgreen", fill="white") +
+  ggtitle("Reporting Gap")
+```
+
+**Ваша очередь:**
+ 
+* Постройте график, показывающий распределение наблюдений НЛО (`Sighted`) по годам (чтобы оставить от даты только год, нужно использовать функцию `year()`). Ограничьте график периодом с 1998 по 2008.
+ufo 
+
+```{r}
+library(lubridate)
+ufo3 = ufo
+ufo3$Sighted = y(ufo3$Sighted)
+```
+
+ 
+ * Постройте график, показывающий распределение наблюдений НЛО (`Sighted`) по дням недели (функция `wday()`)
+```{r}
+
+```
+ 
+ * Оставьте только данные, соответствующие наблюдениям после 2004 года. Дальше работаем только с этой подвыборкой.
+```{r}
+
+```
+
+ * Оставьте только те данные, в которых указана форма НЛО (`Shape`). Условие на "непропущенные данные" можно задать как `!is.na(Shape)`
+```{r}
+
+```
+
+ * НЛО какой формы наблюдали чаще после 2004 года? Посчитайте и покажите на графике
+```{r}
+
+```
+
+ * В какой день недели чаще наблюдали НЛО в форме сферы (sphere)?
+```{r}
+
+```
+
+ * НЛО какой формы имеет наибольшую среднюю разницу между временем наблюдения и сообщения (`Difference`)? Для ответа на этот вопрос используйте функции группировки (`group_by()`) и (`summarize()`) агрегации из пакета dplyr.
+```{r}
+
+```
+
+
+
+
+
+
+Теперь давайте попробуем разобраться с датами.
+Я считаю, что нам будет удобнее, если вместо одной колонки день+время, у нас будет отдельно день и отдельно время. Для этого нам одну колонку нужно разделить на две. Это, например, можно сделать с помощью функции separate из пакета tidyr, который мы обсуждали в прошлый раз.
+
+```{r}
+library(dplyr)
+library(tidyr)
+
+transaction_train<-separate(transaction_train, col=tr_datetime, into=c("day", "time"), sep=" ")
+```
+
+
+```{r}
+gather()spread()separate()unite()
+
+```
+

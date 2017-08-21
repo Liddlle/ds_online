@@ -1,4 +1,5 @@
 ###Syllabus:  
+
 * Week 1. INTRODUCTION. What is Data Science? art of DS + exploratory DA (лекция?)
 Reproducible Research and Data Science  
 https://stepik.org/lesson/50472/step/1
@@ -6,6 +7,8 @@ https://stepik.org/lesson/50472/step/1
 https://aabakhitova.shinyapps.io/week2_2_basics/
 * Week 3. Making plots: grammar of graphics and ggplot2 package https://aabakhitova.shinyapps.io/week3_ggplot2/
 * Week 4. Data aggregation and manipulation: dplyr and tidyr (lubridate) packages 
+Part 1: dplyr + ggplot повторение
+Part 2: tidyr + lubridate
 * Week 5. (КР1)
 * Week 6 . Параметрические тесты + проверка гипотез
 * Week 7. Проверка на нормальность, непараметрические тесты  
