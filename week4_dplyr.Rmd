@@ -231,10 +231,11 @@ flData = rename(flData, tail_num = tailnum)
 ### Группировка. summarise() & mutate()
 
 **Ваша очередь:** В чем отличия функций `summarise()` и `mutate()`?
+Иногда бывает, что в результате исполнения функции вы получаете ошибку, хотя кажется, что сделали все правильно. Одной из причин такого может быть то, что две функции с одинаковым названием существуют в двух одновременно подгруженных библиотеках. Такое, например, часто бывает с функциями `library(dplyr)` и его предшественника `library(plyr)`. В таких ситуациях спасает отключение пакета во вкладке Packages в окне с каталогом файлов или принудительный призыв функции с указанием пакета: `dplyr::summarise()`.
 
-```{r echo=F}
-?summarise
-?mutate
+```{r eval=F}
+?dplyr::summarise
+?dplyr::mutate
 ```
 
 ```{r quiz1, echo = FALSE}
@@ -273,7 +274,6 @@ head(tail_dif)
 
 Для объединения нескольких датасетов в один по какой-либо из переменных используются функции join().
 
-Иногда бывает, что в результате исполнения функции вы получаете ошибку, хотя кажется, что сделали все правильно. Одной из причин такого может быть то, что две функции с одинаковым названием существуют в двух одновременно подгруженных библиотеках. Такое, например, часто бывает с функциями `library(dplyr)` и его предшественника `library(plyr)`. В таких ситуациях спасает отключение пакета во вкладке Packages в окне с каталогом файлов или принудительный призыв функции с указанием пакета: `dplyr::summarise()`.
 
 ```{r eval=F}
 ?join
@@ -374,20 +374,20 @@ head(colleges, 4)
 colleges = filter(colleges, ...)
 ```
 
-```{r exe13-hint, echo = FALSE}
+```{r exe18-hint, echo = FALSE}
 ```
 
-```{r exe13-solution, echo = FALSE}
+```{r exe18-solution, echo = FALSE}
 colleges = filter(colleges, Grad.Rate<50)
 
 ```
 
-```{r exe13-check, echo = FALSE}
+```{r exe18-check, echo = FALSE}
 test_1 <- find_call("filter(whatever, whatever)", "didn't use filter() function")
 test_2 <- find_statement("colleges", "didn't use `colleges` dataset") 
-test_4 <- check_argument("filter(.data = grab_this)", match_data_frame(colleges), "use colleges as the data argument in filter()")
+test_4 <- check_argument("filter(.data = grab_this)", match_data_frame(colleges))
 test_5 <- find_statement("Grad.Rate", "use `Grad.Rate variable`")
-test_6 <- find_statement("< 50", "use `< 50`") #вроде не чувствителен к пробелу, но перепроверить
+test_6 <- check_argument("Grad.Rate < grab_this", match_number(50)) #вроде не чувствителен к пробелу, но перепроверить
 test_7 <- find_assignment("colleges", "assign everuthing back to the `colleges` variable") #вроде не чувствителен к пробелу, но перепроверить
 
 
@@ -395,162 +395,203 @@ USER_CODE %>% test_1 %>% test_2  %>%  test_4 %>% test_5%>% test_6 %>% test_7
 ```
 
 
-
-Создать 2 новые колонки. Первая – отношение принятых (одобренных) заявлений на поступление к количеству
-полученных заявлений. Вторая – отношение количества поступивших студентов к количеству принятых заявлений
+2. Создайте две новые колонки. Первая – отношение принятых (одобренных) заявлений на поступление к количеству полученных заявлений. Вторая – отношение количества поступивших студентов к количеству принятых заявлений
 
 
-```{r exe13-setup, echo = FALSE}
-
-```
-
-```{r exe13, exercise = TRUE, exercise.setup = "exe13-setup", exercise.eval = FALSE}
+```{r exe19-setup, echo = FALSE}
+colleges = filter(colleges, Grad.Rate<50)
 
 ```
 
-```{r exe13-hint, echo = FALSE}
-```
-
-```{r exe13-solution, echo = FALSE}
-```
-
-```{r exe13-check, echo = FALSE}
-USER_CODE %>% test_1
+```{r exe19, exercise = TRUE, exercise.setup = "exe2=19-setup", exercise.eval = FALSE}
+colleges = mutate(colleges, 
+                  acceptance_rate = ...,
+                  enrolled_rate = ...)
 
 ```
 
-```{r eval = F}
-colleges = mutate(colleges, ...)
+```{r exe19-hint, echo = FALSE}
 ```
 
-Оставить только две новые колонки, созданные на предыдущем шаге, и колонку, соответствующую типу вуза (является ли вуз частным или государственным).
-
-
-```{r exe13-setup, echo = FALSE}
-
+```{r exe19-solution, echo = FALSE}
+colleges = mutate(colleges, 
+                  acceptance_rate = Accept/Apps,
+                  enrolled_rate = Enroll/Accept)
 ```
 
-```{r exe13, exercise = TRUE, exercise.setup = "exe13-setup", exercise.eval = FALSE}
+```{r exe19-check, echo = FALSE}
+test_1 <- find_call("mutate()", "didn't use mutate() function")
+test_2 <- find_statement("colleges", "didn't use `colleges` dataset") 
+test_4 <- check_argument("mutate(.data = grab_this)", match_data_frame(colleges), "use colleges as the data argument in filter()")
+test_5 <- find_statement("Accept", "use `Accept variable`")
+test_6 <- find_statement("Apps", "use `Apps variable`")
+test_7 <- find_statement("Enroll", "use `Enroll variable`")
+test_8 <- find_statement("acceptance_rate", "create `acceptance_rate` variable")
+test_9 <- find_statement("enrolled_rate", "create `enrolled_rate` variable")
 
-```
+test_10 <- find_statement("Accept/Apps", "use `Accept` and `Apps` variables") 
+test_11 <- find_statement("Enroll/Accept", "use `Enroll` and `Accept` variables") 
 
-```{r exe13-hint, echo = FALSE}
-```
+test_12<- find_assignment("colleges", "assign everuthing back to the `colleges` variable") 
 
-```{r exe13-solution, echo = FALSE}
-```
 
-```{r exe13-check, echo = FALSE}
-USER_CODE %>% test_1
+USER_CODE %>% test_1 %>% test_2  %>%  test_4 %>% test_5%>% test_6 %>% test_7 %>% test_8 %>% test_9 %>% test_10 %>% test_11 %>% test_12
 
 ```
 
 
-```{r eval = F}
+3. Оставить только две новые колонки, созданные на предыдущем шаге, и колонку, соответствующую типу вуза (является ли вуз частным или государственным).
+
+
+```{r exe20-setup, echo = FALSE}
+colleges = filter(colleges, Grad.Rate<50) %>%  mutate(acceptance_rate = Accept/Apps,
+                  enrolled_rate = Enroll/Accept)
+
+```
+
+```{r exe20, exercise = TRUE, exercise.setup = "exe20-setup", exercise.eval = FALSE}
 colleges = dplyr::select(colleges, ...)
-```
-
-Построить графики для сравнения доли принятых заявлений между типами вузов и сравнения доли поступивших студентов между типами вузов 
-
-
-```{r exe13-setup, echo = FALSE}
 
 ```
 
-```{r exe13, exercise = TRUE, exercise.setup = "exe13-setup", exercise.eval = FALSE}
+```{r exe20-hint, echo = FALSE}
+```
+
+```{r exe20-solution, echo = FALSE}
+colleges = dplyr::select(colleges, acceptance_rate, enrolled_rate, Private)
+
+```
+
+```{r exe20-check, echo = FALSE}
+test_1 <- find_call("select()", "didn't use select() function")
+test_2 <- find_statement("colleges", "didn't use `colleges` dataset") 
+test_3 <- check_argument("select(.data = grab_this)", match_data_frame(colleges), "use colleges as the data argument in filter()")
+test_4 <- find_statement("Private", "select `Private`")
+test_5 <- find_statement("acceptance_rate", "select `acceptance_rate`")
+test_6 <- find_statement("enrolled_rate", "select `enrolled_rate`")
+test_7<- find_assignment("colleges", "assign everuthing back to the `colleges` variable") 
+
+
+USER_CODE %>% test_1 %>% test_2  %>%  test_4 %>% test_5%>% test_6 %>% test_7 
+```
+
+
+
+4. Постройте графики для сравнения доли принятых заявлений между типами вузов и сравнения доли поступивших студентов между типами вузов 
+
+
+```{r exe21-setup, echo = FALSE}
+colleges = filter(colleges, Grad.Rate<50) %>%  mutate(acceptance_rate = Accept/Apps,
+                  enrolled_rate = Enroll/Accept)
+
+colleges = dplyr::select(colleges, acceptance_rate, enrolled_rate, Private)
+
+```
+
+```{r exe21, exercise = TRUE, exercise.setup = "exe21-setup", exercise.eval = FALSE}
+ggplot(data = colleges) + ...
+
 ggplot(data = colleges) + ...
 
 ```
 
-```{r exe13-hint, echo = FALSE}
+```{r exe21-hint, echo = FALSE}
+"Лучше всего здесь подойдет `geom_boxlplot()`"
 ```
 
-```{r exe13-solution, echo = FALSE}
-```
+```{r exe21-solution, echo = FALSE}
+ggplot(data = colleges) + geom_boxplot(aes(Private, acceptance_rate))
 
-```{r exe13-check, echo = FALSE}
-USER_CODE %>% test_1
-
-```
-
-
-Сгрупировать базу по типу вуза (частный или государственный), посчитать средние значения по оставшимся двум колонкам.
-
-
-```{r exe13-setup, echo = FALSE}
-
-```
-
-```{r exe13, exercise = TRUE, exercise.setup = "exe13-setup", exercise.eval = FALSE}
-colleges %>% group_by(...) %>% dplyr::summarize(...)
-
-```
-
-```{r exe13-hint, echo = FALSE}
-```
-
-```{r exe13-solution, echo = FALSE}
-```
-
-```{r exe13-check, echo = FALSE}
-USER_CODE %>% test_1
+ggplot(data = colleges) + geom_boxplot(aes(Private, enrolled_rate))
 
 ```
 
 
-Загрузите базу заново
+5. Сгрупируйте базу по типу вуза (частный или государственный), посчитать средние значения по оставшимся двум колонкам.
 
-```{r}
+
+```{r exe22-setup, echo = FALSE}
+colleges = filter(colleges, Grad.Rate<50) %>%  mutate(acceptance_rate = Accept/Apps,
+                  enrolled_rate = Enroll/Accept)
+
+colleges = dplyr::select(colleges, acceptance_rate, enrolled_rate, Private)
+
+```
+
+```{r exe22, exercise = TRUE, exercise.setup = "exe22-setup", exercise.eval = FALSE}
+colleges %>% group_by(...) %>% summarise(...)
+
+```
+
+```{r exe22-hint, echo = FALSE}
+```
+
+```{r exe22-solution, echo = FALSE}
+colleges %>% group_by(Private) %>% dplyr::summarise(mean_acceptance = mean(acceptance_rate),
+                                                    mean_enrolled = mean(enrolled_rate))
+
+```
+
+```{r exe22-check, echo = FALSE}
+test_1 <- find_call("group_by()", "remember to group before summarizing.")
+test_2 <- find_names("colleges", "didn't use `colleges` dataset") 
+test_3 <- find_call("group_by(.data = whatever, Private)", "break down the result by `cyl`")
+test_4 <- find_call("summarise()", "use summarise() after grouping")
+test_5 <- find_call("mean(acceptance_rate)", "calculate the mean of acceptance_rate for each group")
+test_6 <- find_call("mean(enrolled_rate)", "calculate the mean of enrolled_rate for each group")
+
+USER_CODE %>% test_1 %>% test_2  %>%  test_3 %>% test_4 %>% test_5 %>% test_6 
+
+```
+
+
+####Дополнительно:
+
+Загрузите базу заново.
+
+```{r eval = F}
 colleges = ISLR::College
 ```
 
 Постройте график, чтобы сравнить каких колледжей в базе больше, частных или государственных
 
 
-```{r exe13, exercise = TRUE, exercise.setup = "exe13-setup", exercise.eval = FALSE}
-
-```
-
-```{r exe13-hint, echo = FALSE}
-```
-
-```{r exe13-solution, echo = FALSE}
-```
-
-```{r exe13-check, echo = FALSE}
-USER_CODE %>% test_1
-
-```
-
-
-```{r eval = F}
+```{r exe23, exercise = TRUE}
 ggplot(data = colleges) + ...
 ```
+
 
 Создайте новую колонку, отражающую, приходится ли на одного преподавателя больше 13 студентов или нет
 
-```{r eval = F}
+```{r exe24, exercise = TRUE}
 colleges = mutate(colleges, ...)
 ```
 
-Постройте график, отражающий взаимосвязь между типом колледжа и тем, приходится ли в нем на одного преподавателя больше 13 студентов или нет
 
-```{r eval = F}
-ggplot(data = colleges) + ...
+Выберите колледжи, в которых суммарные затраты (Personal, Books, Room.Board) не превышают 6000. 
+
+```{r exe25, exercise = TRUE}
+colleges = mutate(colleges, ...)
+```
+```{r echo = F, eval = F}
+
+colleges %>% mutate(sum = (Personal + Books + Room.Board)) %>% select(Private, sum) %>% filter(sum <= 6000) %>% group_by(Private) %>% tally()
 ```
 
-Постройте график, отражающий взаимосвязь между затратами на обучение одного студента и количеством поданных заявлений в колледж
-
-```{r eval = F}
-ggplot(data = colleges) + ...
+```{r quiz4, echo = FALSE}
+quiz(caption = "",
+     question("Сколько государственных колледжей в этой категории?", 
+            answer("112", correct = TRUE), 
+           answer("212", message = "нужно посчитать суммарные затраты и отфильтровать таблицу"), 
+           answer("256", message = "это количество частных колледжей"),
+           answer("565",message = "нужно посчитать суммарные затраты и отфильтровать таблицу" ),
+           allow_retry = TRUE))
 ```
 
-Посчитайте среднее количество fulltime undergraduates и parttime undergraduates в частных и государственных колледжах
-
-```{r eval = F}
-colleges %>% group_by(...) %>% dplyr::summarize(...)
-```
-
-Выберите колледжи, в которых суммарные затраты (personal, books, room) не превышают 6000. Каких колледжей в этой категории больше?
 
 Сформулируйте свой вопрос по рассматриваемой базе. Выполните вычисления / постройте график для ответа на него.
+
+
+```{r final, exercise = T}
+
+```
