@@ -1,23 +1,24 @@
 ---
 title: "Data manipulations"
 output: 
-  learnr::tutorial:
-    progressive: true
-    allow_skip: true
+learnr::tutorial: default
+html_document: 
+number_sections: no
+toc: no
 runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
-library(learnr)
-library(tidyverse)
-flights_new = nycflights13::flights
-flData = filter(flights_new, month == 6 | month == 7 | month == 8)
-
-
-
-tail_dif = rename(flData, tail_num = tailnum) %>% mutate(dep_arr_dif = arr_delay - dep_delay) %>% group_by(tail_num) %>% dplyr::summarise(median_dif = median(dep_arr_dif))
-
+library("learnr")
+library("tidyverse")
+library("checkr")
+knitr::opts_chunk$set(exercise.checker = checkr::checkr_tutor)
 knitr::opts_chunk$set(error = TRUE)
+tutorial_options(exercise.timelimit = 60)
+
+flData = nycflights13::flights
+colleges = ISLR::College
+
 ```
 
 ##Предисловие
@@ -32,7 +33,7 @@ knitr::opts_chunk$set(error = TRUE)
 * И получать различную статистику с summarise()
 * Соединять таблицы данных с join() 
 
-Для начала надо загрузим `dplyr` и базу с данными о полетах самолетов, а также пакет `ggplot2`, с которым мы работали в прошлый раз.
+Для начала надо загрузим `dplyr` и базу с данными о полетах самолетов из аэропортов Нью-Йорка, а также пакет `ggplot2`, с которым мы работали в прошлый раз.
 
 Не забывайте при выполнении ДЗ познакомиться с гл. 4 Managing Data Frames with the dplyr package из книжки Exploratory Data Analysis with R.
 
@@ -40,9 +41,8 @@ knitr::opts_chunk$set(error = TRUE)
 
 ```{r eval=F}
 library(nycflights13)
-library(tidyverse)
-#library(dplyr)
-#library(ggplot2)
+library(dplyr)
+library(ggplot2)
 ```
 
 Чтобы познакомиться с переменными в базе, введите `?flights`
@@ -61,51 +61,72 @@ head(flights, n = 3)
 Удалим все строки с `NA` - not available (строки, в которых есть хотя бы одно пропущенное значение).
 
 ```{r ex2, exercise = TRUE}
-flights_new = nycflights13::flights
-flights_new = na.omit(flights_new)
+flData = nycflights13::flights
+flData = na.omit(flData)
 ```
 
 Посмотрим, сколько осталось наблюдений и переменных в базе. 
 
 ```{r ex3, exercise = TRUE}
-dim(flights_new)
-head(flights_new, n = 3)
+dim(flData)
+head(flData, n = 3)
 ```
 
-###Упражнения
+###Повторение
 
 Давайте вспомним, как работает `ggplot2`.
 
 1) Нарисуйте boxplot (ящик с усами), в котором по оси X будут аэропорты Нью-Йорка, из которых вылетают самолеты, а по оси Y - дистанция.
 
 ```{r ex4, exercise = TRUE}
-ggplot(data = flights_new) + 
+ggplot(data = flData) + ...
 ```
 ```{r ex4-check, echo=FALSE}
-USER_CODE %>% find_value(match_class("ggplot")) %>% 
-  find_call("geom_boxplot(whatever)", "you didn't use geom_boxplot().") %>% 
-  find_call("aes(whatever)", "you didn't use aesthetics.") %>% 
-  find_names("flights_new") %>% find_names("origin") %>% find_names("distance")
+test_1 <- find_call("aes(x = origin, y = whatever)", "variable 'origin' goes on the x axis")
+test_2 <- find_call("aes(y = distance, x = whatever)", "variable 'distance' goes on the y axis")
+test_3 <- find_call("geom_boxplot()", "include a 'geom_boxplot()' layer")
+test_4 <- find_statement("flData") 
+
+
+USER_CODE %>% test_1 %>% test_2 %>% test_3 %>% test_4
 ```
-```{r echo=F, eval=F}
-ggplot() + geom_boxplot(data = flights_new, aes(x = origin, y = distance))
+
+```{r ex4-hint, echo = FALSE}
+```
+
+```{r ex4-solution, echo = FALSE}
+ggplot() + geom_boxplot(data = flData, aes(x = origin, y = distance))
+
 ```
 
 
-2) Нарисуйте гистограмму по переменной `hour`. Посмотрите, как работают параметры *coord_flip* и *coord_polar*. Также вспомните, как менять цвет у графика.
+
+
+2) Нарисуйте гистограмму по переменной `hour`. Посмотрите, как работает параметр *coord_flip*. Также вспомните, как менять цвет у графика.
 
 ```{r ex5, exercise = TRUE}
 
 ```
 ```{r ex5-check, echo=FALSE}
-USER_CODE %>% find_value(match_class("ggplot")) %>% 
-  find_call("geom_histogram(whatever)", "you didn't use geom_histogram().") %>% 
-  find_call("aes(whatever)", "you didn't use aesthetics.") %>% 
-  find_names("flights_new") %>% find_names("hour") #проверка не доделана 
+test_1 <- find_call("aes(x = hour)", "variable 'hour' goes on the x axis")
+test_3 <- find_call("geom_histogram()", "include a 'geom_histogram()' layer")
+test_4 <- find_statement("flData") 
+test_6 <- find_call("coord_flip()", "didn't use coord_flip()")
+
+
+USER_CODE %>% test_1 %>% test_3 %>% test_4 %>% test_6
+#добавить проверку цвета графика 
+
 ```
-```{r echo=F, eval=F}
-ggplot() + geom_histogram(data = flights_new, aes(x = hour)) 
+
+```{r ex5-hint, echo = FALSE}
 ```
+
+```{r ex5-solution, echo = FALSE}
+ggplot() + geom_histogram(data = flData, aes(x = hour)) 
+
+```
+
 
 3) Нарисуйте bar chart по переменной `carrier`. Закрасьте столбцы таким образом, чтобы можно было видеть, сколько перелетов для каждого перевозчика относятся к каждому из трех аэропортов, работающих в Нью-Йорке.
 
@@ -114,13 +135,21 @@ ggplot() + geom_histogram(data = flights_new, aes(x = hour))
 
 ```
 ```{r ex6-check, echo=FALSE}
-USER_CODE %>% find_value(match_class("ggplot")) %>% 
-  find_call("geom_bar(whatever)", "you didn't use geom_bar().") %>% 
-  find_call("aes(whatever)", "you didn't use aesthetics.") %>% 
-  find_names("flights_new") %>% find_names("carrier") %>% find_names("origin")
+test_1 <- find_call("aes(x = carrier, fill=whatever)", "variable 'carrier' goes on the x axis")
+test_2 <- find_call("aes(x = whatever, fill=origin)", "use variable 'origin' to add colours to the plot")
+test_3 <- find_call("geom_bar()", "include a 'geom_bar()' layer")
+test_4 <- find_statement("flData") 
+
+
+USER_CODE %>% test_1 %>% test_2 %>% test_3 %>% test_4 
 ```
-```{r echo=F, eval=F}
-ggplot() + geom_bar(data = flights_new, aes(x = carrier, fill = origin)) 
+
+```{r ex6-hint, echo = FALSE}
+```
+
+```{r ex6-solution, echo = FALSE}
+ggplot() + geom_bar(data = flData, aes(x = carrier, fill = origin)) 
+
 ```
 
 
@@ -136,16 +165,17 @@ ggplot() + geom_bar(data = flights_new, aes(x = carrier, fill = origin))
 * ! - не 
 * : - интервал (a:b - все от a до b)
 
-Переходим к основным функциям dplyr. 
+Переходим к основным функциям из пакета `dplyr`. 
 
-## Фильтрация данных
 
-###filter()
+### Выбраем подмножество строк с filter()
+
 Допустим, нас интересуют только полеты в летние месяцы
 
 ```{r}
 #?filter
-flData = filter(flights_new, month == 6 | month == 7 | month == 8)
+class(flData$month) 
+flData = filter(flData, month == 6 | month == 7 | month == 8)
 ```
 
 ```{r ex7, exercise = TRUE}
@@ -165,7 +195,7 @@ flData = filter(flData, dest == "MIA")
 ggplot(data = flData) + geom_bar(aes(x = month, fill = origin), position = "dodge")
 ```
 
-### arrange()
+### Упорядочить значения с arrange()
 
 Упорядочим рейсы по времени вылета
 ```{r ex10, exercise=T}
@@ -174,15 +204,17 @@ flData = arrange(flData, year, month, day)
 head(flData)
 ```
 
-И по задержке прилета в убывающем порядке
+И по задержке прилета в убывающем порядке - для этого добавляется функция `desc()` 
 ```{r  ex11, exercise=T}
 flData = arrange(flData, desc(dep_delay))
 head(flData)
 ```
 
-### select()
 
-Отберем для дальнейшего анализа только данные о номере рейса и задержках, удалим из рассмотрения переменную `arr_time`. 
+###  Отбор переменных с select()
+
+При работе с большим таблицами иногда бываются интересны для анализа только некоторые переменные. Отберем для простоты дальнейшего анализа только данные о номере рейса и задержках, удалим из рассмотрения переменную `arr_time`. 
+
 ```{r ex12, exercise=T}
 #?select
 str(flData)
@@ -191,15 +223,12 @@ flData = dplyr::select(flData, -arr_time)
 str(flData)
 ```
 
-### rename()
-
 Переименуем переменную `tailnum` для единообразия в `tail_num`
 ```{r ex13, exercise=T}
 flData = rename(flData, tail_num = tailnum)
 ```
 
-##Группировка 
-### summarise() & mutate()
+### Группировка. summarise() & mutate()
 
 **Ваша очередь:** В чем отличия функций `summarise()` и `mutate()`?
 
@@ -207,6 +236,18 @@ flData = rename(flData, tail_num = tailnum)
 ?summarise
 ?mutate
 ```
+
+```{r quiz1, echo = FALSE}
+quiz(caption = "",
+     question("Какая функция используется для создания новых переменных:", 
+            answer("summarise()"), 
+           answer("group_by()"),
+           answer("mutate()", correct = TRUE),
+           answer("filter()"), 
+         answer("select()"),
+           allow_retry = TRUE))
+```
+
 
 ```{r ex14, exercise=T}
 flData = mutate(flData, dep_arr_dif = arr_delay - dep_delay)
@@ -220,40 +261,62 @@ summarise(flData, mean_dif = mean(dep_arr_dif))
 ### group_by()
 
 Если нам нужно значение не для всей выборки, а для каждого из рейсов (категориальная переменная/фактор), то мы сначала группируем по номеру рейса, а затем вычисляем нужную характеристику
-```{r}
+```{r ex15, exercise=T}
 flData = group_by(flData, tail_num)
 tail_dif = dplyr::summarise(flData, median_dif = median(dep_arr_dif))
 head(tail_dif)
 ```
 
-##Объединение таблиц
-### join()
+**NB** `summarise()` наиболее полезен в связке после `group_by()`
 
-Объединение нескольких датасетов в один по одной из переменных
+##Объединение таблиц
+
+Для объединения нескольких датасетов в один по какой-либо из переменных используются функции join().
+
+Иногда бывает, что в результате исполнения функции вы получаете ошибку, хотя кажется, что сделали все правильно. Одной из причин такого может быть то, что две функции с одинаковым названием существуют в двух одновременно подгруженных библиотеках. Такое, например, часто бывает с функциями `library(dplyr)` и его предшественника `library(plyr)`. В таких ситуациях спасает отключение пакета во вкладке Packages в окне с каталогом файлов или принудительный призыв функции с указанием пакета: `dplyr::summarise()`.
+
 ```{r eval=F}
 ?join
+?dplyr::join
 ```
 
-В чем разница `inner_join()` и `left_join()`?
 
-```{r}
-flData = inner_join(x = flData, y = tail_dif, by = "tail_num")
+
+Посмотрите справку по функциям и ответьте на следующие вопросы.
+
+```{r quiz2, echo = FALSE}
+quiz(caption = "",
+     question("Все значения из таблицы x сохраняют:", 
+              answer("left_join(x, y)", correct = TRUE), 
+              answer("right_join(x, y)"), 
+              answer("inner_join(x, y)"),
+              answer("anti_join(x, y)"), 
+              answer("full_join(x, y)", correct = TRUE),
+              allow_retry = TRUE))
+```
+
+Чтобы запомнить свойства join-функций иногда используются диаграммы Венна:
+![](http://r4ds.had.co.nz/diagrams/join-venn.png)
+
+
+```{r  ex16, exercise=T}
+flData = left_join(x = flData, y = tail_dif, by = "tail_num")
 str(flData)
 flData = arrange(flData, median_dif)
-flData
+head(flData, 5)
 ```
 
-## Два основных способа работы с `dplyr` пайпы
+## Пайпы (`%>%`)
 
-Вернемся к первоначальному датасету 
-```{r}
+Снова загрузим первоначальный датасету 
+```{r eval=F}
 flights = nycflights13::flights
 flights = na.omit(flights)
 ```
 
 1. Мы можем выполнять операции пошагово (step-by-step), сохраняя промежуточные результаты
 
-```{r}
+```{r eval=F}
 a1 = group_by(flights, year, month, day)
 a2 = select(a1, arr_delay, dep_delay)
 a3 = summarise(a2,
@@ -264,9 +327,27 @@ a4 = filter(a3, arr > 30 | dep > 30)
 
 **Ваша очередь:** Какие данные, как вы думаете, остались в `a4`?
 
-2. Либо можем работать с помощью pipes (%>%)
+2. Можно сделать все через вложенные функции.
 
-```{r}
+```{r eval=F}
+filter(
+  summarise(
+    select(
+      group_by(flights, year, month, day),
+      arr_delay, dep_delay
+    ),
+    arr = mean(arr_delay, na.rm = TRUE),
+    dep = mean(dep_delay, na.rm = TRUE)
+  ),
+  arr > 30 | dep > 30
+)
+```
+
+3. Либо можем работать с помощью pipes (`%>%`). При его использовании элемент, стоящий слева служит в качестве первого аргумента для функции справа от пайпа. Пример: `head(flights)` преобразуется в `flights %>% head()`.
+
+Такое преобразование кода делает его более удобным и более привычным для чтения:
+
+```{r eval = F}
 delays = flights %>%
   group_by(year, month, day) %>%
   select(arr_delay, dep_delay) %>%
@@ -280,21 +361,63 @@ delays = flights %>%
 
 ## Упражнения
 
-Загрузить базу по колледжам
+Загрузим базу по колледжам Америки. Подробнее тут: `?ISLR::College`
 
-```{r}
+```{r exe17, exercise = T}
 colleges = ISLR::College
-?ISLR::College
+head(colleges, 4)
 ```
 
-Оставить в базе только вузы с Graduation Rate меньше 50%
+1. Оставьте в базе только вузы с Graduation Rate меньше 50%
 
-```{r eval = F}
+```{r exe18, exercise = TRUE}
 colleges = filter(colleges, ...)
 ```
 
+```{r exe13-hint, echo = FALSE}
+```
+
+```{r exe13-solution, echo = FALSE}
+colleges = filter(colleges, Grad.Rate<50)
+
+```
+
+```{r exe13-check, echo = FALSE}
+test_1 <- find_call("filter(whatever, whatever)", "didn't use filter() function")
+test_2 <- find_statement("colleges", "didn't use `colleges` dataset") 
+test_4 <- check_argument("filter(.data = grab_this)", match_data_frame(colleges), "use colleges as the data argument in filter()")
+test_5 <- find_statement("Grad.Rate", "use `Grad.Rate variable`")
+test_6 <- find_statement("< 50", "use `< 50`") #вроде не чувствителен к пробелу, но перепроверить
+test_7 <- find_assignment("colleges", "assign everuthing back to the `colleges` variable") #вроде не чувствителен к пробелу, но перепроверить
+
+
+USER_CODE %>% test_1 %>% test_2  %>%  test_4 %>% test_5%>% test_6 %>% test_7
+```
+
+
+
 Создать 2 новые колонки. Первая – отношение принятых (одобренных) заявлений на поступление к количеству
 полученных заявлений. Вторая – отношение количества поступивших студентов к количеству принятых заявлений
+
+
+```{r exe13-setup, echo = FALSE}
+
+```
+
+```{r exe13, exercise = TRUE, exercise.setup = "exe13-setup", exercise.eval = FALSE}
+
+```
+
+```{r exe13-hint, echo = FALSE}
+```
+
+```{r exe13-solution, echo = FALSE}
+```
+
+```{r exe13-check, echo = FALSE}
+USER_CODE %>% test_1
+
+```
 
 ```{r eval = F}
 colleges = mutate(colleges, ...)
@@ -302,21 +425,78 @@ colleges = mutate(colleges, ...)
 
 Оставить только две новые колонки, созданные на предыдущем шаге, и колонку, соответствующую типу вуза (является ли вуз частным или государственным).
 
+
+```{r exe13-setup, echo = FALSE}
+
+```
+
+```{r exe13, exercise = TRUE, exercise.setup = "exe13-setup", exercise.eval = FALSE}
+
+```
+
+```{r exe13-hint, echo = FALSE}
+```
+
+```{r exe13-solution, echo = FALSE}
+```
+
+```{r exe13-check, echo = FALSE}
+USER_CODE %>% test_1
+
+```
+
+
 ```{r eval = F}
 colleges = dplyr::select(colleges, ...)
 ```
 
 Построить графики для сравнения доли принятых заявлений между типами вузов и сравнения доли поступивших студентов между типами вузов 
 
-```{r eval = F}
-ggplot(data = colleges) + ...
+
+```{r exe13-setup, echo = FALSE}
+
 ```
+
+```{r exe13, exercise = TRUE, exercise.setup = "exe13-setup", exercise.eval = FALSE}
+ggplot(data = colleges) + ...
+
+```
+
+```{r exe13-hint, echo = FALSE}
+```
+
+```{r exe13-solution, echo = FALSE}
+```
+
+```{r exe13-check, echo = FALSE}
+USER_CODE %>% test_1
+
+```
+
 
 Сгрупировать базу по типу вуза (частный или государственный), посчитать средние значения по оставшимся двум колонкам.
 
-```{r eval = F}
-colleges %>% group_by(...) %>% dplyr::summarize(...)
+
+```{r exe13-setup, echo = FALSE}
+
 ```
+
+```{r exe13, exercise = TRUE, exercise.setup = "exe13-setup", exercise.eval = FALSE}
+colleges %>% group_by(...) %>% dplyr::summarize(...)
+
+```
+
+```{r exe13-hint, echo = FALSE}
+```
+
+```{r exe13-solution, echo = FALSE}
+```
+
+```{r exe13-check, echo = FALSE}
+USER_CODE %>% test_1
+
+```
+
 
 Загрузите базу заново
 
@@ -325,6 +505,23 @@ colleges = ISLR::College
 ```
 
 Постройте график, чтобы сравнить каких колледжей в базе больше, частных или государственных
+
+
+```{r exe13, exercise = TRUE, exercise.setup = "exe13-setup", exercise.eval = FALSE}
+
+```
+
+```{r exe13-hint, echo = FALSE}
+```
+
+```{r exe13-solution, echo = FALSE}
+```
+
+```{r exe13-check, echo = FALSE}
+USER_CODE %>% test_1
+
+```
+
 
 ```{r eval = F}
 ggplot(data = colleges) + ...

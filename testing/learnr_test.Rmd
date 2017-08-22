@@ -1,0 +1,223 @@
+---
+title: "Filter observations"
+output: 
+  learnr::tutorial:
+progressive: true
+allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(nycflights13)
+library(Lahman)
+
+library(checkr)
+knitr::opts_chunk$set(exercise.checker = checkr::checkr_tutor)
+
+tutorial_options(exercise.timelimit = 60)
+knitr::opts_chunk$set(error = TRUE)
+```
+
+## Welcome
+
+### `r ""`
+
+Visualisation is an important tool for generating insights, but your data won't always arrive ready to visualize. Often you'll need to filter unwanted observations from your data or create new variables and summaries to visualize. In this tutorial, you will learn how to filter your data, including:
+
+* How to use `filter()` to extract observations that pass a logical test
+* How to write logical comparisons in R
+* How to combine logical comparisons with Boolean operators
+* How to handle missing values within comparisons
+
+The readings in this tutorial follow [_R for Data Science_](http://r4ds.had.co.nz/), section 5.2. 
+
+### The tutorials that follow
+
+In the two tutorials that follow, you will learn to create new variables and summaries.
+
+To practice these skills, we will use the `flights` data set from the nycflights13 package, which you met in [Data Basics](../01-data-basics/01-data-basics.html). This data frame comes from the US [Bureau of Transportation Statistics](http://www.transtats.bts.gov/DatabaseInfo.asp?DB_ID=120&Link=0) and contains all `r format(nrow(nycflights13::flights), big.mark = ",")` flights that departed from New York City in 2013. It is documented in `?flights`.
+
+In these three tutorials, we will use the ggplot2 package that you met in [Data Visualization Basics](../02-data-vis-basics/02-data-vis-basics.html) to visualize the data. 
+
+To manipulate the data, we will use four new functions: `filter()`, `mutate()`, `group_by()`, and `summarise()`. All work similarly: 
+
+1.  The first argument is a data frame (or tibble).
+
+1.  The subsequent arguments describe what to do with the data frame, using the variable names (without quotes).
+
+1.  The result is a new data frame.
+
+Together these properties make it easy to chain together multiple simple function calls to achieve a complex result. Let's dive in and see how these functions work.
+
+I've preloaded the packages for this tutorial with 
+
+```{r eval = FALSE}
+library(tidyverse) # loads dplyr, ggplot2, and others
+library(nycflights13)
+```
+
+## Exercises
+
+
+* Простые задания без датасетов.  Сложите 2+2
+
+```{r, 2016-02-04-b7f4e, exercise = TRUE}
+____ + ____
+```
+
+```{r 2016-02-04-b7f4e-check, echo=FALSE}
+test_1 <- find_call("whatever + whatever",  
+                message = "need to use addition (+)")
+test_2 <- find_call("2 + whatever", 
+                message = "first argument should be 2")
+test_3 <- find_call("whatever + 2", 
+                message = "second argument should be 2")
+
+test_4 <- check_value(agrees(x == 4), 
+                message = "the result should be 4")
+
+USER_CODE %>% test_1 %>% test_2 %>% test_3 %>% final_ %>% test_4
+    ```
+
+
+* Посчитайте синус 
+
+```{r new0, exercise = TRUE}
+# this line isn't needed in an actual tutor document
+USER_CODE <- capture.code("x <- 7 + 3\n sin(x)")
+```
+
+```{r new0-check, echo=FALSE}
+test_1 <- find_call("sin(whatever)", "you didn't use sin().")
+test_2 <- check_value(match_number(sin(10), 
+                                   "something's wrong with the sin() line."))
+test_a <- find_call("whatever + whatever", "remember to use +") # regular location test
+test_b <- check_argument("grab_this + whatever", 
+                         match_number(17, tol = 0.1))
+
+USER_CODE %>%
+  test_1 %>% test_2 
+```
+
+
+* Сложите 17 с чем-нибудь 
+
+```{r new1, exercise = TRUE}
+# this line isn't needed in an actual tutor document
+17+2
+```
+
+```{r new1-check, echo=FALSE}
+test_a <- find_call("whatever + whatever", "remember to use +") # regular location test
+test_b <- check_argument("grab_this + whatever", 
+                         match_number(17, tol = 0.1))
+
+USER_CODE %>%
+  test_a %>% test_b 
+```
+  
+  
+
+* Проверка ggplot 
+```{r new2, exercise = TRUE}
+ggplot(mtcars, aes(y = mpg, x = hp)) + 
+    geom_point()
+
+```
+
+```{r new2-check, echo=FALSE}
+test_1 <- find_value(match_class("ggplot"))
+USER_CODE %>% test_1
+```
+
+
+
+
+### Exercise 1
+
+Use the code chunks below to find all flights that
+
+1. Had an arrival delay of two or more hours
+
+```{r filterex1, exercise = TRUE}
+#filter(flights, arr_delay >= 2)
+
+```
+```{r filterex1-check, echo=FALSE}
+test_1 <- find_call("filter(whatever, whatever)")
+test_2 <- find_names("flights")
+test_3 <- find_statement(">= 2") #вроде не чувствителен к пробелу, но перепроверить
+#проверку второго аргумента
+USER_CODE %>% test_1 %>% test_2 %>% test_3
+```
+
+1. Flew to Houston (`IAH` or `HOU`)
+
+```{r filterex2, exercise = TRUE}
+filter(flights, dest %in% c("IAH", "HOU"))
+
+```
+```{r filterex2-check, echo=FALSE}
+test_1 <- find_call("filter(whatever)")
+test_2 <- find_names("flights")
+test_3 <- find_names("%in%") 
+test_4 <- find_names("HOU")
+test_5 <- find_names("IAH")
+
+USER_CODE %>% test_1 %>% test_2 %>% test_3 %>% test_4 %>% test_5
+
+```
+
+<div id="filterex2-hint">
+**Hint:** This is a good case for the `%in%` operator.
+</div>
+
+1. Were operated by United (`UA`), American (`AA`), or Delta (`DL`)
+
+```{r filterex3, exercise = TRUE}
+filter(flights, carrier %in% c("UA", "AA", "DL"))
+
+```
+```{r filterex3-check, echo=FALSE}
+test_1 <- find_call("filter(whatever)")
+test_2 <- find_names("carrier")
+test_3 <- find_names("%in%") 
+test_4 <- find_names(c("UA", "AA", "DL"))
+
+
+USER_CODE %>% test_1 %>% test_2 %>% test_3 %>% test_4
+```
+
+<div id="filterex3-hint">
+**Hint:** The `carrier` variable lists the airline that operated each flight. This is another good case for the `%in%` operator.
+</div>
+
+1. Departed in summer (July, August, and September) # не работает
+
+```{r filterex4, exercise = TRUE}
+filter(flights, 6 < month, month < 10)
+
+```
+```{r filterex4-check, echo=FALSE}
+
+USER_CODE %>% find_call("filter(flights, whatever)") %>% find_names("month") #%>% 
+  #find_call("filter(whatever, 6 < month, whatever")
+  #find_call("filter(whatever, whatever, month <10")
+```
+
+<div id="filterex4-hint">
+**Hint:** When converted to numbers, July, August, and September become 7, 8, and 9.
+</div>
+
+
+### Exercise 2 - посмотреть открытые вопросы
+
+Why is `NA ^ 0` not missing? Why is `NA | TRUE` not missing?
+Why is `FALSE & NA` not missing? Can you figure out the general
+rule?  (`NA * 0` is a tricky counterexample!)
+
+```{r filterex10, exercise = TRUE}
+
+```
