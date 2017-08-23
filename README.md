@@ -1,4 +1,5 @@
-###Syllabus:  
+
+###Syllabus:   
 
 * Week 1. INTRODUCTION. What is Data Science? art of DS + exploratory DA (лекция?)
 Reproducible Research and Data Science  

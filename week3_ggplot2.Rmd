@@ -1,9 +1,10 @@
 ---
 title: "Making plots: grammar of graphics and ggplot2 package"
 output: 
-  learnr::tutorial:
-progressive: true
-allow_skip: true
+learnr::tutorial: default
+html_document: 
+number_sections: yes
+toc: yes
 runtime: shiny_prerendered
 ---
 

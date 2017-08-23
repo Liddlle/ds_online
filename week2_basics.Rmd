@@ -1,9 +1,10 @@
 ---
-title: "Introduction to the tools. Part 2: R Basics"
+title: "Introduction to the tools. R Basics"
 output: 
-  learnr::tutorial:
-progressive: true
-allow_skip: true
+learnr::tutorial: default
+html_document: 
+number_sections: yes
+toc: yes
 runtime: shiny_prerendered
 ---
 
