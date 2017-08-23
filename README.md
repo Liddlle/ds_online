@@ -1,5 +1,6 @@
 
-###Syllabus:   
+Syllabus:   
+-----------------------------------
 
 * Week 1. INTRODUCTION. What is Data Science? art of DS + exploratory DA (лекция?)
 Reproducible Research and Data Science  
@@ -37,9 +38,9 @@ https://bookdown.org/
 - kaggle  
   
 
-learnr и checkr
-https://rstudio.github.io/learnr/
-https://github.com/dtkaplan/checkr/blob/master/vignettes/checking-code.Rmd
+learnr и checkr  
+https://rstudio.github.io/learnr/  
+https://github.com/dtkaplan/checkr/blob/master/vignettes/checking-code.Rmd  
 
 
 Как на степике добавить задание с датасетом:

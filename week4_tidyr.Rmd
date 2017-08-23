@@ -1,9 +1,6 @@
 ---
 title: "tidyr + lubridate"
-output: 
-  learnr::tutorial:
-    progressive: true
-    allow_skip: true
+output: learnr::tutorial
 runtime: shiny_prerendered
 ---
 
