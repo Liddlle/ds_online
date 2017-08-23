@@ -13,6 +13,7 @@ knitr::opts_chunk$set(exercise.checker = checkr::checkr_tutor, error = TRUE)
 
 tutorial_options(exercise.timelimit = 60)
 
+
 ```
 
 ## Библиотека `ggplot2`
@@ -220,84 +221,74 @@ ggplot() +
 ```
 
 ```{r new1-check, echo=FALSE}
-test_1 <- find_call("aes(x = cty)", "variable 'cty' goes on the x axis")
+test_1 <- find_statement("aes(x = cty)", "variable 'cty' goes on the x axis")
 test_2 <- find_call("geom_vline()", "include 'geom_vline()'")
 test_3 <- find_call("geom_histogram()", "include a 'geom_histogram()' layer")
 test_4 <- find_statement("mpg") 
-test_5 <- find_call("median(whatever)", "you didn't use median()")
+test_5 <- find_call("median()", "you didn't use median()")
 
 
 USER_CODE %>% test_1 %>% test_2 %>% test_3 %>% test_4 %>% test_5
 ```
 
 
-2. Исходя из графика, какое значение больше? Среднее значение или значение медианы?
 
 ```{r quiz1, echo = FALSE}
-quiz(question("2. Исходя из графика, какое значение больше? Среднее значение или значение медианы?", 
+quiz(question("Исходя из графика, какое значение больше? Среднее значение или значение медианы?", 
            answer("среднее"),
            answer("медиана", correct = TRUE),
            allow_retry = TRUE))
 ```
 
-3. Постройте гистограмму по количеству миль на галон в условиях шоссе (переменная `hwy`)
+2. Постройте гистограмму по количеству миль на галон в условиях шоссе (переменная `hwy`)
 
 ```{r new2, exercise = TRUE}
 ggplot() + ...
 ```
 
-```{r new2-check, echo=FALSE}
-USER_CODE %>% find_value(match_class("ggplot")) %>% 
-  find_call("geom_histogram(whatever)", "you didn't use geom_histogram().") %>% 
-  find_call("aes(whatever)", "you didn't use aesthetics.") %>% 
-  find_names("hwy") %>% find_names("mpg")
-```
-
-```{r echo=F, eval=F}
+```{r  new2-solution, echo = FALSE}
 ggplot() +
   geom_histogram(data = mpg, aes(x = hwy))
 ```
 
-4. Опишите разницу между двумя гистограммами. Какое количество миль чаще проезжают автомобили в условиях города и шоссе?
+```{r new2-check, echo=FALSE}
+test_1 <- find_value(match_class("ggplot"))
+test_2 <-  find_call("geom_histogram(whatever)", "you didn't use geom_histogram().")
+test_3 <- find_call("aes(whatever)", "you didn't use aesthetics.")
+test_4 <- find_statement("hwy")
+test_5 <- find_statement("mpg")
+
+
+USER_CODE %>% test_1 %>% test_2 %>% test_3 %>% test_4 %>% test_5
+```
+
+
+3. Опишите разницу между двумя гистограммами. Какое количество миль чаще проезжают автомобили в условиях города и шоссе?
 
 
 ```{r new4, exercise = TRUE}
 
 ```
-```{r echo=F, eval=F}
+```{r new4-solution, echo=F}
 #Ответ: на шоссе автомобили чаще ппроезжают более дальние расстояния. Большинство автомобилей способны проехать на одном галоне топлива около 27 миль по шоссе в то время, как  городе эта цифра чаще равна примерно 20.
 
 ```
 
 
-5. Добавьте к получившимуся графику линии моды, медианы, а также среднего. Измените внешний вид полученного графика, используя известные вам аргументы функций. Можно ли назвать полученное распределение нормальным? Почему?
+4. Добавьте к получившимуся графику линии моды, медианы, а также среднего. Измените внешний вид полученного графика, используя известные вам аргументы функций. Можно ли назвать полученное распределение нормальным? Почему? 
 
 *В R нет отдельной функции для отображения моды, поэтому необходимо воспользоваться кодом для ее написания, представленном ниже*
 
-```{r}
+```{r new5-setup}
 Mode <- function(x) {
 ux <- unique(x)
 ux[which.max(tabulate(match(x, ux)))]
 }
 ```
-
-
-```{r new5, exercise = TRUE}
+```{r new5, exercise = TRUE, exercise.setup = "new5-setup",}
 ggplot() + ...
 ```
-
-```{r new5-check, echo=FALSE}
-USER_CODE %>% find_value(match_class("ggplot")) %>% 
-  find_call("geom_histogram(whatever)", "you didn't use geom_histogram().") %>% 
-  find_call("aes(whatever)", "you didn't use aesthetics.") %>% 
-  find_names("hwy") %>% find_names("mpg") %>% find()
-#Полученное распределение нельзя назвать нормальным, так как мода, медиана и среднее не совпадают. Большая часть машин проезжает около 27 миль с учетом одного галона топлива в условиях шоссе. При этом очень маленькое количество автомобилей проезжаетт больше 30 миль на галон.
-```
-
-```{r echo=F, eval=F}
-ggplot() +
-  geom_histogram(data = mpg, aes(x = hwy))
-
+```{r new5-solution, echo=F}
 ggplot() +
   geom_histogram(data = mpg, aes(x = hwy), binwidth = 1, fill="#6495ED", col="#00008B", alpha = 0.5)  + 
   ggtitle("Распределение количества миль на один галон топлив\nв условиях шоссе") + 
@@ -305,19 +296,50 @@ ggplot() +
   ylab("Количество") +
   geom_vline(aes(xintercept = mean(mpg$hwy)), linetype="dashed", color="#8B0000", size=1) +
   geom_vline(aes(xintercept = median(mpg$hwy)), linetype="dotted", color="#8B0000", size=1) + 
-  geom_vline(aes(xintercept = median(mpg$hwy)), linetype="solid", color="#A9A9A9", size=1) + 
+  geom_vline(aes(xintercept = Mode(mpg$hwy)), linetype="solid", color="#A9A9A9", size=1) + 
   theme_bw()
 ```
 
-6. Постройте фасетки для сравнения распределения количества миль на галон в городе для автомобилей разных марок. Опишите различия между графиками в фасетке.
+```{r echo=FALSE}
+#проверку не получилось сделать из-за функции 
 
-```{r}
-#ответ 
-ggplot() +
-  geom_histogram(data = mpg, aes(x = cty), fill = "#F08080", binwidth = 1) + ylab("Частота") + xlab("Количество миль на галон") + ggtitle("Распределение количества миль на галон в городе\nдля авто разных марок") + theme_minimal() + facet_grid(~drv)
+#Полученное распределение нельзя назвать нормальным, так как мода, медиана и среднее не совпадают. Большая часть машин проезжает около 27 миль с учетом одного галона топлива в условиях шоссе. При этом очень маленькое количество автомобилей проезжаетт больше 30 миль на галон.
 ```
 
-## Столбчатая диаграмма:
+
+5. Постройте фасетки для сравнения распределения количества миль на галон в городе для автомобилей разных марок (`drv`). Опишите различия между графиками в фасетке.
+
+```{r new01, exercise = TRUE}
+ggplot() + 
+  geom_histogram(...) + 
+  ...
+```
+```{r  new01-solution, echo = FALSE}
+ggplot() +
+  geom_histogram(data = mpg, aes(x = cty), fill = "#F08080", binwidth = 1) + 
+  ylab("Частота") + 
+  xlab("Количество миль на галон") + 
+  ggtitle("Распределение количества миль на галон в городе\nдля авто разных марок") + 
+  theme_minimal() + 
+  facet_grid(~drv)
+```
+
+```{r new01-check, echo=FALSE}
+t_gg <- find_value(match_class("ggplot")) 
+t_aes <- find_call("aes()", "you didn't use aesthetics.")
+t_mpg <- find_statement("mpg", "use mpg")
+t_set <- all_tests(t_gg, t_aes, t_mpg)
+t_hist <- find_call("geom_histogram()", "you didn't use geom_histogram().") 
+t_bar <- find_call("geom_bar()", "you didn't use geom_bar().")
+
+t_1 <- find_call("facet_grid()", "use facet_grid()")
+t_2 <- find_statement("facet_grid(~drv)", "write facet_grid(~drv)")
+
+
+USER_CODE %>% t_gg %>% t_hist %>% t_1 %>% t_2
+```
+
+## Столбчатая диаграмма
 
 - используется в основном для отображения количественных характеристик категориальной переменной
 - по умолчанию можно построить график на основе лишь одной категориальной переменной, для каждого элемента которой будет посчитано частота его встречаемости в базе данных
@@ -559,7 +581,7 @@ ggplot() +
 #Ответ: 4
 ```
 
-## Диаграмма рассеяния:
+## Диаграмма рассеяния
 
 - показывает взаимосвязи между переменными
 - отражает числовые переменные на осях

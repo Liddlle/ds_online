@@ -113,32 +113,64 @@ $(document).ready(function () {
 
 <div class="tutorial-exercise-support" data-label="exe22-setup" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>library(ggplot2)
-data(mpg)</code></pre>
+data(mpg)
+
+Mode &lt;- function(x) {
+ux &lt;- unique(x)
+ux[which.max(tabulate(match(x, ux)))]
+}</code></pre>
 </div>
 <div class="tutorial-exercise" data-label="exe22" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>ggplot() +
-  geom_histogram(data = mpg, aes(x = cty), binwidth = 1, fill=&quot;#008080&quot;, col=&quot;#483D8B&quot;, alpha = 0.5)  + 
-  ggtitle(&quot;Распределение количества миль на один галон топлива\nв условиях города&quot;) + 
+  geom_histogram(data = mpg, aes(x = hwy), binwidth = 1, fill=&quot;#6495ED&quot;, col=&quot;#00008B&quot;, alpha = 0.5)  + 
+  ggtitle(&quot;Распределение количества миль на один галон топлив\nв условиях шоссе&quot;) + 
   xlab(&quot;Мили&quot;) + 
   ylab(&quot;Количество&quot;) +
-  geom_vline(aes(xintercept = mean(mpg$cty)), linetype=&quot;dashed&quot;, color=&quot;#8B0000&quot;, size=1) +
-  geom_vline(aes(xintercept = median(mpg$cty))) + 
+  geom_vline(aes(xintercept = mean(mpg$hwy)), linetype=&quot;dashed&quot;, color=&quot;#8B0000&quot;, size=1) +
+  geom_vline(aes(xintercept = median(mpg$hwy)), linetype=&quot;dotted&quot;, color=&quot;#8B0000&quot;, size=1) + 
+  geom_vline(aes(xintercept = Mode(mpg$hwy)), linetype=&quot;solid&quot;, color=&quot;#A9A9A9&quot;, size=1) + 
   theme_bw()</code></pre>
 <script type="application/json" data-opts-chunk="1">{"fig.width":7,"fig.height":5,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":672,"warning":true,"error":false,"message":true,"exercise.df_print":"default","exercise.setup":"exe22-setup","exercise.checker":["function (label = NULL, user_code = NULL, solution_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    ..., debug = FALSE) ","{","    if (debug) {","        save_file_name <- sprintf(\"~/Downloads/CheckR/chunk-%s.rds\", ","            label)","        saveRDS(list(label = label, user_code = user_code, solution_code = solution_code, ","            check_code = check_code, envir = envir_result, evaluate_result = evaluate_result), ","            file = save_file_name)","    }","    if (is.null(envir_result)) {","        res <- pre_check_code(user_code, check_code)","        if (nchar(res) > 0) ","            return(list(message = res, correct = FALSE))","        else return(TRUE)","    }","    USER_CODE <- capture.code(user_code)","    SOLN_CODE <- if (is.null(solution_code)) ","        \"\"","    else try(capture.code(solution_code), silent = TRUE)","    if (inherits(SOLN_CODE, \"try-error\")) ","        stop(\"Problem author, there is an error in the solution code.\")","    test_envir <- new.env()","    assign(\"USER_CODE\", USER_CODE, envir = test_envir)","    assign(\"SOLN_CODE\", SOLN_CODE, envir = test_envir)","    commands <- parse(text = paste(check_code, collapse = \"\\n\"))","    final_result <- list(correct = TRUE, message = \"passed\", ","        user_code = user_code, type = \"success\", location = \"prepend\")","    for (k in 1:length(commands)) {","        R <- eval(commands[k], envir = test_envir)","        if (is.test_result(R) || is.capture(R)) {","            if (R$passed) ","                next","            else {","                final_result$message <- paste(\"Sorry, but\", R$message)","                final_result$correct = FALSE","                final_result$type = \"info\"","                break","            }","            stop(\"Shouldn't get here. Statement returned neither a test result or a capture.\")","        }","    }","    if (final_result$correct) {","        final_result$message <- get_success_message()","    }","    log_entry <- list(user = get_user_name(), date = format(as.POSIXlt(Sys.time()), ","        usetz = TRUE), label = label, message = final_result$message, ","        correct = final_result$correct, user_code = final_result$user_code)","    logger_fun <- options(\"checkr.logger\")[[1]]","    logger_fun(log_entry)","    final_result","}"]}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="exe22-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>test_1 &lt;- find_statement(&quot;aes(x = cty)&quot;, &quot;variable &#39;cty&#39; goes on the x axis&quot;)
+<pre class="text"><code>t_1 &lt;- find_names(&quot;hwy&quot;) 
+t_2 &lt;- find_call(&quot;median()&quot;, &quot;you didn&#39;t use median()&quot;)
+t_3 &lt;- find_call(&quot;mean()&quot;, &quot;you didn&#39;t use mean()&quot;) 
+t_4 &lt;- find_call(&quot;Mode()&quot;, &quot;you didn&#39;t use Mode()&quot;)
+USER_CODE %&gt;% t_1 %&gt;% t_2 %&gt;% t_3 %&gt;% t_4</code></pre>
+</div>
+<pre class="r"><code>test_1 &lt;- find_statement(&quot;aes(x = cty)&quot;, &quot;variable &#39;cty&#39; goes on the x axis&quot;)
 test_2 &lt;- find_call(&quot;geom_vline()&quot;, &quot;include &#39;geom_vline()&#39;&quot;)
 test_3 &lt;- find_call(&quot;geom_histogram()&quot;, &quot;include a &#39;geom_histogram()&#39; layer&quot;)
 test_4 &lt;- find_statement(&quot;mpg&quot;) 
-test_5 &lt;- find_statement(&quot;median(whatever)&quot;, &quot;you didn&#39;t use median()&quot;)
+test_5 &lt;- find_call(&quot;median()&quot;, &quot;you didn&#39;t use median()&quot;)
 
 
 USER_CODE %&gt;% test_1 %&gt;% test_2 %&gt;% test_3 %&gt;% test_4 %&gt;% test_5</code></pre>
-</div>
 <p>flData = nycflights13::flights flData = na.omit(flData)</p>
 <p>flData = filter(flData, month == 6 | month == 7 | month == 8) flData = filter(flData, dest == “MIA”) flData = arrange(flData, year, month, day) flData = arrange(flData, desc(dep_delay)) flData = dplyr::select(flData, tail_num = tailnum, dep_delay:arr_delay) flData = dplyr::select(flData, -arr_time) flData = mutate(flData, dep_arr_dif = arr_delay - dep_delay) flData = group_by(flData, tail_num) tail_dif = dplyr::summarise(flData, median_dif = median(dep_arr_dif)) flData = inner_join(x = flData, y = tail_dif, by = “tail_num”)</p>
 flData = arrange(flData, median_dif) 
+<script type="application/shiny-prerendered" data-context="server-start">
+library(learnr)
+library(checkr)
+library(tidyverse)
+library(datasets)
+knitr::opts_chunk$set(exercise.checker = checkr::checkr_tutor)
+
+t_gg <- find_value(match_class("ggplot")) 
+t_aes <- find_call("aes()", "you didn't use aesthetics.")
+t_mpg <- find_statement("mpg", "use mpg")
+t_set <- all_tests(t_gg, t_aes, t_mpg)
+t_gist <- find_call("geom_histogram()", "you didn't use geom_histogram().") 
+t_bar <- find_call("geom_bar()", "you didn't use geom_bar().")
+
+Mode <- function(x) {
+ux <- unique(x)
+ux[which.max(tabulate(match(x, ux)))]
+}
+
+</script>
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::register_http_handlers(session, metadata = NULL)
 </script>

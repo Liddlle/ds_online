@@ -9,37 +9,66 @@ runtime: shiny_prerendered
 ---
 
 
-```{r include=FALSE}
+```{r setup, include=FALSE}
 library(learnr)
 library(checkr)
 library(tidyverse)
 library(datasets)
 knitr::opts_chunk$set(exercise.checker = checkr::checkr_tutor)
+
+t_gg <- find_value(match_class("ggplot")) 
+t_aes <- find_call("aes()", "you didn't use aesthetics.")
+t_mpg <- find_statement("mpg", "use mpg")
+t_set <- all_tests(t_gg, t_aes, t_mpg)
+t_gist <- find_call("geom_histogram()", "you didn't use geom_histogram().") 
+t_bar <- find_call("geom_bar()", "you didn't use geom_bar().")
+
+Mode <- function(x) {
+ux <- unique(x)
+ux[which.max(tabulate(match(x, ux)))]
+}
+
 ```
 
 
 ```{r exe22-setup, echo = FALSE}
 library(ggplot2)
 data(mpg)
+
+Mode <- function(x) {
+ux <- unique(x)
+ux[which.max(tabulate(match(x, ux)))]
+}
+
 ```
 
 ```{r exe22, exercise = TRUE, exercise.setup = "exe22-setup", exercise.eval = FALSE}
+
 ggplot() +
-  geom_histogram(data = mpg, aes(x = cty), binwidth = 1, fill="#008080", col="#483D8B", alpha = 0.5)  + 
-  ggtitle("Распределение количества миль на один галон топлива\nв условиях города") + 
+  geom_histogram(data = mpg, aes(x = hwy), binwidth = 1, fill="#6495ED", col="#00008B", alpha = 0.5)  + 
+  ggtitle("Распределение количества миль на один галон топлив\nв условиях шоссе") + 
   xlab("Мили") + 
   ylab("Количество") +
-  geom_vline(aes(xintercept = mean(mpg$cty)), linetype="dashed", color="#8B0000", size=1) +
-  geom_vline(aes(xintercept = median(mpg$cty))) + 
+  geom_vline(aes(xintercept = mean(mpg$hwy)), linetype="dashed", color="#8B0000", size=1) +
+  geom_vline(aes(xintercept = median(mpg$hwy)), linetype="dotted", color="#8B0000", size=1) + 
+  geom_vline(aes(xintercept = Mode(mpg$hwy)), linetype="solid", color="#A9A9A9", size=1) + 
   theme_bw()
-
 ```
 ```{r exe22-check, echo = FALSE}
+t_1 <- find_names("hwy") 
+t_2 <- find_call("median()", "you didn't use median()")
+t_3 <- find_call("mean()", "you didn't use mean()") 
+t_4 <- find_call("Mode()", "you didn't use Mode()")
+USER_CODE %>% t_1 %>% t_2 %>% t_3 %>% t_4
+
+```
+
+```{r eval = FALSE}
 test_1 <- find_statement("aes(x = cty)", "variable 'cty' goes on the x axis")
 test_2 <- find_call("geom_vline()", "include 'geom_vline()'")
 test_3 <- find_call("geom_histogram()", "include a 'geom_histogram()' layer")
 test_4 <- find_statement("mpg") 
-test_5 <- find_statement("median(whatever)", "you didn't use median()")
+test_5 <- find_call("median()", "you didn't use median()")
 
 
 USER_CODE %>% test_1 %>% test_2 %>% test_3 %>% test_4 %>% test_5
