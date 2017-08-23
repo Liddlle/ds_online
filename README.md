@@ -36,9 +36,10 @@ https://bookdown.org/
 - https://www2.stat.duke.edu/courses/Fall15/sta112.01/data/ 
 - kaggle  
   
-  
-https://github.com/rstudio/learnr/tree/master/examples  
-немного введения в р  
+
+learnr и checkr
+https://rstudio.github.io/learnr/
+https://github.com/dtkaplan/checkr/blob/master/vignettes/checking-code.Rmd
 
 
 Как на степике добавить задание с датасетом:

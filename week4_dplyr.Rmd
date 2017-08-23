@@ -1,10 +1,6 @@
 ---
 title: "Data manipulations"
-output: 
-learnr::tutorial: default
-html_document: 
-number_sections: no
-toc: no
+output: learnr::tutorial
 runtime: shiny_prerendered
 ---
 
@@ -17,8 +13,10 @@ knitr::opts_chunk$set(error = TRUE)
 tutorial_options(exercise.timelimit = 60)
 
 flData = nycflights13::flights
-colleges = ISLR::College
+flData = na.omit(flData)
 
+colleges = ISLR::College
+flights = nycflights13::flights
 ```
 
 ##Предисловие
@@ -45,13 +43,9 @@ library(dplyr)
 library(ggplot2)
 ```
 
-Чтобы познакомиться с переменными в базе, введите `?flights`
+Чтобы познакомиться с переменными в базе, наберите в консоли `?nycflights13::flights`.
 
-```{r eval=FALSE}
-#?nycflights13::flights
-```
-
-Посмотрим, сколько наблюдений и переменных в базе, а также выведем 3 первые строчки. 
+Посмотрим, сколько наблюдений и переменных в таблице, а также выведем 3 первые строчки. 
 
 ```{r ex1, exercise = TRUE}
 dim(flights)
@@ -60,7 +54,7 @@ head(flights, n = 3)
 
 Удалим все строки с `NA` - not available (строки, в которых есть хотя бы одно пропущенное значение).
 
-```{r ex2, exercise = TRUE}
+```{r eval=F}
 flData = nycflights13::flights
 flData = na.omit(flData)
 ```
@@ -79,7 +73,7 @@ head(flData, n = 3)
 1) Нарисуйте boxplot (ящик с усами), в котором по оси X будут аэропорты Нью-Йорка, из которых вылетают самолеты, а по оси Y - дистанция.
 
 ```{r ex4, exercise = TRUE}
-ggplot(data = flData) + ...
+ggplot(data = flData) + geom_boxplot(...)
 ```
 ```{r ex4-check, echo=FALSE}
 test_1 <- find_call("aes(x = origin, y = whatever)", "variable 'origin' goes on the x axis")
@@ -102,9 +96,10 @@ ggplot() + geom_boxplot(data = flData, aes(x = origin, y = distance))
 
 
 
-2) Нарисуйте гистограмму по переменной `hour`. Посмотрите, как работает параметр *coord_flip*. Также вспомните, как менять цвет у графика.
+2) Нарисуйте гистограмму по переменной `hour`. Посмотрите, как работает параметр `coord_flip()`. Также вспомните, как менять цвет у графика.
 
 ```{r ex5, exercise = TRUE}
+ggplot(data = flData) + geom_histogram(...)
 
 ```
 ```{r ex5-check, echo=FALSE}
@@ -123,7 +118,7 @@ USER_CODE %>% test_1 %>% test_3 %>% test_4 %>% test_6
 ```
 
 ```{r ex5-solution, echo = FALSE}
-ggplot() + geom_histogram(data = flData, aes(x = hour)) 
+ggplot() + geom_histogram(data = flData, aes(x = hour)) + coord_flip()
 
 ```
 
@@ -132,6 +127,7 @@ ggplot() + geom_histogram(data = flData, aes(x = hour))
 
 
 ```{r ex6, exercise = TRUE}
+ggplot(data = flData) + geom_bar(...)
 
 ```
 ```{r ex6-check, echo=FALSE}
@@ -157,18 +153,18 @@ ggplot() + geom_bar(data = flData, aes(x = carrier, fill = origin))
 
 Сначала напоминание про основную пунктуацию:
 
-* < - меньше
-* == - равно
-* != - не равно
-* | - или (выполнено хотя бы одно из условий)
-* & - и (выполнены оба условия)
-* ! - не 
-* : - интервал (a:b - все от a до b)
+* `<`  - меньше
+* `==` - равно
+* `!=` - не равно
+* `|`  - или (выполнено хотя бы одно из условий)
+* `&`  - и (выполнены оба условия)
+* `!`  - не 
+* `:`  - интервал (a:b - все от a до b)
 
 Переходим к основным функциям из пакета `dplyr`. 
 
 
-### Выбраем подмножество строк с filter()
+## Подмножество строк с filter()
 
 Допустим, нас интересуют только полеты в летние месяцы
 
@@ -190,45 +186,66 @@ ggplot(data = flData) + geom_boxplot(aes(x = origin, y = distance))
 
 Теперь отберем только те рейсы, в которых пункт назначения Майами (MIA - Miami International Airport)
 
-```{r ex9, exercise=T}
+```{r exe9-setup, echo = FALSE}
+flData = filter(flData, month == 6 | month == 7 | month == 8)
+
+```
+```{r exe9, exercise = TRUE, exercise.setup = "exe9-setup", exercise.eval = FALSE}
 flData = filter(flData, dest == "MIA")
 ggplot(data = flData) + geom_bar(aes(x = month, fill = origin), position = "dodge")
 ```
 
-### Упорядочить значения с arrange()
+## Упорядочить значения с arrange()
 
 Упорядочим рейсы по времени вылета
-```{r ex10, exercise=T}
+```{r exe10-setup, echo = FALSE}
+flData = filter(flData, month == 6 | month == 7 | month == 8)
+flData = filter(flData, dest == "MIA")
+
+```
+```{r exe10, exercise = TRUE, exercise.setup = "exe10-setup", exercise.eval = FALSE}
 #?arrange
 flData = arrange(flData, year, month, day)
 head(flData)
 ```
 
 И по задержке прилета в убывающем порядке - для этого добавляется функция `desc()` 
-```{r  ex11, exercise=T}
+```{r exe11-setup, echo = FALSE}
+flData = filter(flData, month == 6 | month == 7 | month == 8)
+flData = filter(flData, dest == "MIA")
+flData = arrange(flData, year, month, day)
+```
+```{r exe11, exercise = TRUE, exercise.setup = "exe11-setup", exercise.eval = FALSE}
 flData = arrange(flData, desc(dep_delay))
 head(flData)
 ```
 
 
-###  Отбор переменных с select()
+## Отбор переменных с select()
 
 При работе с большим таблицами иногда бываются интересны для анализа только некоторые переменные. Отберем для простоты дальнейшего анализа только данные о номере рейса и задержках, удалим из рассмотрения переменную `arr_time`. 
 
-```{r ex12, exercise=T}
+```{r exe12-setup, echo = FALSE}
+flData = filter(flData, month == 6 | month == 7 | month == 8)
+flData = filter(flData, dest == "MIA")
+flData = arrange(flData, year, month, day)
+flData = arrange(flData, desc(dep_delay))
+```
+```{r exe12, exercise = TRUE, exercise.setup = "exe12-setup", exercise.eval = FALSE}
 #?select
 str(flData)
-flData = dplyr::select(flData, tailnum, dep_delay:arr_delay)
-flData = dplyr::select(flData, -arr_time)
+flData = dplyr::select(flData, tailnum, dep_delay:arr_delay, -arr_time)
 str(flData)
 ```
 
 Переименуем переменную `tailnum` для единообразия в `tail_num`
-```{r ex13, exercise=T}
+```{r eval=F}
 flData = rename(flData, tail_num = tailnum)
 ```
 
-### Группировка. summarise() & mutate()
+## Сгруппированные данные 
+
+### summarise() & mutate()
 
 **Ваша очередь:** В чем отличия функций `summarise()` и `mutate()`?
 Иногда бывает, что в результате исполнения функции вы получаете ошибку, хотя кажется, что сделали все правильно. Одной из причин такого может быть то, что две функции с одинаковым названием существуют в двух одновременно подгруженных библиотеках. Такое, например, часто бывает с функциями `library(dplyr)` и его предшественника `library(plyr)`. В таких ситуациях спасает отключение пакета во вкладке Packages в окне с каталогом файлов или принудительный призыв функции с указанием пакета: `dplyr::summarise()`.
@@ -239,8 +256,7 @@ flData = rename(flData, tail_num = tailnum)
 ```
 
 ```{r quiz1, echo = FALSE}
-quiz(caption = "",
-     question("Какая функция используется для создания новых переменных:", 
+quiz(question("Какая функция используется для создания новых переменных:", 
             answer("summarise()"), 
            answer("group_by()"),
            answer("mutate()", correct = TRUE),
@@ -249,8 +265,15 @@ quiz(caption = "",
            allow_retry = TRUE))
 ```
 
-
-```{r ex14, exercise=T}
+```{r exe14-setup, echo = FALSE}
+flData = filter(flData, month == 6 | month == 7 | month == 8)
+flData = filter(flData, dest == "MIA")
+flData = arrange(flData, year, month, day)
+flData = arrange(flData, desc(dep_delay))
+flData = dplyr::select(flData, tail_num = tailnum, dep_delay:arr_delay)
+flData = dplyr::select(flData, -arr_time)
+```
+```{r exe14, exercise = TRUE, exercise.setup = "exe14-setup", exercise.eval = FALSE}
 flData = mutate(flData, dep_arr_dif = arr_delay - dep_delay)
 head(flData, 3)
 summarise(flData, mean_dif = mean(dep_arr_dif))
@@ -262,7 +285,16 @@ summarise(flData, mean_dif = mean(dep_arr_dif))
 ### group_by()
 
 Если нам нужно значение не для всей выборки, а для каждого из рейсов (категориальная переменная/фактор), то мы сначала группируем по номеру рейса, а затем вычисляем нужную характеристику
-```{r ex15, exercise=T}
+```{r exe15-setup, echo = FALSE}
+flData = filter(flData, month == 6 | month == 7 | month == 8)
+flData = filter(flData, dest == "MIA")
+flData = arrange(flData, year, month, day)
+flData = arrange(flData, desc(dep_delay))
+flData = dplyr::select(flData, tail_num = tailnum, dep_delay:arr_delay)
+flData = dplyr::select(flData, -arr_time)
+flData = mutate(flData, dep_arr_dif = arr_delay - dep_delay)
+```
+```{r exe15, exercise = TRUE, exercise.setup = "exe15-setup", exercise.eval = FALSE}
 flData = group_by(flData, tail_num)
 tail_dif = dplyr::summarise(flData, median_dif = median(dep_arr_dif))
 head(tail_dif)
@@ -270,7 +302,7 @@ head(tail_dif)
 
 **NB** `summarise()` наиболее полезен в связке после `group_by()`
 
-##Объединение таблиц
+## Объединение нескольких таблиц 
 
 Для объединения нескольких датасетов в один по какой-либо из переменных используются функции join().
 
@@ -296,17 +328,32 @@ quiz(caption = "",
 ```
 
 Чтобы запомнить свойства join-функций иногда используются диаграммы Венна:
-![](http://r4ds.had.co.nz/diagrams/join-venn.png)
+```{r, out.width = "800px"}
+knitr::include_graphics("http://r4ds.had.co.nz/diagrams/join-venn.png")
+```
 
 
-```{r  ex16, exercise=T}
+```{r exe16-setup, echo = FALSE}
+flData = na.omit(flights)
+
+flData = filter(flData, month == 6 | month == 7 | month == 8)
+flData = filter(flData, dest == "MIA")
+flData = arrange(flData, year, month, day)
+flData = arrange(flData, desc(dep_delay))
+flData = dplyr::select(flData, tail_num = tailnum, dep_delay:arr_delay)
+flData = dplyr::select(flData, -arr_time)
+flData = mutate(flData, dep_arr_dif = arr_delay - dep_delay)
+flData = group_by(flData, tail_num)
+tail_dif = dplyr::summarise(flData, median_dif = median(dep_arr_dif))
+```
+```{r exe16, exercise = TRUE, exercise.setup = "exe16-setup", exercise.eval = FALSE}
 flData = left_join(x = flData, y = tail_dif, by = "tail_num")
 str(flData)
 flData = arrange(flData, median_dif)
 head(flData, 5)
 ```
 
-## Пайпы (`%>%`)
+## Pipes (`%>%`)   
 
 Снова загрузим первоначальный датасету 
 ```{r eval=F}
@@ -359,7 +406,7 @@ delays = flights %>%
 ```
 
 
-## Упражнения
+##Exercises
 
 Загрузим базу по колледжам Америки. Подробнее тут: `?ISLR::College`
 
@@ -458,7 +505,7 @@ colleges = dplyr::select(colleges, ...)
 ```
 
 ```{r exe20-solution, echo = FALSE}
-colleges = dplyr::select(colleges, acceptance_rate, enrolled_rate, Private)
+colleges = select(colleges, acceptance_rate, enrolled_rate, Private)
 
 ```
 
@@ -511,6 +558,8 @@ ggplot(data = colleges) + geom_boxplot(aes(Private, enrolled_rate))
 
 
 ```{r exe22-setup, echo = FALSE}
+colleges = ISLR::College
+
 colleges = filter(colleges, Grad.Rate<50) %>%  mutate(acceptance_rate = Accept/Apps,
                   enrolled_rate = Enroll/Accept)
 
@@ -527,18 +576,18 @@ colleges %>% group_by(...) %>% summarise(...)
 ```
 
 ```{r exe22-solution, echo = FALSE}
-colleges %>% group_by(Private) %>% dplyr::summarise(mean_acceptance = mean(acceptance_rate),
-                                                    mean_enrolled = mean(enrolled_rate))
+colleges %>% group_by(Private) %>% summarise(mean_acceptance = mean(acceptance_rate),
+                                             mean_enrolled = mean(enrolled_rate))
 
 ```
 
 ```{r exe22-check, echo = FALSE}
 test_1 <- find_call("group_by()", "remember to group before summarizing.")
 test_2 <- find_names("colleges", "didn't use `colleges` dataset") 
-test_3 <- find_call("group_by(.data = whatever, Private)", "break down the result by `cyl`")
+test_3 <- find_names("Private", "break down the result by `Private`")
 test_4 <- find_call("summarise()", "use summarise() after grouping")
-test_5 <- find_call("mean(acceptance_rate)", "calculate the mean of acceptance_rate for each group")
-test_6 <- find_call("mean(enrolled_rate)", "calculate the mean of enrolled_rate for each group")
+test_5 <- find_statement("mean(acceptance_rate)", "calculate the mean of acceptance_rate for each group")
+test_6 <- find_statement("mean(enrolled_rate)", "calculate the mean of enrolled_rate for each group")
 
 USER_CODE %>% test_1 %>% test_2  %>%  test_3 %>% test_4 %>% test_5 %>% test_6 
 

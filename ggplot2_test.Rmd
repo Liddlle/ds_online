@@ -1,0 +1,72 @@
+---
+title: "test"
+output: 
+learnr::tutorial: default
+html_document: 
+number_sections: no
+toc: no
+runtime: shiny_prerendered
+---
+
+
+```{r include=FALSE}
+library(learnr)
+library(checkr)
+library(tidyverse)
+library(datasets)
+knitr::opts_chunk$set(exercise.checker = checkr::checkr_tutor)
+```
+
+
+```{r exe22-setup, echo = FALSE}
+colleges = ISLR::College
+
+colleges = filter(colleges, Grad.Rate<50) %>%  mutate(acceptance_rate = Accept/Apps,
+                  enrolled_rate = Enroll/Accept)
+
+colleges = dplyr::select(colleges, acceptance_rate, enrolled_rate, Private)
+
+```
+
+```{r exe22, exercise = TRUE, exercise.setup = "exe22-setup", exercise.eval = FALSE}
+colleges %>% group_by(...) %>% summarise(...)
+
+```
+
+```{r exe22-hint, echo = FALSE}
+```
+
+```{r exe22-solution, echo = FALSE}
+colleges %>% group_by(Private) %>% summarise(mean_acceptance = mean(acceptance_rate),
+                                             mean_enrolled = mean(enrolled_rate))
+
+```
+
+```{r exe22-check, echo = FALSE}
+test_1 <- find_call("group_by()", "remember to group before summarizing.")
+test_2 <- find_names("colleges", "didn't use `colleges` dataset") 
+test_3 <- find_names("Private", "break down the result by `Private`")
+test_4 <- find_call("summarise()", "use summarise() after grouping")
+test_5 <- find_statement("mean(acceptance_rate)", "calculate the mean of acceptance_rate for each group")
+test_6 <- find_statement("mean(enrolled_rate)", "calculate the mean of enrolled_rate for each group")
+
+USER_CODE %>% test_1 %>% test_2  %>%  test_3 %>% test_4 %>% test_5 %>% test_6 
+
+```
+
+
+flData = nycflights13::flights
+flData = na.omit(flData)
+
+flData = filter(flData, month == 6 | month == 7 | month == 8)
+flData = filter(flData, dest == "MIA")
+flData = arrange(flData, year, month, day)
+flData = arrange(flData, desc(dep_delay))
+flData = dplyr::select(flData, tail_num = tailnum, dep_delay:arr_delay)
+flData = dplyr::select(flData, -arr_time)
+flData = mutate(flData, dep_arr_dif = arr_delay - dep_delay)
+flData = group_by(flData, tail_num)
+tail_dif = dplyr::summarise(flData, median_dif = median(dep_arr_dif))
+flData = inner_join(x = flData, y = tail_dif, by = "tail_num")
+
+flData = arrange(flData, median_dif)
