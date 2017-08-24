@@ -5,18 +5,16 @@ runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
-library(learnr)
-library(checkr)
-library(tidyverse)
-data(mpg)
-knitr::opts_chunk$set(exercise.checker = checkr::checkr_tutor, error = TRUE)
-
+library("learnr")
+library("tidyverse")
+library("checkr")
+knitr::opts_chunk$set(exercise.checker = checkr::checkr_tutor)
+knitr::opts_chunk$set(error = TRUE)
 tutorial_options(exercise.timelimit = 60)
-
 
 ```
 
-## Библиотека `ggplot2`
+## `ggplot2` package
 
 > “The simple graph has brought more information to the data analyst’s mind than any other device.” — John Tukey
 
@@ -76,17 +74,16 @@ ggplot(data = <DATA>) +
 
 
 
-## Гистограмма
+## Histogram
 
 - используется для описания формы *распределения*
 - показывает *плотность* данных (чем выше столбец диаграммы, тем выше плотность)
 - строится на основе *одной непрерывной переменной*
 - в лучшей мере реперезентирует распределение *больших данных* (в сравнении с диаграммой рассеяния)
     
-Перед началом построения графика загрузим библиотеку ggplot2, а также базу данных, содержащую наблюдения для 38 моделей автомобилей.
+Перед началом построения графика загрузим `library(ggplot2)`, а также базу данных, содержащую наблюдения для 38 моделей автомобилей.
 
 ```{r ex1, exercise = TRUE}
-library(ggplot2)
 data(mpg)
 head(mpg, n = 3) #смотрим на первые три наблюдения, представленные в базе данных
 ```
@@ -115,7 +112,7 @@ ggplot() +
 
 Важным шагом при построении графика является добавление названий осей, а также самого графика. Для добавления данных элементов необходимо использовать функции `xlab` для подписи оси X, `ylab` для подписи оси Y, `ggtitle` для добавления названия графика через оператор `+`. Для того, чтобы вместить длинное название для графика, можно использовать `\n` для переноса текста на следующую строку.
 
-```{r ex4, exercise = TRUE}
+```{r new20, exercise = TRUE}
 ggplot() +
   geom_histogram(data = mpg, aes(x = cty)) + 
   ggtitle("Распределение количества миль на один галон топлива\nв условиях города") + 
@@ -193,11 +190,11 @@ ggplot() +
   geom_histogram(data = mpg, aes(x = cty), fill = "#6495ED", binwidth = 5) + ylab("Частота") + xlab("Количество миль на галон") + ggtitle("Распределение количества миль на галон для авто\nразных классов") + theme_minimal() + facet_grid(~class)
 ```
 
-## Гистограмма: упражнения
+## Histogram: exercises
 
 1. Добавьте к существующему графику линию медианы. (Функция `median`)
 
-```{r new1, exercise = TRUE}
+```{r new111, exercise = TRUE}
 ggplot() +
   geom_histogram(data = mpg, aes(x = cty), binwidth = 1, fill="#008080", col="#483D8B", alpha = 0.5)  + 
   ggtitle("Распределение количества миль на один галон топлива\nв условиях города") + 
@@ -205,7 +202,7 @@ ggplot() +
   ylab("Количество") +
   geom_vline(aes(xintercept = mean(mpg$cty)), linetype="dashed", color="#8B0000", size=1) +
   theme_bw() +
-  geom_vline(#добавьте медиану)
+  #добавьте медиану
 
 ```
 
@@ -220,7 +217,7 @@ ggplot() +
   theme_bw()
 ```
 
-```{r new1-check, echo=FALSE}
+```{r new111-check, echo=FALSE}
 test_1 <- find_statement("aes(x = cty)", "variable 'cty' goes on the x axis")
 test_2 <- find_call("geom_vline()", "include 'geom_vline()'")
 test_3 <- find_call("geom_histogram()", "include a 'geom_histogram()' layer")
@@ -269,7 +266,7 @@ USER_CODE %>% test_1 %>% test_2 %>% test_3 %>% test_4 %>% test_5
 ```{r new4, exercise = TRUE}
 
 ```
-```{r new4-solution, echo=F}
+```{r echo=F}
 #Ответ: на шоссе автомобили чаще ппроезжают более дальние расстояния. Большинство автомобилей способны проехать на одном галоне топлива около 27 миль по шоссе в то время, как  городе эта цифра чаще равна примерно 20.
 
 ```
@@ -279,16 +276,26 @@ USER_CODE %>% test_1 %>% test_2 %>% test_3 %>% test_4 %>% test_5
 
 *В R нет отдельной функции для отображения моды, поэтому необходимо воспользоваться кодом для ее написания, представленном ниже*
 
-```{r new5-setup}
+```{r eval=F}
 Mode <- function(x) {
 ux <- unique(x)
 ux[which.max(tabulate(match(x, ux)))]
 }
 ```
-```{r new5, exercise = TRUE, exercise.setup = "new5-setup",}
+```{r new5, exercise = TRUE, exercise.setup = "new5-setup"}
+Mode <- function(x) {
+ux <- unique(x)
+ux[which.max(tabulate(match(x, ux)))]
+}
+
 ggplot() + ...
 ```
 ```{r new5-solution, echo=F}
+Mode <- function(x) {
+ux <- unique(x)
+ux[which.max(tabulate(match(x, ux)))]
+}
+
 ggplot() +
   geom_histogram(data = mpg, aes(x = hwy), binwidth = 1, fill="#6495ED", col="#00008B", alpha = 0.5)  + 
   ggtitle("Распределение количества миль на один галон топлив\nв условиях шоссе") + 
@@ -339,10 +346,10 @@ t_2 <- find_statement("facet_grid(~drv)", "write facet_grid(~drv)")
 USER_CODE %>% t_gg %>% t_hist %>% t_1 %>% t_2
 ```
 
-## Столбчатая диаграмма
 
+## Bar chart
 - используется в основном для отображения количественных характеристик категориальной переменной
-- по умолчанию можно построить график на основе лишь одной категориальной переменной, для каждого элемента которой будет посчитано частота его встречаемости в базе данных
+- по умолчанию можно построить график на основе лишь одной **категориальной** переменной, для каждого элемента которой будет посчитано частота его встречаемости в базе данных
 
 Какой класс автомобилей встречается в базе данных чаще всего?
 
@@ -408,7 +415,7 @@ ggplot() +
 
 ### **Изменение расположения осей на примере столбчатой диаграммы**
 
-Для более наглядного отображения данных на графике зачастую требуется поменять оси местами. Для этого необходимо к существующему графику, в данном случае столбчатой диаграмме, добавить слой с функцией 'coord_flip()'.
+Для более наглядного отображения данных на графике зачастую требуется поменять оси местами. Для этого необходимо к существующему графику, в данном случае столбчатой диаграмме, добавить слой с функцией `coord_flip()`.
 
 ```{r}
 ggplot() +
@@ -420,28 +427,28 @@ ggplot() +
   coord_flip()
 ```
 
-### **Столбчатая диаграмма: упражнения**
+## Bar chart: exercises
 
 1. Постройте столбчатую диаграмму, в которой ось X будет отражать тип топлива, а ось Y - количество миль на галон на шоссе. Поменяйте оси местами при помощи функции 'coord_flip()'.
-
-Ответ:
 
 ```{r new11, exercise = TRUE}
 ggplot() + ...
 ```
 
-```{r new11-check, echo=FALSE}
-USER_CODE %>% find_value(match_class("ggplot")) %>% 
-  find_call("geom_histogram(whatever)", "you didn't use geom_histogram().") %>% 
-  find_call("aes(whatever)", "you didn't use aesthetics.") %>% 
-  find_names("hwy") %>% find_names("mpg")
-```
-
-```{r echo=F, eval=F}
+```{r new11-solution, echo = FALSE}
 ggplot() +
   geom_bar(data = mpg, aes(x = fl, y = hwy), stat = "identity") +
   coord_flip()
+
 ```
+
+```{r new11-check, echo=FALSE}
+USER_CODE %>% find_value(match_class("ggplot")) %>% 
+  find_call("geom_histogram()", "you didn't use geom_histogram().") %>% 
+  find_call("aes()", "you didn't use aesthetics.") %>% 
+  find_names("hwy") %>% find_statement("mpg") %>% find_call("coord_flip()", "didn't use coord_flip()")
+```
+
 
 2. Постройте столбчатую диаграмму, показывающую расход топлива в городе для различных классов машин с разными потребляемыми типами топлива, используя аргументы 'fill' и 'position', а также функцию для изменения палитры 'scale_fill_brewer()'. Опишите получившийся график.
 
@@ -449,14 +456,7 @@ ggplot() +
 ggplot() + ...
 ```
 
-```{r new12-check, echo=FALSE}
-USER_CODE %>% find_value(match_class("ggplot")) %>% 
-  find_call("geom_histogram(whatever)", "you didn't use geom_histogram().") %>% 
-  find_call("aes(whatever)", "you didn't use aesthetics.") %>% 
-  find_names("hwy") %>% find_names("mpg")
-```
-
-```{r echo=F, eval=F}
+```{r new12-solution, echo=F}
 ggplot() +
   geom_bar(data = mpg, aes(x = class, y=cty, fill=fl), position = "dodge", stat = "identity") +
   xlab("Класс автомобиля") +
@@ -466,7 +466,17 @@ ggplot() +
   theme_bw()
 ```
 
-#### Ящик с усами (боксплот):
+```{r new12-check, echo=FALSE}
+USER_CODE %>% find_value(match_class("ggplot")) %>% 
+  find_call("geom_histogram()", "you didn't use geom_histogram().") %>% 
+  find_call("aes()", "you didn't use aesthetics.") %>% 
+  find_statement("hwy") %>% find_statement("mpg") %>% 
+  find_statement("position", "use `position` parameter") %>%
+  find_statement("fill", "use `fill`") %>% 
+  find_call("scale_fill_brewer()", "use `scale_fill_brewer()`")
+```
+
+## Boxplot
 
 - показывает пять статистичесских величин и выбросы в данных
 - отражает категориальную переменную на оси X и числовую на оси Y
@@ -486,13 +496,15 @@ ggplot() +
 
 На данной картинке представлено краткое описание интерпретации боксплота:
 
-! [Структура боксплота] (~/ds_online/boxplot.jpg)
+```{r, out.width = "800px"}
+knitr::include_graphics('https://pp.userapi.com/c837434/v837434250/4d1e2/qHMNcWm0qqY.jpg')
+```
 
 Подробнее [здесь](https://drive.google.com/file/d/0B-DHaDEbiOGkRHNndUlBaHVmaGM/view) на странице 28.
 
 Расмотрим распределение количества миль, которое способны проехать автомобили из базы данных на одном галоне топлива по городу. Для этого присваиваем переменную только оси Y, ось X оставляя без какой-либо переменной.
 
-```{r}
+```{r new13, exercise = T}
 ggplot() +
   geom_boxplot(data = mpg, aes(x = factor(0), y = cty), col = "#E52B50", fill = "#F0F8FF") + xlab(" ") + ylab("Количество миль на галон") + ggtitle("Распределение количества миль на галон") + theme_bw()  #так как мы не обозначаем переменную X используем для оси X значение 0 как фактора.
 ```
@@ -501,21 +513,21 @@ ggplot() +
 
 Так, например, мы можем посмотреть на распределение количества миль на галон для автомобилей разных марок.
 
-```{r}
+```{r new14, exercise = T}
 ggplot() +
   geom_boxplot(data = mpg, aes(x = manufacturer, y = cty)) + xlab("Марка автомобиля") + ylab("Количество миль на галон") + ggtitle("Распределение количества миль на галон\nдля разных марок автомобилей") + theme_bw()  
 ```
 
-Также как и в других типах графиков мы можем добавить дополнительный аргумент 'fill' для рассмотрениия нескольких категориальных переменных в одном боксплоте.
+Также как и в других типах графиков мы можем добавить дополнительный аргумент `fill` для рассмотрениия нескольких категориальных переменных в одном боксплоте.
 
 Например, сравнить количество миль на галон для разных классов автомобилей с учетом их привода. 
 
-```{r}
+```{r new15, exercise = T}
 ggplot() +
   geom_boxplot(data = mpg, aes(x = class, y = cty, fill=drv)) + xlab("Класс") + ylab("Количество миль на галон") + ggtitle("Распределение количества миль на галон для авто\nразных классов с учетом типа привода") + theme_bw()
 ```
 
-## **Ящик с усами/боксплот: упражнения**
+## Boxplot: exercises
 
 1. Сравните представленные графике гистограммы и боксплота. В чем различие между гистограммой и боксплотом? В каком случае лучше применять тот или иной тип графика?
 
@@ -568,20 +580,47 @@ r2 <- ggplot(data = mpg, aes(x = factor(0), y = cty)) +
 multiplot(r1, r2, cols = 2)
 ```
 
-2. Постройте боксплот, показывающий распределение объемов двигателей в зависимости от типа привода. Чему равна медиана объемов двигателей среди полноприводных автомобилей (значение '4' в переменной 'drv')?
+```{r new16, exercise = T}
 
-```{r}
+```
+
+2. Постройте боксплот, показывающий распределение объемов двигателей в зависимости от типа привода. 
+
+```{r new17, exercise = TRUE}
+ggplot(data = mpg) + geom_boxplot(...)
+```
+```{r new17-check, echo=FALSE}
+test_1 <- find_call("aes(x = drv, y = whatever)", "variable 'drv' goes on the x axis")
+test_2 <- find_call("aes(y = displ, x = whatever)", "variable 'displ' goes on the y axis")
+test_3 <- find_call("geom_boxplot()", "include a 'geom_boxplot()' layer")
+test_4 <- find_statement("mpg") 
+
+
+USER_CODE %>% test_1 %>% test_2 %>% test_3 %>% test_4
+```
+
+```{r new17-hint, echo = FALSE}
+```
+
+```{r new17-solution, echo = FALSE}
 ggplot() +
   geom_boxplot(data = mpg, aes(x = drv, y = displ), fill = "#FFA500", col = "#3CB371", alpha = 0.6) +
   xlab("Тип привода") +
   ylab("Объем двигателя") +
   ggtitle("Распределение объемов двигателей в зависимости от типа привода") +
   theme_bw()
-
-#Ответ: 4
 ```
 
-## Диаграмма рассеяния
+```{r quiz3, echo = FALSE}
+quiz(question("Чему равна медиана объемов двигателей среди полноприводных автомобилей (значение '4' в переменной 'drv')?", 
+            answer("2"), 
+           answer("4", correct = T),
+           answer("8"),
+           answer("16"), 
+           allow_retry = TRUE))
+```
+
+## Scatter plot
 
 - показывает взаимосвязи между переменными
 - отражает числовые переменные на осях
@@ -596,7 +635,7 @@ ggplot() +
 
 Так, мы можем построить диаграмму рассеяния для того, чтобы посмотреть, как меняется количество миль на галон в городе при изменении объема двигателя автомобиля. 
 
-```{r}
+```{r new18, exercise = T}
 ggplot() +
   geom_point(data = mpg, aes(x = displ, cty)) +
   xlab("Объем двигателя") +
@@ -609,7 +648,7 @@ ggplot() +
 
 Рассмотрим различие в соотношении между количеством миль на галон и объемом двигателя для автомобилей с разными типами привода, отмечая каждый тип своей формой.
 
-```{r}
+```{r  new19, exercise = T}
 ggplot() +
   geom_point(data = mpg, aes(x = displ, y = cty, shape = drv)) +
   xlab("Объем двигателя") +
@@ -621,11 +660,30 @@ ggplot() +
 
 Из графика видно, что взаимосвязь нелинейна. При этом, наибольшее кольчество миль на галон при маленьком объеме двигателя проезжают автомобили с передним приводом. 
 
-## Диаграмма рассеяния: упражнения
+### Упражнения
 
-Постройте фасетку с распределением количества миль на галон для каждого класса автомобилей с разным объемом двигателя. Сравните получившиеся диаграммы распределения. Для каких классов автомобилей наблюдается линейная ассоциация? 
+Постройте фасетку с распределением количества миль на галон для каждого класса автомобилей (`class`) с разным объемом двигателя. Сравните получившиеся диаграммы распределения. 
 
-```{r}
+```{r ex4, exercise = TRUE}
+ggplot(data = mpg) +
+  geom_point(x = ..., y = ..., shape = ...) + ...
+
+```
+```{r ex4-check, echo=FALSE}
+test_1 <- find_statement("displ", "variable 'displ' goes on the x axis")
+test_2 <- find_statement("cty", "variable 'cty' goes on the y axis")
+test_3 <- find_call("geom_point()", "include a 'geom_point()' layer")
+test_4 <- find_statement("mpg")
+test_5 <- find_call("facet_grid()", "include a 'facet_grid()' layer")
+test_6 <- find_statement("class", "use `class` in 'facet_grid()'")
+
+USER_CODE %>% test_1 %>% test_2 %>% test_3 %>% test_4 %>% test_5 %>% test_6
+```
+
+```{r ex4-hint, echo = FALSE}
+```
+
+```{r ex4-solution, echo = FALSE}
 ggplot() +
   geom_point(data = mpg, aes(x = displ, y = cty, shape = drv)) +
   xlab("Объем двигателя") +
@@ -634,6 +692,7 @@ ggplot() +
   theme_bw() +
   facet_grid(~class)
 
-#ответ
-#midsize, pickup
 ```
+
+
+
