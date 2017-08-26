@@ -240,7 +240,10 @@ str(flData)
 
 Переименуем переменную `tailnum` для единообразия в `tail_num`
 ```{r exe120, exercise = T}
+#summary(flData$tailnum)
+
 flData = rename(flData, tail_num = tailnum)
+summary(flData$tail_num) # проверим, сработала ли функция
 ```
 
 ## Grouped data
@@ -327,8 +330,8 @@ quiz(caption = "",
               allow_retry = TRUE))
 ```
 
-Чтобы запомнить свойства join-функций иногда используются диаграммы Венна:
-```{r, out.width = "800px"}
+Чтобы запомнить свойства `join`-функций иногда используются диаграммы Венна:
+```{r, out.width = "800px", echo =F}
 knitr::include_graphics("http://r4ds.had.co.nz/diagrams/join-venn.png")
 ```
 
