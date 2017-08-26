@@ -222,7 +222,16 @@ head(mpg, n = 3) #смотрим на первые три наблюдения, 
   #добавьте медиану</code></pre>
 <script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":true,"message":true,"exercise.df_print":"paged","exercise.timelimit":60,"exercise.checker":["function (label = NULL, user_code = NULL, solution_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    ..., debug = FALSE) ","{","    if (debug) {","        save_file_name <- sprintf(\"~/Downloads/CheckR/chunk-%s.rds\", ","            label)","        saveRDS(list(label = label, user_code = user_code, solution_code = solution_code, ","            check_code = check_code, envir = envir_result, evaluate_result = evaluate_result), ","            file = save_file_name)","    }","    if (is.null(envir_result)) {","        res <- pre_check_code(user_code, check_code)","        if (nchar(res) > 0) ","            return(list(message = res, correct = FALSE))","        else return(TRUE)","    }","    USER_CODE <- capture.code(user_code)","    SOLN_CODE <- if (is.null(solution_code)) ","        \"\"","    else try(capture.code(solution_code), silent = TRUE)","    if (inherits(SOLN_CODE, \"try-error\")) ","        stop(\"Problem author, there is an error in the solution code.\")","    test_envir <- new.env()","    assign(\"USER_CODE\", USER_CODE, envir = test_envir)","    assign(\"SOLN_CODE\", SOLN_CODE, envir = test_envir)","    commands <- parse(text = paste(check_code, collapse = \"\\n\"))","    final_result <- list(correct = TRUE, message = \"passed\", ","        user_code = user_code, type = \"success\", location = \"prepend\")","    for (k in 1:length(commands)) {","        R <- eval(commands[k], envir = test_envir)","        if (is.test_result(R) || is.capture(R)) {","            if (R$passed) ","                next","            else {","                final_result$message <- paste(\"Sorry, but\", R$message)","                final_result$correct = FALSE","                final_result$type = \"info\"","                break","            }","            stop(\"Shouldn't get here. Statement returned neither a test result or a capture.\")","        }","    }","    if (final_result$correct) {","        final_result$message <- get_success_message()","    }","    log_entry <- list(user = get_user_name(), date = format(as.POSIXlt(Sys.time()), ","        usetz = TRUE), label = label, message = final_result$message, ","        correct = final_result$correct, user_code = final_result$user_code)","    logger_fun <- options(\"checkr.logger\")[[1]]","    logger_fun(log_entry)","    final_result","}"]}</script>
 </div>
-<p><img src="week3_ggplot2_files/figure-html/new1-solution-1.png" width="624" /></p>
+<div class="tutorial-exercise-support" data-label="new111-solution" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>ggplot() +
+  geom_histogram(data = mpg, aes(x = cty), binwidth = 1, fill=&quot;#008080&quot;, col=&quot;#483D8B&quot;, alpha = 0.5)  + 
+  ggtitle(&quot;Распределение количества миль на один галон топлива\nв условиях города&quot;) + 
+  xlab(&quot;Мили&quot;) + 
+  ylab(&quot;Количество&quot;) +
+  geom_vline(aes(xintercept = mean(mpg$cty)), linetype=&quot;dashed&quot;, color=&quot;#8B0000&quot;, size=1) +
+  geom_vline(aes(xintercept = median(mpg$cty))) + 
+  theme_bw()</code></pre>
+</div>
 <div class="tutorial-exercise-support" data-label="new111-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>test_1 &lt;- find_statement(&quot;aes(x = cty)&quot;, &quot;variable &#39;cty&#39; goes on the x axis&quot;)
 test_2 &lt;- find_call(&quot;geom_vline()&quot;, &quot;include &#39;geom_vline()&#39;&quot;)
@@ -239,14 +248,14 @@ USER_CODE %&gt;% test_1 %&gt;% test_2 %&gt;% test_3 %&gt;% test_4 %&gt;% test_5<
 <tr>
 <td>
 
-<div id="htmlwidget-a9389597dbba0413d766" style="width:100%;height:auto;", class = "quiz html-widget">
+<div id="htmlwidget-88fd49c13652ce3f1471" style="width:100%;height:auto;", class = "quiz html-widget">
 <div class="panel panel-default">
 <div class="panel-body quizArea">
 </div>
 </div>
 </div>
 
-<script type="application/json" data-for="htmlwidget-a9389597dbba0413d766">{"x":{"question":"Исходя из графика, какое значение больше? Среднее значение или значение медианы?","answers":[{"option":"среднее","correct":false,"message":null},{"option":"медиана","correct":true,"message":null}],"label":"quiz1-1","skipStartButton":true,"perQuestionResponseAnswers":true,"perQuestionResponseMessaging":true,"preventUnanswered":true,"displayQuestionCount":false,"displayQuestionNumber":false,"disableRanking":true,"nextQuestionText":"","checkAnswerText":"Submit Answer","allowRetry":true,"randomSortAnswers":false,"json":{"info":{"name":"","main":""},"questions":[{"q":"Исходя из графика, какое значение больше? Среднее значение или значение медианы?","a":[{"option":"среднее","correct":false,"message":null},{"option":"медиана","correct":true,"message":null}],"correct":"Correct!","incorrect":"Incorrect."}]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-88fd49c13652ce3f1471">{"x":{"question":"Исходя из графика, какое значение больше? Среднее значение или значение медианы?","answers":[{"option":"среднее","correct":false,"message":null},{"option":"медиана","correct":true,"message":null}],"label":"quiz1-1","skipStartButton":true,"perQuestionResponseAnswers":true,"perQuestionResponseMessaging":true,"preventUnanswered":true,"displayQuestionCount":false,"displayQuestionNumber":false,"disableRanking":true,"nextQuestionText":"","checkAnswerText":"Submit Answer","allowRetry":true,"randomSortAnswers":false,"json":{"info":{"name":"","main":""},"questions":[{"q":"Исходя из графика, какое значение больше? Среднее значение или значение медианы?","a":[{"option":"среднее","correct":false,"message":null},{"option":"медиана","correct":true,"message":null}],"correct":"Correct!","incorrect":"Incorrect."}]}},"evals":[],"jsHooks":[]}</script>
 </td>
 </tr>
 </table>
@@ -437,10 +446,14 @@ USER_CODE %&gt;% t_gg %&gt;% t_hist %&gt;% t_1 %&gt;% t_2</code></pre>
   coord_flip()</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="new11-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>USER_CODE %&gt;% find_value(match_class(&quot;ggplot&quot;)) %&gt;% 
-  find_call(&quot;geom_histogram()&quot;, &quot;you didn&#39;t use geom_histogram().&quot;) %&gt;% 
-  find_call(&quot;aes()&quot;, &quot;you didn&#39;t use aesthetics.&quot;) %&gt;% 
-  find_names(&quot;hwy&quot;) %&gt;% find_statement(&quot;mpg&quot;) %&gt;% find_call(&quot;coord_flip()&quot;, &quot;didn&#39;t use coord_flip()&quot;)</code></pre>
+<pre class="text"><code>t_1 &lt;- find_value(match_class(&quot;ggplot&quot;)) 
+t_2 &lt;- find_call(&quot;geom_bar()&quot;, &quot;you didn&#39;t use geom_bar().&quot;) 
+t_3 &lt;- find_call(&quot;aes()&quot;, &quot;you didn&#39;t use aesthetics.&quot;) 
+t_4 &lt;- find_statement(&quot;hwy&quot;) 
+t_5 &lt;- find_statement(&quot;mpg&quot;)
+t_6 &lt;- find_statement(&quot;fl&quot;) 
+t_7 &lt;- find_statement(&quot;coord_flip()&quot;, &quot;you didn&#39;t use coord_flip()&quot;)
+USER_CODE %&gt;% t_1 %&gt;% t_2  %&gt;% t_4 %&gt;% t_5 %&gt;% t_6 %&gt;% t_7 </code></pre>
 </div>
 <ol start="2" style="list-style-type: decimal">
 <li>Постройте столбчатую диаграмму, показывающую расход топлива в городе для различных классов машин с разными потребляемыми типами топлива, используя аргументы ‘fill’ и ‘position’, а также функцию для изменения палитры ‘scale_fill_brewer()’. Опишите получившийся график.</li>
@@ -459,13 +472,18 @@ USER_CODE %&gt;% t_gg %&gt;% t_hist %&gt;% t_1 %&gt;% t_2</code></pre>
   theme_bw()</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="new12-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>USER_CODE %&gt;% find_value(match_class(&quot;ggplot&quot;)) %&gt;% 
-  find_call(&quot;geom_histogram()&quot;, &quot;you didn&#39;t use geom_histogram().&quot;) %&gt;% 
-  find_call(&quot;aes()&quot;, &quot;you didn&#39;t use aesthetics.&quot;) %&gt;% 
-  find_statement(&quot;hwy&quot;) %&gt;% find_statement(&quot;mpg&quot;) %&gt;% 
-  find_statement(&quot;position&quot;, &quot;use `position` parameter&quot;) %&gt;%
-  find_statement(&quot;fill&quot;, &quot;use `fill`&quot;) %&gt;% 
-  find_call(&quot;scale_fill_brewer()&quot;, &quot;use `scale_fill_brewer()`&quot;)</code></pre>
+<pre class="text"><code>t_1 &lt;- find_value(match_class(&quot;ggplot&quot;)) 
+t_2 &lt;- find_call(&quot;geom_bar()&quot;, &quot;you didn&#39;t use geom_bar().&quot;) 
+t_3 &lt;- find_call(&quot;aes()&quot;, &quot;you didn&#39;t use aesthetics.&quot;) 
+t_4 &lt;- find_statement(&quot;class&quot;) 
+t_5 &lt;- find_statement(&quot;cty&quot;)
+t_6 &lt;- find_statement(&quot;fl&quot;) 
+t_7 &lt;- find_statement(&quot;mpg&quot;) 
+t_8 &lt;-   find_statement(&quot;position&quot;, &quot;use `position` parameter&quot;) 
+t_9 &lt;- find_statement(&quot;fill&quot;, &quot;use `fill`&quot;) 
+t_10 &lt;- find_call(&quot;scale_fill_brewer()&quot;, &quot;use `scale_fill_brewer()`&quot;)
+
+USER_CODE %&gt;% t_1 %&gt;% t_2  %&gt;% t_4 %&gt;% t_5 %&gt;% t_6 %&gt;% t_7 %&gt;% t_8 %&gt;% t_9 %&gt;% t_10 </code></pre>
 </div>
 </div>
 <div id="section-boxplot" class="section level2">
@@ -488,8 +506,7 @@ USER_CODE %&gt;% t_gg %&gt;% t_hist %&gt;% t_1 %&gt;% t_2</code></pre>
 <li>Дают представление об интересных свойствах данных</li>
 </ol>
 <p>На данной картинке представлено краткое описание интерпретации боксплота:</p>
-<pre class="r"><code>knitr::include_graphics(&#39;https://pp.userapi.com/c837434/v837434250/4d1e2/qHMNcWm0qqY.jpg&#39;)</code></pre>
-<p><img src="https://pp.userapi.com/c837434/v837434250/4d1e2/qHMNcWm0qqY.jpg" width="800px" /></p>
+<p><img src="https://pp.userapi.com/c837434/v837434250/4d1e2/qHMNcWm0qqY.jpg" width="600px" /></p>
 <p>Подробнее <a href="https://drive.google.com/file/d/0B-DHaDEbiOGkRHNndUlBaHVmaGM/view">здесь</a> на странице 28.</p>
 <p>Расмотрим распределение количества миль, которое способны проехать автомобили из базы данных на одном галоне топлива по городу. Для этого присваиваем переменную только оси Y, ось X оставляя без какой-либо переменной.</p>
 <div class="tutorial-exercise" data-label="new13" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
@@ -530,8 +547,8 @@ USER_CODE %&gt;% t_gg %&gt;% t_hist %&gt;% t_1 %&gt;% t_2</code></pre>
 <script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":true,"message":true,"exercise.df_print":"paged","exercise.timelimit":60,"exercise.checker":["function (label = NULL, user_code = NULL, solution_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    ..., debug = FALSE) ","{","    if (debug) {","        save_file_name <- sprintf(\"~/Downloads/CheckR/chunk-%s.rds\", ","            label)","        saveRDS(list(label = label, user_code = user_code, solution_code = solution_code, ","            check_code = check_code, envir = envir_result, evaluate_result = evaluate_result), ","            file = save_file_name)","    }","    if (is.null(envir_result)) {","        res <- pre_check_code(user_code, check_code)","        if (nchar(res) > 0) ","            return(list(message = res, correct = FALSE))","        else return(TRUE)","    }","    USER_CODE <- capture.code(user_code)","    SOLN_CODE <- if (is.null(solution_code)) ","        \"\"","    else try(capture.code(solution_code), silent = TRUE)","    if (inherits(SOLN_CODE, \"try-error\")) ","        stop(\"Problem author, there is an error in the solution code.\")","    test_envir <- new.env()","    assign(\"USER_CODE\", USER_CODE, envir = test_envir)","    assign(\"SOLN_CODE\", SOLN_CODE, envir = test_envir)","    commands <- parse(text = paste(check_code, collapse = \"\\n\"))","    final_result <- list(correct = TRUE, message = \"passed\", ","        user_code = user_code, type = \"success\", location = \"prepend\")","    for (k in 1:length(commands)) {","        R <- eval(commands[k], envir = test_envir)","        if (is.test_result(R) || is.capture(R)) {","            if (R$passed) ","                next","            else {","                final_result$message <- paste(\"Sorry, but\", R$message)","                final_result$correct = FALSE","                final_result$type = \"info\"","                break","            }","            stop(\"Shouldn't get here. Statement returned neither a test result or a capture.\")","        }","    }","    if (final_result$correct) {","        final_result$message <- get_success_message()","    }","    log_entry <- list(user = get_user_name(), date = format(as.POSIXlt(Sys.time()), ","        usetz = TRUE), label = label, message = final_result$message, ","        correct = final_result$correct, user_code = final_result$user_code)","    logger_fun <- options(\"checkr.logger\")[[1]]","    logger_fun(log_entry)","    final_result","}"]}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="new17-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>test_1 &lt;- find_call(&quot;aes(x = drv, y = whatever)&quot;, &quot;variable &#39;drv&#39; goes on the x axis&quot;)
-test_2 &lt;- find_call(&quot;aes(y = displ, x = whatever)&quot;, &quot;variable &#39;displ&#39; goes on the y axis&quot;)
+<pre class="text"><code>test_1 &lt;- find_statement(&quot;drv&quot;, &quot;variable &#39;drv&#39; goes on the x axis&quot;)
+test_2 &lt;- find_statement(&quot;displ&quot;, &quot;variable &#39;displ&#39; goes on the y axis&quot;)
 test_3 &lt;- find_call(&quot;geom_boxplot()&quot;, &quot;include a &#39;geom_boxplot()&#39; layer&quot;)
 test_4 &lt;- find_statement(&quot;mpg&quot;) 
 
@@ -555,14 +572,14 @@ USER_CODE %&gt;% test_1 %&gt;% test_2 %&gt;% test_3 %&gt;% test_4</code></pre>
 <tr>
 <td>
 
-<div id="htmlwidget-169f72a672df1fbeca10" style="width:100%;height:auto;", class = "quiz html-widget">
+<div id="htmlwidget-2e062ae94ed284f3fec8" style="width:100%;height:auto;", class = "quiz html-widget">
 <div class="panel panel-default">
 <div class="panel-body quizArea">
 </div>
 </div>
 </div>
 
-<script type="application/json" data-for="htmlwidget-169f72a672df1fbeca10">{"x":{"question":"Чему равна медиана объемов двигателей среди полноприводных автомобилей (значение &#39;4&#39; в переменной &#39;drv&#39;)?","answers":[{"option":"2","correct":false,"message":null},{"option":"4","correct":true,"message":null},{"option":"8","correct":false,"message":null},{"option":"16","correct":false,"message":null}],"label":"quiz3-1","skipStartButton":true,"perQuestionResponseAnswers":true,"perQuestionResponseMessaging":true,"preventUnanswered":true,"displayQuestionCount":false,"displayQuestionNumber":false,"disableRanking":true,"nextQuestionText":"","checkAnswerText":"Submit Answer","allowRetry":true,"randomSortAnswers":false,"json":{"info":{"name":"","main":""},"questions":[{"q":"Чему равна медиана объемов двигателей среди полноприводных автомобилей (значение &#39;4&#39; в переменной &#39;drv&#39;)?","a":[{"option":"2","correct":false,"message":null},{"option":"4","correct":true,"message":null},{"option":"8","correct":false,"message":null},{"option":"16","correct":false,"message":null}],"correct":"Correct!","incorrect":"Incorrect."}]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-2e062ae94ed284f3fec8">{"x":{"question":"Чему равна медиана объемов двигателей среди полноприводных автомобилей (значение &#39;4&#39; в переменной &#39;drv&#39;)?","answers":[{"option":"2","correct":false,"message":null},{"option":"4","correct":true,"message":null},{"option":"8","correct":false,"message":null},{"option":"16","correct":false,"message":null}],"label":"quiz3-1","skipStartButton":true,"perQuestionResponseAnswers":true,"perQuestionResponseMessaging":true,"preventUnanswered":true,"displayQuestionCount":false,"displayQuestionNumber":false,"disableRanking":true,"nextQuestionText":"","checkAnswerText":"Submit Answer","allowRetry":true,"randomSortAnswers":false,"json":{"info":{"name":"","main":""},"questions":[{"q":"Чему равна медиана объемов двигателей среди полноприводных автомобилей (значение &#39;4&#39; в переменной &#39;drv&#39;)?","a":[{"option":"2","correct":false,"message":null},{"option":"4","correct":true,"message":null},{"option":"8","correct":false,"message":null},{"option":"16","correct":false,"message":null}],"correct":"Correct!","incorrect":"Incorrect."}]}},"evals":[],"jsHooks":[]}</script>
 </td>
 </tr>
 </table>

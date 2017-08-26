@@ -44,8 +44,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 <div class="topics">
 
-<div class="section level2">
-<h2>Предисловие</h2>
+<div id="section-dplyr-package" class="section level2">
+<h2><code>dplyr</code> package</h2>
 <p>Визуализация является важным инструментом для работы с данными, но эти данные не всегда приходят к нам в виде, готовом к визуализации. Часто нам нужно убрать что-то из данных, создать новую переменную или получить описательную статистику по группам переменных. На этом уроке вы освоите базовые навыки обращения с таблицами используя пакеты <code>dplyr</code>, включая:</p>
 <ul>
 <li>Использовать filter(), чтобы убрать нежелательные значения из таблицы с данными</li>
@@ -114,7 +114,7 @@ USER_CODE %&gt;% test_1 %&gt;% test_2 %&gt;% test_3 %&gt;% test_4</code></pre>
 <pre class="text"><code>test_1 &lt;- find_call(&quot;aes(x = hour)&quot;, &quot;variable &#39;hour&#39; goes on the x axis&quot;)
 test_3 &lt;- find_call(&quot;geom_histogram()&quot;, &quot;include a &#39;geom_histogram()&#39; layer&quot;)
 test_4 &lt;- find_statement(&quot;flData&quot;) 
-test_6 &lt;- find_call(&quot;coord_flip()&quot;, &quot;didn&#39;t use coord_flip()&quot;)
+test_6 &lt;- find_call(&quot;coord_flip()&quot;, &quot;you didn&#39;t use coord_flip()&quot;)
 
 
 USER_CODE %&gt;% test_1 %&gt;% test_3 %&gt;% test_4 %&gt;% test_6
@@ -162,8 +162,8 @@ USER_CODE %&gt;% test_1 %&gt;% test_2 %&gt;% test_3 %&gt;% test_4 </code></pre>
 <p>Переходим к основным функциям из пакета <code>dplyr</code>.</p>
 </div>
 </div>
-<div id="section----filter" class="section level2">
-<h2>Подмножество строк с filter()</h2>
+<div id="section-filtering-rowsobservations" class="section level2">
+<h2>Filtering rows/observations</h2>
 <p>Допустим, нас интересуют только полеты в летние месяцы</p>
 <pre class="r"><code>#?filter
 class(flData$month) </code></pre>
@@ -189,8 +189,8 @@ ggplot(data = flData) + geom_bar(aes(x = month, fill = origin), position = &quot
 <script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":true,"message":true,"exercise.df_print":"paged","exercise.timelimit":60,"exercise.setup":"exe9-setup","exercise.checker":["function (label = NULL, user_code = NULL, solution_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    ..., debug = FALSE) ","{","    if (debug) {","        save_file_name <- sprintf(\"~/Downloads/CheckR/chunk-%s.rds\", ","            label)","        saveRDS(list(label = label, user_code = user_code, solution_code = solution_code, ","            check_code = check_code, envir = envir_result, evaluate_result = evaluate_result), ","            file = save_file_name)","    }","    if (is.null(envir_result)) {","        res <- pre_check_code(user_code, check_code)","        if (nchar(res) > 0) ","            return(list(message = res, correct = FALSE))","        else return(TRUE)","    }","    USER_CODE <- capture.code(user_code)","    SOLN_CODE <- if (is.null(solution_code)) ","        \"\"","    else try(capture.code(solution_code), silent = TRUE)","    if (inherits(SOLN_CODE, \"try-error\")) ","        stop(\"Problem author, there is an error in the solution code.\")","    test_envir <- new.env()","    assign(\"USER_CODE\", USER_CODE, envir = test_envir)","    assign(\"SOLN_CODE\", SOLN_CODE, envir = test_envir)","    commands <- parse(text = paste(check_code, collapse = \"\\n\"))","    final_result <- list(correct = TRUE, message = \"passed\", ","        user_code = user_code, type = \"success\", location = \"prepend\")","    for (k in 1:length(commands)) {","        R <- eval(commands[k], envir = test_envir)","        if (is.test_result(R) || is.capture(R)) {","            if (R$passed) ","                next","            else {","                final_result$message <- paste(\"Sorry, but\", R$message)","                final_result$correct = FALSE","                final_result$type = \"info\"","                break","            }","            stop(\"Shouldn't get here. Statement returned neither a test result or a capture.\")","        }","    }","    if (final_result$correct) {","        final_result$message <- get_success_message()","    }","    log_entry <- list(user = get_user_name(), date = format(as.POSIXlt(Sys.time()), ","        usetz = TRUE), label = label, message = final_result$message, ","        correct = final_result$correct, user_code = final_result$user_code)","    logger_fun <- options(\"checkr.logger\")[[1]]","    logger_fun(log_entry)","    final_result","}"]}</script>
 </div>
 </div>
-<div id="section----arrange" class="section level2">
-<h2>Упорядочить значения с arrange()</h2>
+<div id="section-arrange-rows" class="section level2">
+<h2>Arrange rows</h2>
 Упорядочим рейсы по времени вылета
 <div class="tutorial-exercise-support" data-label="exe10-setup" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>flData = filter(flData, month == 6 | month == 7 | month == 8)
@@ -214,8 +214,8 @@ head(flData)</code></pre>
 <script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":true,"message":true,"exercise.df_print":"paged","exercise.timelimit":60,"exercise.setup":"exe11-setup","exercise.checker":["function (label = NULL, user_code = NULL, solution_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    ..., debug = FALSE) ","{","    if (debug) {","        save_file_name <- sprintf(\"~/Downloads/CheckR/chunk-%s.rds\", ","            label)","        saveRDS(list(label = label, user_code = user_code, solution_code = solution_code, ","            check_code = check_code, envir = envir_result, evaluate_result = evaluate_result), ","            file = save_file_name)","    }","    if (is.null(envir_result)) {","        res <- pre_check_code(user_code, check_code)","        if (nchar(res) > 0) ","            return(list(message = res, correct = FALSE))","        else return(TRUE)","    }","    USER_CODE <- capture.code(user_code)","    SOLN_CODE <- if (is.null(solution_code)) ","        \"\"","    else try(capture.code(solution_code), silent = TRUE)","    if (inherits(SOLN_CODE, \"try-error\")) ","        stop(\"Problem author, there is an error in the solution code.\")","    test_envir <- new.env()","    assign(\"USER_CODE\", USER_CODE, envir = test_envir)","    assign(\"SOLN_CODE\", SOLN_CODE, envir = test_envir)","    commands <- parse(text = paste(check_code, collapse = \"\\n\"))","    final_result <- list(correct = TRUE, message = \"passed\", ","        user_code = user_code, type = \"success\", location = \"prepend\")","    for (k in 1:length(commands)) {","        R <- eval(commands[k], envir = test_envir)","        if (is.test_result(R) || is.capture(R)) {","            if (R$passed) ","                next","            else {","                final_result$message <- paste(\"Sorry, but\", R$message)","                final_result$correct = FALSE","                final_result$type = \"info\"","                break","            }","            stop(\"Shouldn't get here. Statement returned neither a test result or a capture.\")","        }","    }","    if (final_result$correct) {","        final_result$message <- get_success_message()","    }","    log_entry <- list(user = get_user_name(), date = format(as.POSIXlt(Sys.time()), ","        usetz = TRUE), label = label, message = final_result$message, ","        correct = final_result$correct, user_code = final_result$user_code)","    logger_fun <- options(\"checkr.logger\")[[1]]","    logger_fun(log_entry)","    final_result","}"]}</script>
 </div>
 </div>
-<div id="section----select" class="section level2">
-<h2>Отбор переменных с select()</h2>
+<div id="section-selecting-variables" class="section level2">
+<h2>Selecting variables</h2>
 <p>При работе с большим таблицами иногда бываются интересны для анализа только некоторые переменные. Отберем для простоты дальнейшего анализа только данные о номере рейса и задержках, удалим из рассмотрения переменную <code>arr_time</code>.</p>
 <div class="tutorial-exercise-support" data-label="exe12-setup" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>flData = filter(flData, month == 6 | month == 7 | month == 8)
@@ -233,8 +233,8 @@ str(flData)</code></pre>
 <p>Переименуем переменную <code>tailnum</code> для единообразия в <code>tail_num</code></p>
 <pre class="r"><code>flData = rename(flData, tail_num = tailnum)</code></pre>
 </div>
-<div id="section--" class="section level2">
-<h2>Сгруппированные данные</h2>
+<div id="section-grouped-data" class="section level2">
+<h2>Grouped data</h2>
 <div id="section-summarise-mutate" class="section level3">
 <h3>summarise() &amp; mutate()</h3>
 <p><strong>Ваша очередь:</strong> В чем отличия функций <code>summarise()</code> и <code>mutate()</code>? Иногда бывает, что в результате исполнения функции вы получаете ошибку, хотя кажется, что сделали все правильно. Одной из причин такого может быть то, что две функции с одинаковым названием существуют в двух одновременно подгруженных библиотеках. Такое, например, часто бывает с функциями <code>library(dplyr)</code> и его предшественника <code>library(plyr)</code>. В таких ситуациях спасает отключение пакета во вкладке Packages в окне с каталогом файлов или принудительный призыв функции с указанием пакета: <code>dplyr::summarise()</code>.</p>
@@ -246,14 +246,14 @@ str(flData)</code></pre>
 <tr>
 <td>
 
-<div id="htmlwidget-bf384dd6f42847e83d6e" style="width:100%;height:auto;", class = "quiz html-widget">
+<div id="htmlwidget-9173ac2e6fb9e7ffca91" style="width:100%;height:auto;", class = "quiz html-widget">
 <div class="panel panel-default">
 <div class="panel-body quizArea">
 </div>
 </div>
 </div>
 
-<script type="application/json" data-for="htmlwidget-bf384dd6f42847e83d6e">{"x":{"question":"Какая функция используется для создания новых переменных:","answers":[{"option":"summarise()","correct":false,"message":null},{"option":"group_by()","correct":false,"message":null},{"option":"mutate()","correct":true,"message":null},{"option":"filter()","correct":false,"message":null},{"option":"select()","correct":false,"message":null}],"label":"quiz1-1","skipStartButton":true,"perQuestionResponseAnswers":true,"perQuestionResponseMessaging":true,"preventUnanswered":true,"displayQuestionCount":false,"displayQuestionNumber":false,"disableRanking":true,"nextQuestionText":"","checkAnswerText":"Submit Answer","allowRetry":true,"randomSortAnswers":false,"json":{"info":{"name":"","main":""},"questions":[{"q":"Какая функция используется для создания новых переменных:","a":[{"option":"summarise()","correct":false,"message":null},{"option":"group_by()","correct":false,"message":null},{"option":"mutate()","correct":true,"message":null},{"option":"filter()","correct":false,"message":null},{"option":"select()","correct":false,"message":null}],"correct":"Correct!","incorrect":"Incorrect."}]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-9173ac2e6fb9e7ffca91">{"x":{"question":"Какая функция используется для создания новых переменных:","answers":[{"option":"summarise()","correct":false,"message":null},{"option":"group_by()","correct":false,"message":null},{"option":"mutate()","correct":true,"message":null},{"option":"filter()","correct":false,"message":null},{"option":"select()","correct":false,"message":null}],"label":"quiz1-1","skipStartButton":true,"perQuestionResponseAnswers":true,"perQuestionResponseMessaging":true,"preventUnanswered":true,"displayQuestionCount":false,"displayQuestionNumber":false,"disableRanking":true,"nextQuestionText":"","checkAnswerText":"Submit Answer","allowRetry":true,"randomSortAnswers":false,"json":{"info":{"name":"","main":""},"questions":[{"q":"Какая функция используется для создания новых переменных:","a":[{"option":"summarise()","correct":false,"message":null},{"option":"group_by()","correct":false,"message":null},{"option":"mutate()","correct":true,"message":null},{"option":"filter()","correct":false,"message":null},{"option":"select()","correct":false,"message":null}],"correct":"Correct!","incorrect":"Incorrect."}]}},"evals":[],"jsHooks":[]}</script>
 </td>
 </tr>
 </table>
@@ -295,8 +295,8 @@ head(tail_dif)</code></pre>
 <p><strong>NB</strong> <code>summarise()</code> наиболее полезен в связке после <code>group_by()</code></p>
 </div>
 </div>
-<div id="section---" class="section level2">
-<h2>Объединение нескольких таблиц</h2>
+<div id="section-joining-tables" class="section level2">
+<h2>Joining tables</h2>
 <p>Для объединения нескольких датасетов в один по какой-либо из переменных используются функции join().</p>
 <pre class="r"><code>?join
 ?dplyr::join</code></pre>
@@ -307,14 +307,14 @@ head(tail_dif)</code></pre>
 <tr>
 <td>
 
-<div id="htmlwidget-d0cbda94548a44f6efd6" style="width:100%;height:auto;", class = "quiz html-widget">
+<div id="htmlwidget-285c6fc7956974a1a903" style="width:100%;height:auto;", class = "quiz html-widget">
 <div class="panel panel-default">
 <div class="panel-body quizArea">
 </div>
 </div>
 </div>
 
-<script type="application/json" data-for="htmlwidget-d0cbda94548a44f6efd6">{"x":{"question":"Все значения из таблицы x сохраняют:","answers":[{"option":"left_join(x, y)","correct":true,"message":null},{"option":"right_join(x, y)","correct":false,"message":null},{"option":"inner_join(x, y)","correct":false,"message":null},{"option":"anti_join(x, y)","correct":false,"message":null},{"option":"full_join(x, y)","correct":true,"message":null}],"label":"quiz2-1","skipStartButton":true,"perQuestionResponseAnswers":true,"perQuestionResponseMessaging":true,"preventUnanswered":true,"displayQuestionCount":false,"displayQuestionNumber":false,"disableRanking":true,"nextQuestionText":"","checkAnswerText":"Submit Answer","allowRetry":true,"randomSortAnswers":false,"json":{"info":{"name":"","main":""},"questions":[{"q":"Все значения из таблицы x сохраняют:","a":[{"option":"left_join(x, y)","correct":true,"message":null},{"option":"right_join(x, y)","correct":false,"message":null},{"option":"inner_join(x, y)","correct":false,"message":null},{"option":"anti_join(x, y)","correct":false,"message":null},{"option":"full_join(x, y)","correct":true,"message":null}],"correct":"Correct!","incorrect":"Incorrect."}]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-285c6fc7956974a1a903">{"x":{"question":"Все значения из таблицы x сохраняют:","answers":[{"option":"left_join(x, y)","correct":true,"message":null},{"option":"right_join(x, y)","correct":false,"message":null},{"option":"inner_join(x, y)","correct":false,"message":null},{"option":"anti_join(x, y)","correct":false,"message":null},{"option":"full_join(x, y)","correct":true,"message":null}],"label":"quiz2-1","skipStartButton":true,"perQuestionResponseAnswers":true,"perQuestionResponseMessaging":true,"preventUnanswered":true,"displayQuestionCount":false,"displayQuestionNumber":false,"disableRanking":true,"nextQuestionText":"","checkAnswerText":"Submit Answer","allowRetry":true,"randomSortAnswers":false,"json":{"info":{"name":"","main":""},"questions":[{"q":"Все значения из таблицы x сохраняют:","a":[{"option":"left_join(x, y)","correct":true,"message":null},{"option":"right_join(x, y)","correct":false,"message":null},{"option":"inner_join(x, y)","correct":false,"message":null},{"option":"anti_join(x, y)","correct":false,"message":null},{"option":"full_join(x, y)","correct":true,"message":null}],"correct":"Correct!","incorrect":"Incorrect."}]}},"evals":[],"jsHooks":[]}</script>
 </td>
 </tr>
 </table>
@@ -407,8 +407,8 @@ head(colleges, 4)</code></pre>
 <pre class="text"><code>colleges = filter(colleges, Grad.Rate&lt;50)</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="exe18-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>test_1 &lt;- find_call(&quot;filter(whatever, whatever)&quot;, &quot;didn&#39;t use filter() function&quot;)
-test_2 &lt;- find_statement(&quot;colleges&quot;, &quot;didn&#39;t use `colleges` dataset&quot;) 
+<pre class="text"><code>test_1 &lt;- find_call(&quot;filter(whatever, whatever)&quot;, &quot; you didn&#39;t use filter() function&quot;)
+test_2 &lt;- find_statement(&quot;colleges&quot;, &quot; you didn&#39;t use `colleges` dataset&quot;) 
 test_4 &lt;- check_argument(&quot;filter(.data = grab_this)&quot;, match_data_frame(colleges))
 test_5 &lt;- find_statement(&quot;Grad.Rate&quot;, &quot;use `Grad.Rate variable`&quot;)
 test_6 &lt;- check_argument(&quot;Grad.Rate &lt; grab_this&quot;, match_number(50)) #вроде не чувствителен к пробелу, но перепроверить
@@ -438,8 +438,8 @@ USER_CODE %&gt;% test_1 %&gt;% test_2  %&gt;%  test_4 %&gt;% test_5%&gt;% test_6
                   enrolled_rate = Enroll/Accept)</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="exe19-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>test_1 &lt;- find_call(&quot;mutate()&quot;, &quot;didn&#39;t use mutate() function&quot;)
-test_2 &lt;- find_statement(&quot;colleges&quot;, &quot;didn&#39;t use `colleges` dataset&quot;) 
+<pre class="text"><code>test_1 &lt;- find_call(&quot;mutate()&quot;, &quot; you didn&#39;t use mutate() function&quot;)
+test_2 &lt;- find_statement(&quot;colleges&quot;, &quot; you didn&#39;t use `colleges` dataset&quot;) 
 test_4 &lt;- check_argument(&quot;mutate(.data = grab_this)&quot;, match_data_frame(colleges), &quot;use colleges as the data argument in filter()&quot;)
 test_5 &lt;- find_statement(&quot;Accept&quot;, &quot;use `Accept variable`&quot;)
 test_6 &lt;- find_statement(&quot;Apps&quot;, &quot;use `Apps variable`&quot;)
@@ -473,8 +473,8 @@ USER_CODE %&gt;% test_1 %&gt;% test_2  %&gt;%  test_4 %&gt;% test_5%&gt;% test_6
 <pre class="text"><code>colleges = select(colleges, acceptance_rate, enrolled_rate, Private)</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="exe20-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>test_1 &lt;- find_call(&quot;select()&quot;, &quot;didn&#39;t use select() function&quot;)
-test_2 &lt;- find_statement(&quot;colleges&quot;, &quot;didn&#39;t use `colleges` dataset&quot;) 
+<pre class="text"><code>test_1 &lt;- find_call(&quot;select()&quot;, &quot;you didn&#39;t use select() function&quot;)
+test_2 &lt;- find_statement(&quot;colleges&quot;, &quot;you didn&#39;t use `colleges` dataset&quot;) 
 test_3 &lt;- check_argument(&quot;select(.data = grab_this)&quot;, match_data_frame(colleges), &quot;use colleges as the data argument in filter()&quot;)
 test_4 &lt;- find_statement(&quot;Private&quot;, &quot;select `Private`&quot;)
 test_5 &lt;- find_statement(&quot;acceptance_rate&quot;, &quot;select `acceptance_rate`&quot;)
@@ -531,11 +531,11 @@ colleges = dplyr::select(colleges, acceptance_rate, enrolled_rate, Private)</cod
 </div>
 <div class="tutorial-exercise-support" data-label="exe22-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>test_1 &lt;- find_call(&quot;group_by()&quot;, &quot;remember to group before summarizing.&quot;)
-test_2 &lt;- find_names(&quot;colleges&quot;, &quot;didn&#39;t use `colleges` dataset&quot;) 
-test_3 &lt;- find_call(&quot;group_by(.data = whatever, Private)&quot;, &quot;break down the result by `cyl`&quot;)
+test_2 &lt;- find_names(&quot;colleges&quot;, &quot;you didn&#39;t use `colleges` dataset&quot;) 
+test_3 &lt;- find_names(&quot;Private&quot;, &quot;break down the result by `Private`&quot;)
 test_4 &lt;- find_call(&quot;summarise()&quot;, &quot;use summarise() after grouping&quot;)
-test_5 &lt;- find_call(&quot;mean(acceptance_rate)&quot;, &quot;calculate the mean of acceptance_rate for each group&quot;)
-test_6 &lt;- find_call(&quot;mean(enrolled_rate)&quot;, &quot;calculate the mean of enrolled_rate for each group&quot;)
+test_5 &lt;- find_statement(&quot;mean(acceptance_rate)&quot;, &quot;calculate the mean of acceptance_rate for each group&quot;)
+test_6 &lt;- find_statement(&quot;mean(enrolled_rate)&quot;, &quot;calculate the mean of enrolled_rate for each group&quot;)
 
 USER_CODE %&gt;% test_1 %&gt;% test_2  %&gt;%  test_3 %&gt;% test_4 %&gt;% test_5 %&gt;% test_6 </code></pre>
 </div>
@@ -564,14 +564,14 @@ USER_CODE %&gt;% test_1 %&gt;% test_2  %&gt;%  test_3 %&gt;% test_4 %&gt;% test_
 <tr>
 <td>
 
-<div id="htmlwidget-f2905a0cd1aa4bce95d0" style="width:100%;height:auto;", class = "quiz html-widget">
+<div id="htmlwidget-d1d2d0c6e626b30e1a25" style="width:100%;height:auto;", class = "quiz html-widget">
 <div class="panel panel-default">
 <div class="panel-body quizArea">
 </div>
 </div>
 </div>
 
-<script type="application/json" data-for="htmlwidget-f2905a0cd1aa4bce95d0">{"x":{"question":"Сколько государственных колледжей в этой категории?","answers":[{"option":"112","correct":true,"message":null},{"option":"212","correct":false,"message":"нужно посчитать суммарные затраты и отфильтровать таблицу"},{"option":"256","correct":false,"message":"это количество частных колледжей"},{"option":"565","correct":false,"message":"нужно посчитать суммарные затраты и отфильтровать таблицу"}],"label":"quiz4-1","skipStartButton":true,"perQuestionResponseAnswers":true,"perQuestionResponseMessaging":true,"preventUnanswered":true,"displayQuestionCount":false,"displayQuestionNumber":false,"disableRanking":true,"nextQuestionText":"","checkAnswerText":"Submit Answer","allowRetry":true,"randomSortAnswers":false,"json":{"info":{"name":"","main":""},"questions":[{"q":"Сколько государственных колледжей в этой категории?","a":[{"option":"112","correct":true,"message":null},{"option":"212","correct":false,"message":"нужно посчитать суммарные затраты и отфильтровать таблицу"},{"option":"256","correct":false,"message":"это количество частных колледжей"},{"option":"565","correct":false,"message":"нужно посчитать суммарные затраты и отфильтровать таблицу"}],"correct":"Correct!","incorrect":"Incorrect."}]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-d1d2d0c6e626b30e1a25">{"x":{"question":"Сколько государственных колледжей в этой категории?","answers":[{"option":"112","correct":true,"message":null},{"option":"212","correct":false,"message":"нужно посчитать суммарные затраты и отфильтровать таблицу"},{"option":"256","correct":false,"message":"это количество частных колледжей"},{"option":"565","correct":false,"message":"нужно посчитать суммарные затраты и отфильтровать таблицу"}],"label":"quiz4-1","skipStartButton":true,"perQuestionResponseAnswers":true,"perQuestionResponseMessaging":true,"preventUnanswered":true,"displayQuestionCount":false,"displayQuestionNumber":false,"disableRanking":true,"nextQuestionText":"","checkAnswerText":"Submit Answer","allowRetry":true,"randomSortAnswers":false,"json":{"info":{"name":"","main":""},"questions":[{"q":"Сколько государственных колледжей в этой категории?","a":[{"option":"112","correct":true,"message":null},{"option":"212","correct":false,"message":"нужно посчитать суммарные затраты и отфильтровать таблицу"},{"option":"256","correct":false,"message":"это количество частных колледжей"},{"option":"565","correct":false,"message":"нужно посчитать суммарные затраты и отфильтровать таблицу"}],"correct":"Correct!","incorrect":"Incorrect."}]}},"evals":[],"jsHooks":[]}</script>
 </td>
 </tr>
 </table>

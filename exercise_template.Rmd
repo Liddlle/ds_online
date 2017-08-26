@@ -11,6 +11,9 @@ knitr::opts_chunk$set(exercise.checker = checkr::checkr_tutor)
 ```
 
 
+```{r, out.width = "800px"}
+knitr::include_graphics("~/ds_online/boxplot.jpg")
+```
 
 ```{r ..problem_id..-setup, echo = FALSE}
 # code to be evaluated before exercise code
