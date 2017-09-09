@@ -10,6 +10,8 @@ library("tidyverse")
 library("checkr")
 knitr::opts_chunk$set(exercise.checker = checkr::checkr_tutor,
                       error = TRUE)
+library(ggplot2movies)
+data(movies)
 
 ```
 
@@ -60,11 +62,15 @@ gather(data, key, value, ...)
 Более подробно можно посмотреть в справке `?gather`
 
 ```{r exe2, exercise = TRUE}
-moviesLong <- gather(movies, key = genre, value = isGenre, Action:Short)
-head(moviesLong, 5)
+moviesLong <- gather(movies, 
+                     key = genre, 
+                     value = isGenre, 
+                     Action:Short)
+
+head(moviesLong, 5) 
 ```
 
-В результате, мы получили из "широкого" датасета "длинный".
+В результате, мы получили из "широкого" датасета "длинный". Новые колонки можно обнаружить в конце таблицы.
 
 ## Gathering: exercises
 
@@ -95,10 +101,11 @@ test_6 <- find_names("rating", "select `ratings` variable")
 test_7 <- find_names("Action", "select `Action` variable")
 test_8 <- find_names("Short", "select `Short` variable")
 test_9 <- find_call("filter()", "you didn't use filter()")
-test_10 <- find_statement("votes>200", "filter movies with less or equal to 200 votes")
+test_10 <- check_argument("votes > grab_this", match_number(200), "you didn't filter movies with less or equal to 200 votes")
 test_11 <- find_statement('!=', "")
+test_12 <- find_statement('mpaa!=""', "you didn't filter movies with less or equal to 200 votes")
 
-USER_CODE %>% test_1 %>% test_2  %>%  test_3 %>% test_4 %>% test_5 %>% test_6 %>% test_7  %>%  test_8 %>% test_9 %>% test_10 %>% test_11 
+USER_CODE %>% test_1 %>% test_2  %>%  test_3 %>% test_4 %>% test_5 %>% test_6 %>% test_7  %>%  test_8 %>% test_9 %>% test_10 %>% test_11 %>% test_12
 
 ```
 

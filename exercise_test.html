@@ -4,16 +4,19 @@
 
 <head>
 
-<meta charset="utf-8" />
+<meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
 
 
+<meta name="progressive" content="false" />
+<meta name="allow-skip" content="false" />
 
 <title>test</title>
 
 
+<!-- highlightjs -->
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
   pre:not([class]) {
@@ -30,108 +33,52 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
-
-
 </head>
 
 <body>
 
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
-img {
-  max-width:100%;
-  height: auto;
-}
-.tabbed-pane {
-  padding-top: 12px;
-}
-button.code-folding-btn:focus {
-  outline: none;
-}
-</style>
 
 
+<div class="pageContent band">
+<div class="bandContent page">
 
-<div class="container-fluid main-container">
+<div class="topics">
 
-<!-- tabsets -->
-<script>
-$(document).ready(function () {
-  window.buildTabsets("section-TOC");
-});
-</script>
-
-<!-- code folding -->
-
-
-
-
-
-
-<div class="fluid-row" id="section-header">
-
-
-
-<h1 class="title toc-ignore">test</h1>
-
+<div id="section-r-exe22-exercise-true-exercise.setup-exe22-setup-exercise.eval-false" class="section level1">
+<h1>```{r exe22, exercise = TRUE, exercise.setup = “exe22-setup”, exercise.eval = FALSE}</h1>
+<div class="tutorial-exercise" data-label="exe3" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>movies1 &lt;- movies %&gt;% select(title,votes,mpaa,rating, Action:Short) %&gt;%
+  filter(votes &gt; 200, mpaa!=&quot;&quot;)</code></pre>
+<script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.checker":["function (label = NULL, user_code = NULL, solution_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    ..., debug = FALSE) ","{","    if (debug) {","        save_file_name <- sprintf(\"~/Downloads/CheckR/chunk-%s.rds\", ","            label)","        saveRDS(list(label = label, user_code = user_code, solution_code = solution_code, ","            check_code = check_code, envir = envir_result, evaluate_result = evaluate_result), ","            file = save_file_name)","    }","    if (is.null(envir_result)) {","        res <- pre_check_code(user_code, check_code)","        if (nchar(res) > 0) ","            return(list(message = res, correct = FALSE))","        else return(TRUE)","    }","    USER_CODE <- capture.code(user_code)","    SOLN_CODE <- if (is.null(solution_code)) ","        \"\"","    else try(capture.code(solution_code), silent = TRUE)","    if (inherits(SOLN_CODE, \"try-error\")) ","        stop(\"Problem author, there is an error in the solution code.\")","    test_envir <- new.env()","    assign(\"USER_CODE\", USER_CODE, envir = test_envir)","    assign(\"SOLN_CODE\", SOLN_CODE, envir = test_envir)","    commands <- parse(text = paste(check_code, collapse = \"\\n\"))","    final_result <- list(correct = TRUE, message = \"passed\", ","        user_code = user_code, type = \"success\", location = \"prepend\")","    for (k in 1:length(commands)) {","        R <- eval(commands[k], envir = test_envir)","        if (is.test_result(R) || is.capture(R)) {","            if (R$passed) ","                next","            else {","                final_result$message <- paste(\"Sorry, but\", R$message)","                final_result$correct = FALSE","                final_result$type = \"info\"","                break","            }","            stop(\"Shouldn't get here. Statement returned neither a test result or a capture.\")","        }","    }","    if (final_result$correct) {","        final_result$message <- get_success_message()","    }","    log_entry <- list(user = get_user_name(), date = format(as.POSIXlt(Sys.time()), ","        usetz = TRUE), label = label, message = final_result$message, ","        correct = final_result$correct, user_code = final_result$user_code)","    logger_fun <- options(\"checkr.logger\")[[1]]","    logger_fun(log_entry)","    final_result","}"]}</script>
 </div>
-
-
-<div class="tutorial-exercise-support" data-label="exe22-setup" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-
+<div class="tutorial-exercise-support" data-label="exe3-solution" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>movies1 &lt;- movies %&gt;% select(title,votes,mpaa,rating, Action:Short) %&gt;%
+  filter(votes &gt; 200, mpaa!=&quot;&quot;)</code></pre>
 </div>
-<div class="tutorial-exercise" data-label="exe22" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>ggplot() +
-  geom_bar(data = mpg, aes(x = fl, y = hwy), stat = &quot;identity&quot;) +
-  coord_flip()</code></pre>
-<script type="application/json" data-opts-chunk="1">{"fig.width":7,"fig.height":5,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":672,"warning":true,"error":false,"message":true,"exercise.df_print":"default","exercise.setup":"exe22-setup","exercise.checker":["function (label = NULL, user_code = NULL, solution_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    ..., debug = FALSE) ","{","    if (debug) {","        save_file_name <- sprintf(\"~/Downloads/CheckR/chunk-%s.rds\", ","            label)","        saveRDS(list(label = label, user_code = user_code, solution_code = solution_code, ","            check_code = check_code, envir = envir_result, evaluate_result = evaluate_result), ","            file = save_file_name)","    }","    if (is.null(envir_result)) {","        res <- pre_check_code(user_code, check_code)","        if (nchar(res) > 0) ","            return(list(message = res, correct = FALSE))","        else return(TRUE)","    }","    USER_CODE <- capture.code(user_code)","    SOLN_CODE <- if (is.null(solution_code)) ","        \"\"","    else try(capture.code(solution_code), silent = TRUE)","    if (inherits(SOLN_CODE, \"try-error\")) ","        stop(\"Problem author, there is an error in the solution code.\")","    test_envir <- new.env()","    assign(\"USER_CODE\", USER_CODE, envir = test_envir)","    assign(\"SOLN_CODE\", SOLN_CODE, envir = test_envir)","    commands <- parse(text = paste(check_code, collapse = \"\\n\"))","    final_result <- list(correct = TRUE, message = \"passed\", ","        user_code = user_code, type = \"success\", location = \"prepend\")","    for (k in 1:length(commands)) {","        R <- eval(commands[k], envir = test_envir)","        if (is.test_result(R) || is.capture(R)) {","            if (R$passed) ","                next","            else {","                final_result$message <- paste(\"Sorry, but\", R$message)","                final_result$correct = FALSE","                final_result$type = \"info\"","                break","            }","            stop(\"Shouldn't get here. Statement returned neither a test result or a capture.\")","        }","    }","    if (final_result$correct) {","        final_result$message <- get_success_message()","    }","    log_entry <- list(user = get_user_name(), date = format(as.POSIXlt(Sys.time()), ","        usetz = TRUE), label = label, message = final_result$message, ","        correct = final_result$correct, user_code = final_result$user_code)","    logger_fun <- options(\"checkr.logger\")[[1]]","    logger_fun(log_entry)","    final_result","}"]}</script>
-</div>
-<div class="tutorial-exercise-support" data-label="exe22-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>t_1 &lt;- find_value(match_class(&quot;ggplot&quot;)) 
-t_2 &lt;- find_call(&quot;geom_bar()&quot;, &quot;you didn&#39;t use geom_bar().&quot;) 
-t_3 &lt;- find_call(&quot;aes()&quot;, &quot;you didn&#39;t use aesthetics.&quot;) 
-t_4 &lt;- find_statement(&quot;hwy&quot;) 
-t_5 &lt;- find_statement(&quot;mpg&quot;)
-t_6 &lt;- find_statement(&quot;fl&quot;) 
-t_7 &lt;- find_statement(&quot;coord_flip()&quot;, &quot;didn&#39;t use coord_flip()&quot;)
+<div class="tutorial-exercise-support" data-label="exe3-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code># USER_CODE &lt;- capture.code(&#39;movies1 &lt;- movies %&gt;% select(title,votes,mpaa,rating, Action:Short) %&gt;%
+#   filter(votes &gt; 200, mpaa!=&quot;&quot;)&#39;)
 
-USER_CODE %&gt;% t_1 %&gt;% t_2  %&gt;%  t_4 %&gt;% t_5%&gt;% t_6 %&gt;% t_7 </code></pre>
+test_1 &lt;- find_call(&quot;select()&quot;, &quot;you didn&#39;s use select()&quot;)
+test_2 &lt;- find_names(&quot;movies&quot;, &quot;you didn&#39;t use `movies` dataset&quot;) 
+test_3 &lt;- find_names(&quot;title&quot;, &quot;select `title` variable&quot;)
+test_4 &lt;- find_names(&quot;votes&quot;, &quot;select `votes` variable&quot;)
+test_5 &lt;- find_names(&quot;mpaa&quot;, &quot;select `mpaa` variable&quot;)
+test_6 &lt;- find_names(&quot;rating&quot;, &quot;select `ratings` variable&quot;)
+test_7 &lt;- find_names(&quot;Action&quot;, &quot;select `Action` variable&quot;)
+test_8 &lt;- find_names(&quot;Short&quot;, &quot;select `Short` variable&quot;)
+test_9 &lt;- find_call(&quot;filter()&quot;, &quot;you didn&#39;t use filter()&quot;)
+
+
+test_10 &lt;- find_call(&#39;votes &gt; 200 &amp; mpaa != &quot;&quot;&#39;, &quot;mpaa&quot;)
+
+# test_10 &lt;- check_argument(&quot;... = grab_this&quot;, check_value(x == &quot;votes &gt; 200&quot;), &quot;you didn&#39;t filter movies with less or equal to 200 votes&quot;)
+# test_11 &lt;- check_argument(&quot;mpaa!= grab_this&quot;, agrees(x == &quot;&quot;), &quot;fuc u&quot;)
+# test_11 &lt;- find_statement(&#39;!=&#39;, &quot;&quot;)
+# test_12 &lt;- find_statement(&#39;mpaa!=&quot;&quot;&#39;, &quot;mpaa&quot;)
+
+USER_CODE %&gt;% test_1 %&gt;% test_2  %&gt;%  test_3 %&gt;% test_4 %&gt;% test_5 %&gt;% test_6 %&gt;% test_7  %&gt;%  test_8 %&gt;% test_9 %&gt;% test_10 #%&gt;% test_11 #%&gt;% test_10</code></pre>
 </div>
-<pre class="r"><code>USER_CODE %&gt;% test_1 %&gt;% test_2 %&gt;% test_3 %&gt;% test_4 %&gt;% test_5</code></pre>
 <p>flData = nycflights13::flights flData = na.omit(flData)</p>
 <p>flData = filter(flData, month == 6 | month == 7 | month == 8) flData = filter(flData, dest == “MIA”) flData = arrange(flData, year, month, day) flData = arrange(flData, desc(dep_delay)) flData = dplyr::select(flData, tail_num = tailnum, dep_delay:arr_delay) flData = dplyr::select(flData, -arr_time) flData = mutate(flData, dep_arr_dif = arr_delay - dep_delay) flData = group_by(flData, tail_num) tail_dif = dplyr::summarise(flData, median_dif = median(dep_arr_dif)) flData = inner_join(x = flData, y = tail_dif, by = “tail_num”)</p>
 flData = arrange(flData, median_dif) 
@@ -142,6 +89,8 @@ library(tidyverse)
 library(datasets)
 knitr::opts_chunk$set(exercise.checker = checkr::checkr_tutor)
 
+library(ggplot2movies)
+data(movies)
 
 </script>
  
@@ -150,24 +99,44 @@ learnr:::register_http_handlers(session, metadata = NULL)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-`tutorial-exercise-exe22-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-exe22-code-editor`)), session)
-output$`tutorial-exercise-exe22-output` <- renderUI({
-  `tutorial-exercise-exe22-result`()
+`tutorial-exercise-exe3-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-exe3-code-editor`)), session)
+output$`tutorial-exercise-exe3-output` <- renderUI({
+  `tutorial-exercise-exe3-result`()
 })
 </script>
  <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="dependencies">
-{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery-1.11.3"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap-3.3.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/bootstrap.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery-1.11.3"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery-1.11.3"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["4.5.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/font-awesome-4.5.0"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/font-awesome.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["4.4.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["localforage"]},{"type":"character","attributes":{},"value":["1.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/localforage"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["localforage.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]}]}
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery-1.11.3"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap-3.3.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery-1.11.3"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["4.5.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/font-awesome-4.5.0"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/font-awesome.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["4.4.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["localforage"]},{"type":"character","attributes":{},"value":["1.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/localforage"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["localforage.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]}]}
 </script>
 <!--/html_preserve-->
-
-
-
-
 </div>
 
-<script>
+</div> <!-- topics -->
 
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h2 class="title toc-ignore" style="display:none;">test</h2>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</div> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+
+<script>
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
@@ -175,9 +144,8 @@ function bootstrapStylePandocTables() {
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
-
-
 </script>
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
@@ -190,4 +158,5 @@ $(document).ready(function () {
 </script>
 
 </body>
+
 </html>
